@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">EpidemicGames</string>
+    <string name="app_name">Epidemic\nGames</string>
+
+    <!--Acciones abrir/cerra-->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
