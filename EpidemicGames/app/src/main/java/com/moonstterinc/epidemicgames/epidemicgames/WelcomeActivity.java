@@ -17,7 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        mDrawerlayout = (DrawerLayout) findViewById(R.id.drawer);
+        mDrawerlayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

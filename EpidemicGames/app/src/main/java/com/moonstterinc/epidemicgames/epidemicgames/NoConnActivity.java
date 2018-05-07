@@ -16,5 +16,6 @@ public class NoConnActivity extends AppCompatActivity {
     public void goLoading (View v){
         Intent Intent = new Intent(this, LoadingActivity.class);
         startActivity(Intent);
+        finish();
     }
 }
