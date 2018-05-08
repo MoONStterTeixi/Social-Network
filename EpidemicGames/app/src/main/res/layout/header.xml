@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Epidemic Zombie"
+        android:text="TestDummy"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginTop="5dp"
@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Epidemic@Zombie.com"
+        android:text="testdummy@td.com"
         android:textColor="@color/white"
         />
 
