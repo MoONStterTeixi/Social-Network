@@ -12,8 +12,8 @@
         android:id="@+id/flcontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </FrameLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav"
         app:headerLayout="@layout/header"
@@ -25,56 +25,32 @@
         app:menu="@menu/drawermenu"
         android:layout_gravity="start"
         >
-
-
     </android.support.design.widget.NavigationView>
-    <!--<ImageView
-        android:id="@+id/imageView"
-        android:layout_width="124dp"
-        android:layout_height="103dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.395"
-        app:srcCompat="@android:drawable/ic_menu_add" />-->
+    <TextView
+       android:textAlignment="center"
+       android:id="@+id/textView10"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Welcome"
+       android:textSize="40dp"
+       android:padding="10dp"/>
 
-    <!-- <TextView
-         android:id="@+id/textView10"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginBottom="8dp"
-         android:layout_marginEnd="8dp"
-         android:layout_marginStart="8dp"
-         android:layout_marginTop="8dp"
-         android:text="Welcome Survival"
-         android:textSize="30sp"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.503"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.0" />-->
+   <TextView
+       android:textAlignment="center"
+       android:id="@+id/welcomeTime"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="welcomeTime"
+       android:textSize="20dp"
+       android:padding="50dp"/>
 
-    <!-- <Button
-         android:id="@+id/button7"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginBottom="8dp"
-         android:layout_marginEnd="8dp"
-         android:layout_marginStart="8dp"
-         android:layout_marginTop="8dp"
-         android:onClick="goBack"
-         android:text="Out :("
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.932"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.955" />-->
+   <TextView
+       android:textAlignment="center"
+       android:id="@+id/username"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="nick"
+       android:textSize="30dp"
+       android:padding="70dp"/>
 
 </android.support.v4.widget.DrawerLayout>
