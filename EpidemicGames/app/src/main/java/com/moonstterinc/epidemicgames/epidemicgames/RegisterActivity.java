@@ -20,13 +20,13 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btgoback, btgologin;
 
     int resultRG;
+    String msg = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Reference();
-
     }
 
     public void Reference(){
@@ -57,11 +57,20 @@ public class RegisterActivity extends AppCompatActivity {
     public void goLogin (View v) throws InterruptedException {
         if (etpassword.getText().toString().equals(etreppassword.getText().toString())){
             selectRadioGroup();
-            User usr = new User(etusername.getText().toString(),etmail.getText().toString(),etpassword.getText().toString(),resultRG,cbaccept.isChecked());
+
+            DataClass.email= etmail.getText().toString();
+            DataClass.pwd = etpassword.getText().toString();
+            String link = "AQUÍ LA IP";
+            new ClassCallPHPfile().execute(link);
+            msg = DataClass.msg;
+
+            Toast.makeText(this, "[Status:] " + msg, Toast.LENGTH_LONG).show();
+
+            /*User usr = new User(etusername.getText().toString(),etmail.getText().toString(),etpassword.getText().toString(),resultRG,cbaccept.isChecked());
             Connection conn = new Connection("register", usr);
             Toast.makeText(this, "JSON:" + usr.toJson(), Toast.LENGTH_LONG).show();
             conn.start();
-            conn.join();
+            conn.join();*/
             //Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
             /*Intent Intent = new Intent(this, LoginActivity.class);
             startActivity(Intent);

@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -47,6 +48,8 @@ public class WelcomeActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         getTimeFromAndroid();
+
+
     }
 
     public void references(){
@@ -93,6 +96,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         mDrawerlayout.closeDrawers();
     }
+
 
     //Navigation Drawer
     private void setupDrawerContent(NavigationView navigationView){
@@ -150,6 +154,8 @@ public class WelcomeActivity extends AppCompatActivity {
             tvWelcomeTime.setText("Good Night,");
         }
     }
+
+
 
     //Volver a Inicio
     public void goBack (View v){

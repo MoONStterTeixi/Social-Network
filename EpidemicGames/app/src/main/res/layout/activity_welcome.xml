@@ -14,6 +14,35 @@
         android:layout_height="match_parent">
     </FrameLayout>
 
+
+    <TextView
+        android:textAlignment="center"
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="40dp"
+        android:padding="10dp"/>
+
+    <TextView
+        android:textAlignment="center"
+        android:id="@+id/welcomeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="welcomeTime"
+        android:textSize="20dp"
+        android:padding="50dp"/>
+
+    <TextView
+        android:textAlignment="center"
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nick"
+        android:textSize="30dp"
+        android:padding="70dp"/>
+
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav"
         app:headerLayout="@layout/header"
@@ -26,31 +55,6 @@
         android:layout_gravity="start"
         >
     </android.support.design.widget.NavigationView>
-    <TextView
-       android:textAlignment="center"
-       android:id="@+id/textView10"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Welcome"
-       android:textSize="40dp"
-       android:padding="10dp"/>
 
-   <TextView
-       android:textAlignment="center"
-       android:id="@+id/welcomeTime"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="welcomeTime"
-       android:textSize="20dp"
-       android:padding="50dp"/>
-
-   <TextView
-       android:textAlignment="center"
-       android:id="@+id/username"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="nick"
-       android:textSize="30dp"
-       android:padding="70dp"/>
 
 </android.support.v4.widget.DrawerLayout>
