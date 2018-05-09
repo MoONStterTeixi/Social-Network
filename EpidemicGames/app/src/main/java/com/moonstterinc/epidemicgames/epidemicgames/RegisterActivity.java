@@ -58,28 +58,16 @@ public class RegisterActivity extends AppCompatActivity {
         if (etpassword.getText().toString().equals(etreppassword.getText().toString())){
             selectRadioGroup();
 
-            DataClass.email= etmail.getText().toString();
-            DataClass.pwd = etpassword.getText().toString();
-            String link = "AQUÍ LA IP";
-            new ClassCallPHPfile().execute(link);
-            msg = DataClass.msg;
-
-            Toast.makeText(this, "[Status:] " + msg, Toast.LENGTH_LONG).show();
-
-            /*User usr = new User(etusername.getText().toString(),etmail.getText().toString(),etpassword.getText().toString(),resultRG,cbaccept.isChecked());
-            Connection conn = new Connection("register", usr);
-            Toast.makeText(this, "JSON:" + usr.toJson(), Toast.LENGTH_LONG).show();
-            conn.start();
-            conn.join();*/
-            //Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            /*Intent Intent = new Intent(this, LoginActivity.class);
+            User usr = new User(etusername.getText().toString(),etmail.getText().toString(),etpassword.getText().toString(),resultRG,cbaccept.isChecked());
+            new Connection().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
+            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+            Intent Intent = new Intent(this, LoginActivity.class);
             startActivity(Intent);
-            finish();*/
+            finish();
+
         }else{
             Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
         }
-
-
     }
 
     public void goBack (View v){
