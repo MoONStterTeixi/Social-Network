@@ -13,15 +13,19 @@ public class Connection extends AsyncTask<String,String,String> {
     @Override
     protected String doInBackground(String... parm) {
         HttpURLConnection conn = null;
-        try {
 
+        try {
             URL url = new URL(parm[0]);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-            String inputLine = "aaa";
+            String inputLine = "A";
             inputLine = in.readLine();
             in.close();
-            DataClass.UserJson = inputLine;
 
+            DataClass.UserJson = inputLine;
             return "Done";
 
         }catch (Exception e){
