@@ -3,6 +3,8 @@ package com.moonstterinc.epidemicgames.epidemicgames;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,6 +29,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Reference();
+
+        //Boton lateral atras <-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void Reference(){
@@ -43,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         cbaccept = findViewById(R.id.accept);
 
-        btgoback = findViewById(R.id.goBack);
         btgologin = findViewById(R.id.goLogin);
     }
 
@@ -82,9 +86,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void goBack (View v){
-        Intent Intent = new Intent(this, StartActivity.class);
-        startActivity(Intent);
-    }
+    //Boton lateral atras <-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
+    //Boton lateral atras <-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
 }

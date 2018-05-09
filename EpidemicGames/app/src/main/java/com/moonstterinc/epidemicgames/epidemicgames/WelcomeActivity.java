@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.util.Calendar;
 
@@ -37,6 +38,12 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         references();
+
+        //Añadir fragmento inicial
+        //FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.flcontent,new WelcomeFragment()).commit();
+
+
 
         //Para el Navigation Drawer
         mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
@@ -80,9 +87,6 @@ public class WelcomeActivity extends AppCompatActivity {
             case R.id.logout:
                 //Falta poner el salir
                 break;
-             default:
-                 //fragmentClass = OptionsFragment.class;
-                 Toast.makeText(this, "ERROR NOT FOUND 404", Toast.LENGTH_LONG).show();
         }
         try{
             myFragment = (Fragment) fragmentClass.newInstance();
@@ -95,6 +99,7 @@ public class WelcomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawerlayout.closeDrawers();
+
     }
 
 
@@ -109,6 +114,8 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     //Ventana PopUp Salir
     @Override
@@ -154,6 +161,10 @@ public class WelcomeActivity extends AppCompatActivity {
             tvWelcomeTime.setText("Good Night,");
         }
     }
+
+    /**
+     * Changes the icon of the drawer to back
+     */
 
 
 
