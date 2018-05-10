@@ -18,8 +18,9 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loading);
         hideNavigationBar();
+        setContentView(R.layout.activity_loading);
+
         ResultisNetworkAvailable();
 
         //Evitar que rote *
@@ -86,13 +87,13 @@ public class LoadingActivity extends AppCompatActivity {
             Toast.makeText(this, "STATUS INTERNET: OK", Toast.LENGTH_SHORT).show();
 
             value = 0;
-            thread(2000);
+            thread(3000);
 
         } else {
             Toast.makeText(this, "STATUS INTERNET: FAIL", Toast.LENGTH_SHORT).show();
 
             value = 1;
-            thread(1000);
+            thread(2000);
         }
     }
 }

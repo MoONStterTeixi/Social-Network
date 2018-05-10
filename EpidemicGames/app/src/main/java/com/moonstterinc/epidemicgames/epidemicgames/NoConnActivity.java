@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class NoConnActivity extends AppCompatActivity {
@@ -15,13 +17,18 @@ public class NoConnActivity extends AppCompatActivity {
 
         //Evitar que rote *
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        //Boton lateral atras <-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
 
     public void goLoading (View v){
         Intent Intent = new Intent(this, LoadingActivity.class);
+        startActivity(Intent);
+        finish();
+    }
+
+    public void onlyDEV(View v){
+        Intent Intent = new Intent(this, StartActivity.class);
         startActivity(Intent);
         finish();
     }
