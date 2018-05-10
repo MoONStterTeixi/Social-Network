@@ -2,6 +2,7 @@ package com.moonstterinc.epidemicgames.epidemicgames;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,9 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
 
         ResultisNetworkAvailable();
+
+        //Evitar que rote *
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     //Pantalla de carga de 10s OK

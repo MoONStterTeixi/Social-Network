@@ -1,145 +1,135 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Network;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import java.util.Calendar;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout mDrawerlayout;
-    private ActionBarDrawerToggle mToggle;
-    private NavigationView nvDrawer;
-    private String welcomeTime = null;
-    private TextView tvWelcomeTime;
+    private TextView tv_statusTime, tv_username;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //Evitar que rote *
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         references();
-
-        //Añadir fragmento inicial
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.flcontent,new WelcomeFragment()).commit();
-
-
-
-        //Para el Navigation Drawer
-        mToggle = new ActionBarDrawerToggle(this, mDrawerlayout, R.string.open, R.string.close);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawerlayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setupDrawerContent(nvDrawer);
-
         getTimeFromAndroid();
-
+        createNotification();
 
     }
 
-    public void references(){
-        mDrawerlayout = findViewById(R.id.drawer);
-        nvDrawer =  findViewById(R.id.nav);
-        tvWelcomeTime = findViewById(R.id.welcomeTime);
+    /*@Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.welcome, menu);
+        return true;
     }
 
-    //Para el Navigation Drawer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mToggle.onOptionsItemSelected(item)){
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent Intent = new Intent(this, RegisterActivity.class);
+            startActivity(Intent);
             return true;
         }
+
         return super.onOptionsItemSelected(item);
-
     }
 
-    //Navigation Drawer Opciones segun el caso
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void selectItemDrawer(MenuItem menuItem){
-        Fragment myFragment = null;
-        Class fragmentClass = null;
-        switch (menuItem.getItemId()){
-            case R.id.options:
-                fragmentClass = OptionsFragment.class;
-                break;
-            case R.id.logout:
-                //Falta poner el salir
-                break;
-        }
-        try{
-            myFragment = (Fragment) fragmentClass.newInstance();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flcontent,myFragment).commit();
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        mDrawerlayout.closeDrawers();
-
-    }
-
-
-    //Navigation Drawer
-    private void setupDrawerContent(NavigationView navigationView){
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectItemDrawer(item);
-                return false;
-            }
-        });
-    }
-
-
-
-    //Ventana PopUp Salir
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public void onBackPressed() {
-        AlertDialog.Builder myBulid = new AlertDialog.Builder(this);
-        myBulid.setMessage("Sure you want to get out?");
-        myBulid.setTitle("Epidemic Games");
-        myBulid.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-            }
-        });
-        myBulid.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog dialog = myBulid.create();
-        dialog.show();
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    //Codigo a mano
+
+    public void references(){
+        tv_statusTime = findViewById(R.id.statusTime);
+        tv_username = findViewById(R.id.username);
+        tv_username.setText(DataClass.nameUsername);
     }
 
     //Obtener mensaje
@@ -149,29 +139,60 @@ public class WelcomeActivity extends AppCompatActivity {
 
         if(timeOfDay >= 0 && timeOfDay < 12){
             //Toast.makeText(this, "Good Morning", Toast.LENGTH_SHORT).show();
-            tvWelcomeTime.setText("Good Morning,");
+            tv_statusTime.setText("Good Morning,");
         }else if(timeOfDay >= 12 && timeOfDay < 16){
             //Toast.makeText(this, "Good Afternoon", Toast.LENGTH_SHORT).show();
-            tvWelcomeTime.setText("Good Afternoon,");
+            tv_statusTime.setText("Good Afternoon,");
         }else if(timeOfDay >= 16 && timeOfDay < 21){
             //Toast.makeText(this, "Good Evening", Toast.LENGTH_SHORT).show();
-            tvWelcomeTime.setText("Good Evening,");
+            tv_statusTime.setText("Good Evening,");
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
-            tvWelcomeTime.setText("Good Night,");
+            tv_statusTime.setText("Good Night,");
         }
     }
 
-    /**
-     * Changes the icon of the drawer to back
-     */
+    public void createNotification() {
+        // Prepare intent which is triggered if the
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        PendingIntent pending = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification notifications = new Notification.Builder(this)
+                .setContentTitle("New notification EpidemicGames")
+                .setContentText("Thanks for using this app :)").setSmallIcon(R.drawable.icon)
+                .setContentIntent(pending)
+                .addAction(R.drawable.ic_menu_send, "Reply", pending) //Añadir Banner Largo x3
+                .addAction(R.drawable.ic_menu_share, "cancel", pending)
+                .addAction(R.drawable.ic_menu_slideshow, "setings", pending).build();
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notifications.flags |= Notification.FLAG_AUTO_CANCEL;
+        manager.notify(0, notifications);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
+        myBuild.setMessage("You sure you're going to get out?");
+        myBuild.setTitle("Epidemic Games");
+
+        myBuild.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    finishAffinity();
+            }
+        });
+
+        myBuild.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               dialog.cancel();
+            }
+        });
 
 
-
-    //Volver a Inicio
-    public void goBack (View v){
-        Intent Intent = new Intent(this, StartActivity.class);
-        startActivity(Intent);
-        finish();
+        AlertDialog dialog = myBuild.create();
+        dialog.show();
     }
 }

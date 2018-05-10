@@ -8,11 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email, pwd;
-    private Button go;
+    private EditText et_email, et_pwd;
+
     //private ClassCallPHPfile callPHP = new ClassCallPHPfile();
 
     @Override
@@ -24,13 +25,12 @@ public class LoginActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Toast.makeText(this, callPHP.ok, Toast.LENGTH_SHORT).show();
+
     }
 
     private void Reference(){
-        email = findViewById(R.id.email);
-        pwd =  findViewById(R.id.pwd);
-        go = findViewById(R.id.go);
+        et_email = findViewById(R.id.email);
+        et_pwd =  findViewById(R.id.pwd);
     }
 
     //Boton lateral atras <-
@@ -50,10 +50,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goWelcome (View v){
+    Toast.makeText(this, "Error User", Toast.LENGTH_SHORT).show();
+       // User usr = new User(et_email.getText().toString(),et_pwd.getText().toString());
+        //new Connection().execute("http://172.17.129.63:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json="+usr.toJson());
+
+        /*if (DataClass.UserJson.equals('0') ) {
+            Toast.makeText(this, "Error Pass", Toast.LENGTH_SHORT).show();
+            //if (DataClass.UserJson.equals('1')){
+            //Toast.makeText(this, "Error User", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent Intent = new Intent(this, WelcomeActivity.class);
+            startActivity(Intent);
+            finish();
+        }*/
+    }
+
+    public void onlyDEV(View v){
         Intent Intent = new Intent(this, WelcomeActivity.class);
         startActivity(Intent);
         finish();
-
     }
 
 }

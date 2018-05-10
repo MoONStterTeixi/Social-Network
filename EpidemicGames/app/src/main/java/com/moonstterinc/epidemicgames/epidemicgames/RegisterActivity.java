@@ -1,6 +1,7 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,16 +20,17 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioGroup rggenre;
     private RadioButton rbother, rbfemale, rbmale;
     private CheckBox cbaccept;
-    private Button btgoback, btgologin;
 
     int resultRG;
-    String msg = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Reference();
+
+        //Evitar que rote *
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -47,8 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         rbmale = findViewById(R.id.male);
 
         cbaccept = findViewById(R.id.accept);
-
-        btgologin = findViewById(R.id.goLogin);
     }
 
     //Selecionar el Grupo de radio
@@ -62,28 +62,16 @@ public class RegisterActivity extends AppCompatActivity {
         if (etpassword.getText().toString().equals(etreppassword.getText().toString())){
             selectRadioGroup();
 
-            DataClass.email= etmail.getText().toString();
-            DataClass.pwd = etpassword.getText().toString();
-            String link = "AQUÍ LA IP";
-            new ClassCallPHPfile().execute(link);
-            msg = DataClass.msg;
-
-            Toast.makeText(this, "[Status:] " + msg, Toast.LENGTH_LONG).show();
-
-            /*User usr = new User(etusername.getText().toString(),etmail.getText().toString(),etpassword.getText().toString(),resultRG,cbaccept.isChecked());
-            Connection conn = new Connection("register", usr);
-            Toast.makeText(this, "JSON:" + usr.toJson(), Toast.LENGTH_LONG).show();
-            conn.start();
-            conn.join();*/
-            //Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            /*Intent Intent = new Intent(this, LoginActivity.class);
+            User usr = new User(etusername.getText().toString(),etmail.getText().toString(),etpassword.getText().toString(),resultRG,cbaccept.isChecked());
+            new Connection().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
+            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+            Intent Intent = new Intent(this, LoginActivity.class);
             startActivity(Intent);
-            finish();*/
+            finish();
+
         }else{
             Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
         }
-
-
     }
 
     //Boton lateral atras <-
