@@ -8,10 +8,18 @@
     tools:context=".WelcomeActivity"
     tools:showIn="@layout/app_bar_welcome">
 
+<<<<<<< HEAD
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+=======
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -20,7 +28,11 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.239"
+=======
+        app:layout_constraintHorizontal_bias="0.537"
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.017" />
@@ -35,6 +47,7 @@
         android:layout_marginTop="8dp"
         android:text="statusTime"
         android:textSize="20sp"
+<<<<<<< HEAD
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +58,17 @@
 
     <TextView
         android:id="@+id/username"
+=======
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.079" />
+
+    <TextView
+        android:id="@+id/textView3"
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -52,6 +76,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Nick"
+<<<<<<< HEAD
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -62,4 +87,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.132" />
 
+=======
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.158" />
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
 </android.support.constraint.ConstraintLayout>

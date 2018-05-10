@@ -10,11 +10,6 @@ public class User {
     private boolean sub;
     //private Bitmap img;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
     public User() {
 
     }
@@ -26,6 +21,12 @@ public class User {
         this.genre = genre;
         this.sub = sub;
     }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
 
     public String getUsername() {
         return username;
@@ -66,6 +67,7 @@ public class User {
     public void setSub(boolean sub) {
         this.sub = sub;
     }
+
     public String toJson(){
         JSONObject jsonobj = new JSONObject();
         try{
@@ -79,4 +81,6 @@ public class User {
         }catch (Exception e){}
         return jsonobj.toString();
     }
+
+
 }

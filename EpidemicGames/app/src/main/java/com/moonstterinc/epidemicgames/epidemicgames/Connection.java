@@ -1,15 +1,20 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
 import android.os.AsyncTask;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+<<<<<<< HEAD
 import java.net.URI;
+=======
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
 import java.net.URL;
-import java.net.URLConnection;
 
 public class Connection extends AsyncTask<String,String,String> {
 

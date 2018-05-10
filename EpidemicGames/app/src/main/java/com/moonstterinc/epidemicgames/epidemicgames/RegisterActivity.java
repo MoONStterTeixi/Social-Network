@@ -72,6 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
         }
+<<<<<<< HEAD
     }
 
     //Boton lateral atras <-
@@ -84,6 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+=======
+>>>>>>> fde5a4637e9c1abfdc00ce50c3096149b72d1b8c
     }
     //Boton lateral atras <-
     public boolean onCreateOptionsMenu(Menu menu) {

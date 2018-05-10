@@ -125,7 +125,6 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     //Codigo a mano
-
     public void references(){
         tv_statusTime = findViewById(R.id.statusTime);
         tv_username = findViewById(R.id.username);
@@ -152,6 +151,7 @@ public class WelcomeActivity extends AppCompatActivity
         }
     }
 
+    //Creamos notificaciones
     public void createNotification() {
         // Prepare intent which is triggered if the
         Intent intent = new Intent(this, WelcomeActivity.class);
@@ -170,6 +170,7 @@ public class WelcomeActivity extends AppCompatActivity
         manager.notify(0, notifications);
     }
 
+    //Al pusar atras con el boton de android sale un mensaje de estas seguro?
     @Override
     public void onBackPressed()
     {
@@ -180,7 +181,8 @@ public class WelcomeActivity extends AppCompatActivity
         myBuild.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                    finishAffinity();
+                //Cierra todo
+                finishAffinity();
             }
         });
 
@@ -190,7 +192,6 @@ public class WelcomeActivity extends AppCompatActivity
                dialog.cancel();
             }
         });
-
 
         AlertDialog dialog = myBuild.create();
         dialog.show();
