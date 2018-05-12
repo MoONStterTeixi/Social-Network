@@ -60,15 +60,21 @@ public class Registerv2Activity extends AppCompatActivity {
                 case 2:
                     return IntroFragment3.newInstance();
 
+                case 3:
+                    return IntroFragment4.newInstance();
+
+                case 4:
+                    return IntroFragment5.newInstance();
+
                 default:
-                    return IntroFragment3.newInstance();
+                    return IntroFragment5.newInstance();
             }
         }
 
 
         @Override
         public int getCount() {
-            return 3;
+            return 5;
         }
 
     }

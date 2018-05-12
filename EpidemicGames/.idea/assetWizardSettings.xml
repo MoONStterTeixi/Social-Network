@@ -37,7 +37,6 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="scalingPercent" value="76" />
-                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -59,6 +58,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundImage" value="C:\Users\Javie\Documents\GitHub\Social-Network\EpidemicGames\app\src\main\res\drawable\icon_app.jpg" />
+                                      <entry key="foregroundImage" value="C:\Users\Javie\Documents\GitHub\Social-Network\EpidemicGames\app\src\main\res\drawable\vallas.png" />
                                       <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
