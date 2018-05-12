@@ -26,4 +26,9 @@ public class StartActivity extends AppCompatActivity {
         Intent Intent = new Intent(this, RegisterActivity.class);
         startActivity(Intent);
     }
+
+    public void goRegisterv2 (View v){
+        Intent Intent = new Intent(this, Registerv2Activity.class);
+        startActivity(Intent);
+    }
 }
