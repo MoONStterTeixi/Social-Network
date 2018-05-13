@@ -22,13 +22,13 @@ public class StartActivity extends AppCompatActivity {
         startActivity(Intent);
     }
 
-    public void goRegister (View v){
+    public void goRegisterv2 (View v){
         Intent Intent = new Intent(this, Registerv2Activity.class);
         startActivity(Intent);
     }
 
     //Delete una vez pasado los parametros
-    public void goRegisterv2 (View v){
+    public void goRegisterOld  (View v){
         Intent Intent = new Intent(this, RegisterActivity.class);
         startActivity(Intent);
     }
