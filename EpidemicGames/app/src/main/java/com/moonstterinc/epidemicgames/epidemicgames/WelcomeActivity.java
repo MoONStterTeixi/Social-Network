@@ -20,6 +20,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -60,7 +63,14 @@ public class WelcomeActivity extends AppCompatActivity
 
         references();
         getTimeFromAndroid();
-        createNotification();
+        //createNotification();
+
+
+        WebView myWebView = (WebView) findViewById(R.id.webView);
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.loadUrl("https://www.xataka.com/");
     }
 
     /*@Override
@@ -110,9 +120,31 @@ public class WelcomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            Intent Intent = new Intent(this, SettingsActivity.class);
+            startActivity(Intent);
 
         } else if (id == R.id.nav_send) {
+            AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
+            myBuild.setMessage("You sure you're going to get out?");
+            myBuild.setTitle("Epidemic Games");
 
+            myBuild.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Cierra todo
+                    finishAffinity();
+                }
+            });
+
+            myBuild.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog dialog = myBuild.create();
+            dialog.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -148,7 +180,7 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     //Creamos notificaciones
-    public void createNotification() {
+    /*public void createNotification() {
         // Prepare intent which is triggered if the
         Intent intent = new Intent(this, WelcomeActivity.class);
         PendingIntent pending = PendingIntent.getActivity(this, 0, intent, 0);
@@ -164,7 +196,7 @@ public class WelcomeActivity extends AppCompatActivity
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notifications.flags |= Notification.FLAG_AUTO_CANCEL;
         manager.notify(0, notifications);
-    }
+    }*/
 
     //Al pusar atras con el boton de android sale un mensaje de estas seguro?
     @Override

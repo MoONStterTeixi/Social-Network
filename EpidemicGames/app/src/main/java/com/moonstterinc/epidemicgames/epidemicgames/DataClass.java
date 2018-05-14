@@ -11,7 +11,14 @@ public class DataClass {
     public static String  nameUsername = "TestDummy";;
     public static boolean checkUJ = false;
     public static Context  cnt = null;
+    public static String saveLogin = "";
+    public static Boolean resultLogin = false;
+    public static String sSubCadena1 = "";
+    public static String sSubCadena2 = "";
+
+
     public static void msToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_LONG).show();
     }
+
 }

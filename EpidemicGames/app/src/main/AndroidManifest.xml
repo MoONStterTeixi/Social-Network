@@ -27,7 +27,8 @@
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Registerv2Activity"></activity>
+        <activity android:name=".Registerv2Activity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
