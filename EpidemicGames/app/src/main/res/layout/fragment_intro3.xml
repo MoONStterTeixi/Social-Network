@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/fetemail"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.498" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/fetusername"
         android:layout_width="289dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -83,7 +83,7 @@
         app:layout_constraintVertical_bias="0.221" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/fetpwd"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -104,7 +104,7 @@
         app:layout_constraintVertical_bias="0.606" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/fetgenre"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

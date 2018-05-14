@@ -2,18 +2,23 @@ package com.moonstterinc.epidemicgames.epidemicgames;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class Registerv2Activity extends AppCompatActivity {
 
     public static Vibrator vb1;
     public Button nextScreen;
+    private EditText etusername, etgenre, etemail, etpwd, etrepwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +38,19 @@ public class Registerv2Activity extends AppCompatActivity {
         ViewPager mViewPager = findViewById(R.id.containerIntroScreen);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        Reference();
+
+       // etpwd.setText(DataClass.nameUsername);
+
     }
 
+    public void Reference(){
+        etusername = findViewById(R.id.nick);
+        etgenre  = findViewById(R.id.genre);
+        etemail = findViewById(R.id.email);
+        etpwd = findViewById(R.id.pwd);
+        etrepwd = findViewById(R.id.repwd);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

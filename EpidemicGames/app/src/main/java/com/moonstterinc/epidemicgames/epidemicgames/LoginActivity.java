@@ -5,9 +5,11 @@ import android.content.pm.ActivityInfo;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -20,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -71,7 +75,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        final CheckBox showPasswordCheckBox = (CheckBox) findViewById(R.id.showPasswordCheckBox);
+        showPasswordCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showPasswordCheckBox.isChecked()){
+                    et_pwd.setTransformationMethod(null);
+                }else{
+                    et_pwd.setTransformationMethod(new PasswordTransformationMethod());
+                }
+            }
+        });
     }
 
 
@@ -97,22 +111,66 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    private static final String PASSWORD_REGEXP =
+            "^"
+                    + "(?=.*\\d)"
+                    + "(?=.*[a-z])"
+                    + "(?=.*[A-Z])"
+                    + "(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])"
+                    + "."
+                    + "{6,15}"
+                    + "$";
+
+
+    private Pattern pattern = Pattern.compile(PASSWORD_REGEXP);
+    private Matcher matcher;
+
+    public boolean isValid(String password){
+
+        matcher = pattern.matcher(password);
+        return matcher.matches();
+
+    }
+
+    //Return true if email is valid and false if email is invalid
+    protected boolean validateEmail(String email) {
+        String emailPattern = DataClass.pattern;
+        Pattern pattern = Pattern.compile(emailPattern);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
+    }
+
+
     public void goWelcome (View v){
-        try{
-            DataClass.usr = new User(et_email.getText().toString(), et_pwd.getText().toString());
-            new CallAPI_Rest().execute("http://172.17.129.63:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
-            tx_login.setText(DataClass.UserJson);
-        }catch(Exception e){
-            Toast.makeText(this, "[ERROR] User o Password", Toast.LENGTH_LONG).show();
-        }
-        if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
-            Toast.makeText(this, "[ERROR] Turn new", Toast.LENGTH_LONG).show();
+
+        Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
+        if(!validateEmail(et_email.getText().toString())) {
+            et_email.setError("Invalid Email");
+            et_email.requestFocus();
+        } else if (!isValid(et_pwd.getText().toString())) {
+            et_pwd.setError("Invalid Password");
+            et_pwd.requestFocus();
         } else {
-            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            Intent Intent = new Intent(this, WelcomeActivity.class);
-            startActivity(Intent);
-            finish();
+            try{
+                DataClass.usr = new User(et_email.getText().toString(), et_pwd.getText().toString());
+                //localhost= new CallAPI_Rest().execute("http://172.17.129.67:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
+                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
+                //tx_login.setText(DataClass.UserJson);
+            }catch(Exception e){
+                Toast.makeText(this, "[ERROR] User o Password", Toast.LENGTH_LONG).show();
+            }
+            if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
+                Toast.makeText(this, "[ERROR] Turn new", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
+                Intent Intent = new Intent(this, WelcomeActivity.class);
+                startActivity(Intent);
+                finish();
+            }
         }
+
     }
 
     public void onlyDEV(View v){
