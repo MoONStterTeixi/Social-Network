@@ -30,7 +30,7 @@ import java.util.Calendar;
 public class WelcomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView tv_statusTime, tv_username;
+    private TextView tv_statusTime, tv_username, tv_emailDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,21 @@ public class WelcomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         references();
+
+        tv_username.setText(DataClass.GlobalUser.getUsername());
+
+        //----Probar
+        //Crear un nuevo intent de respuesta
+        Intent databack = new Intent();
+
+        //Añadir como Extra el texto del radiobutton
+        databack.putExtra("opinion",tv_emailDrawer.toString());
+
+        //Devolver por el canal de forma exitosa el mensaje del intent
+        setResult(RESULT_OK,databack);
+
+        //------
+        
         getTimeFromAndroid();
         //createNotification();
 
@@ -160,7 +175,11 @@ public class WelcomeActivity extends AppCompatActivity
     public void references(){
         tv_statusTime = findViewById(R.id.statusTime);
         tv_username = findViewById(R.id.username);
-        tv_username.setText(DataClass.nameUsername);
+        tv_emailDrawer = findViewById(R.id.emailDrawer);
+
+
+        //
+
     }
 
     //Obtener mensaje

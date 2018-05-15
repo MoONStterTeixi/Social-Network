@@ -84,13 +84,13 @@ public class LoadingActivity extends AppCompatActivity {
     //Muestra mensaje vía toast (OK/FAIL)
     private void ResultisNetworkAvailable(){
         if (isNetworkAvailable() == true) {
-            Toast.makeText(this, "STATUS INTERNET: OK", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "STATUS INTERNET: OK", Toast.LENGTH_SHORT).show();
 
             value = 0;
             thread(3000);
 
         } else {
-            Toast.makeText(this, "STATUS INTERNET: FAIL", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "STATUS INTERNET: FAIL", Toast.LENGTH_SHORT).show();
 
             value = 1;
             thread(2000);

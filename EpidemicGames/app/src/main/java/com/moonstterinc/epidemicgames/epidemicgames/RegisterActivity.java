@@ -188,10 +188,10 @@ public class RegisterActivity extends AppCompatActivity {
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
                Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-               Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
-               /*Intent Intent = new Intent(this, LoginActivity.class);
+               //Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
+               Intent Intent = new Intent(this, LoginActivity.class);
                startActivity(Intent);
-               finish();*/
+               finish();
 
             }else{
                Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();

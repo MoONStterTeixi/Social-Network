@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        onClickLoading();
+        //onClickLoading();
 
 
         et_email.setText(DataClass.sSubCadena1);
@@ -66,12 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                 if(isChecked) {
                     DataClass.saveLogin = "YES";
                     //tx_login.setText("Check");
-                    onClickSave();
+                    //onClickSave();
                 }
                 else {
                     DataClass.saveLogin = "NO";
                     //tx_login.setText("NOCheck");
-                    onClickSave();
+                    //onClickSave();
                 }
             }
         });
@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String cryptohash = pwdFinal + userFinal;
 
-        Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
         if(!validateEmail(et_email.getText().toString())) {
             et_email.setError("Invalid Email");
             et_email.requestFocus();
@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
             et_pwd.requestFocus();
         } else {
             try{
-                DataClass.usr = new User(et_email.getText().toString(), et_pwd.getText().toString());
+                DataClass.usr = new User(et_email.getText().toString(), cryptohash);
                 //localhost= new CallAPI_Rest().execute("http://172.17.129.67:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 //tx_login.setText(DataClass.UserJson);
@@ -194,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
     }*/
 
     //Guardar datos y Cargar en TXT
-    public void onClickSave(){
+    /*public void onClickSave(){
         String str =  "PEPE";
         String str2 =  "PEPE";
 
@@ -215,10 +215,10 @@ public class LoginActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-    }
+    }*/
 
 
-    public void onClickLoading(){
+    /*public void onClickLoading(){
         try{
             FileInputStream fis = openFileInput("rememberME.txt");
             InputStreamReader isr = new InputStreamReader(fis);
@@ -253,5 +253,5 @@ public class LoginActivity extends AppCompatActivity {
         }catch (IOException ex){
             ex.printStackTrace();
         }
-    }
+    }*/
 }
