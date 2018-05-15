@@ -170,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
             if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
                 Toast.makeText(this, "[ERROR] Turn new", Toast.LENGTH_LONG).show();
             } else {
+                DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
                 Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
                 Intent Intent = new Intent(this, WelcomeActivity.class);
                 startActivity(Intent);

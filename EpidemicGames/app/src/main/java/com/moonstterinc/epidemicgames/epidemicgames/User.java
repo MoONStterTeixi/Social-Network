@@ -9,14 +9,6 @@ public class User {
     private String password;
     private boolean sub;
 
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
     private String action;
     //private Bitmap img;
 
@@ -101,5 +93,15 @@ public class User {
 
         }catch (Exception e){}
         return jsonobj.toString();
+    }
+
+    public static User GetObj(String v){
+        User usr = new User();
+        try {
+            JSONObject json = new JSONObject(v);
+            usr.setEmail(json.getString("email"));
+            usr.setUsername(json.getString("username"));
+        }catch (Exception e){}
+        return usr;
     }
 }
