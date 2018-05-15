@@ -1,4 +1,3 @@
-
 package com.moonstterinc.epidemicgames.epidemicgames;
 
 import android.app.AlertDialog;
@@ -112,23 +111,23 @@ public class WelcomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_profile) {
             Intent Intent = new Intent(this, ProfileActivity.class);
             startActivity(Intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_news) {
             Intent Intent = new Intent(this, NewsActivity.class);
             startActivity(Intent);
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_games) {
             Intent Intent = new Intent(this, GamesActivity.class);
             startActivity(Intent);
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_about) {
             Intent Intent = new Intent(this, AboutActivity.class);
             startActivity(Intent);
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
             Intent Intent = new Intent(this, SettingsActivity.class);
             startActivity(Intent);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_exit) {
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
             myBuild.setMessage("You sure you're going to get out?");
             myBuild.setTitle("Epidemic Games");
