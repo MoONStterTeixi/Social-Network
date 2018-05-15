@@ -23,12 +23,16 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".NoConnActivity" />
+        <activity android:name=".Registerv2Activity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".NewsActivity" />
+        <activity android:name=".GamesActivity" />
+        <activity android:name=".AboutActivity" />
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Registerv2Activity" />
-        <activity android:name=".SettingsActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

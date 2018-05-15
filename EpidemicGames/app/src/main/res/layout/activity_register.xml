@@ -128,17 +128,17 @@
         android:id="@+id/accept"
         android:layout_width="33dp"
         android:layout_height="34dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="104dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="104dp"
+        android:layout_marginStart="84dp"
         android:layout_marginTop="8dp"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.953" />
 
     <Button
         android:id="@+id/goLogin"
@@ -159,26 +159,26 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="162dp"
         android:layout_height="22dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="onpopbtnclick"
+        android:onClick="terms"
         android:text="(Click here for more info)"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintHorizontal_bias="0.752"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.817" />
+        app:layout_constraintVertical_bias="0.807" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_height="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -186,9 +186,9 @@
         android:text="Accept Terms and Conditions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.766"
+        app:layout_constraintHorizontal_bias="0.722"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.764" />
 
 </android.support.constraint.ConstraintLayout>

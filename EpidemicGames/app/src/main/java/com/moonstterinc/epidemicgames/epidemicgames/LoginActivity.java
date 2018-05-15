@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         onClickLoading();
 
+
         et_email.setText(DataClass.sSubCadena1);
         et_pwd.setText(DataClass.sSubCadena2);
         if (DataClass.resultLogin == true){

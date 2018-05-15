@@ -1,7 +1,9 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.moonstterinc.epidemicgames.epidemicgames.DataClass.context;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -41,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
     }
 
@@ -76,6 +79,44 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    public void terms(View v){
+       android.app.AlertDialog.Builder myBuild = new android.app.AlertDialog.Builder(this);
+        myBuild.setMessage("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis ex, feugiat at dolor quis," +
+                " elementum rutrum lorem. Morbi viverra leo eget scelerisque imperdiet. Nulla sit amet commodo enim.\n" +
+                " Sed congue sed diam sit amet pharetra. Vestibulum vitae nulla eu metus varius venenatis ac nec urna.\n\n\n\n" +
+                " Quisque ut lorem tempus orci porttitor porttitor nec in mauris. Ut sem velit, semper et enim viverra, " +
+                "porttitor posuere ligula. Sed tincidunt, risus et bibendum lobortis, nunc nisl pellentesque quam, in vulputate felis tortor ac justo.\n\n\n" +
+                " In ornare ex vitae eros ornare commodo. Vestibulum porttitor, felis in hendrerit porttitor, ligula quam tincidunt mi," +
+                " eu condimentum urna neque ac eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. " +
+                "Sed et tortor mollis, convallis mauris nec, pellentesque eros."+
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis ex, feugiat at dolor quis," +
+                " elementum rutrum lorem. Morbi viverra leo eget scelerisque imperdiet. Nulla sit amet commodo enim.\n" +
+                " Sed congue sed diam sit amet pharetra. Vestibulum vitae nulla eu metus varius venenatis ac nec urna.\n\n\n\n" +
+                " Quisque ut lorem tempus orci porttitor porttitor nec in mauris. Ut sem velit, semper et enim viverra, " +
+                "porttitor posuere ligula. Sed tincidunt, risus et bibendum lobortis, nunc nisl pellentesque quam, in vulputate felis tortor ac justo.\n\n\n" +
+                " In ornare ex vitae eros ornare commodo. Vestibulum porttitor, felis in hendrerit porttitor, ligula quam tincidunt mi," +
+                " eu condimentum urna neque ac eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. " +
+                "Sed et tortor mollis, convallis mauris nec, pellentesque eros.");
+
+        myBuild.setTitle("Epidemic Games Info");
+
+        myBuild.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cb_accept.setChecked(true);
+            }
+        });
+        myBuild.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                cb_accept.setChecked(false);
+            }
+        });
+
+        android.app.AlertDialog dialog = myBuild.create();
+        dialog.show();
+    }
 
     //Selecionar el Grupo de radio
    /* public void selectRadioGroup() {
@@ -116,26 +157,45 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void goLogin (View v) throws InterruptedException {
         //selectRadioGroup();
-        if(!validateEmail(et_email.getText().toString())) {
-            et_email.setError("Invalid Email");
-            et_email.requestFocus();
-        } else if (!isValid(et_pwd.getText().toString())) {
-            et_pwd.setError("Invalid Password");
-            et_pwd.requestFocus();
-        } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
-            User usr = new User(et_username.getText().toString(), et_email.getText().toString(), et_pwd.getText().toString(),resultRG ,cb_accept.isChecked());
-            //new Connection().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
-            new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
-            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            Intent Intent = new Intent(this, LoginActivity.class);
-            startActivity(Intent);
-            finish();
-        }else{
-            Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
-            et_pwd.requestFocus();
 
-            et_repwd.setError("Are not the same");
-            et_repwd.requestFocus();
-        }
+       int a =  et_username.getText().length();
+       if (cb_accept.isChecked()) {
+            if( a < 3){
+                et_username.setError("Invalid Username:\n" +
+                        "-is at least 4 character long");
+                et_username.requestFocus();
+            }else if(!validateEmail(et_email.getText().toString())) {
+               et_email.setError("Invalid Email");
+               et_email.requestFocus();
+
+            } else if (!isValid(et_pwd.getText().toString())) {
+               et_pwd.setError("Invalid Password:\n" +
+                       "-contains at least 1 digit\n" +
+                       "-contains at least 1 lowercase letter\n" +
+                       "-contains at least 1 lowercase letter\n" +
+                       "-contains at least 1 of the special\n" +
+                       "-is at least 6 character long\n" +
+                       "-is at most 15 characters long");
+               et_pwd.requestFocus();
+
+            } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
+               User usr = new User(et_username.getText().toString(), et_email.getText().toString(), et_pwd.getText().toString(),resultRG ,cb_accept.isChecked());
+               //new Connection().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
+               new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
+               Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+               Intent Intent = new Intent(this, LoginActivity.class);
+               startActivity(Intent);
+               finish();
+
+            }else{
+               Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
+               et_pwd.requestFocus();
+
+               et_repwd.setError("Are not the same");
+               et_repwd.requestFocus();
+            }
+       }else{
+           Toast.makeText(this, "Read conditions and then Accept", Toast.LENGTH_LONG).show();
+       }
     }
 }
