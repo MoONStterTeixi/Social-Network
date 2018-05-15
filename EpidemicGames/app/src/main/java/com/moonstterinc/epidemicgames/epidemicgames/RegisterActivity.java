@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.security.MessageDigest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -155,8 +156,12 @@ public class RegisterActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
+
+
+
     public void goLogin (View v) throws InterruptedException {
         //selectRadioGroup();
+        String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString());
 
        int a =  et_username.getText().length();
        if (cb_accept.isChecked()) {
@@ -180,12 +185,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
                User usr = new User(et_username.getText().toString(), et_email.getText().toString(), et_pwd.getText().toString(),resultRG ,cb_accept.isChecked());
-               //new Connection().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
+               //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
                Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-               Intent Intent = new Intent(this, LoginActivity.class);
+               Toast.makeText(this, "Pass: " + pwdFinal, Toast.LENGTH_LONG).show();
+               /*Intent Intent = new Intent(this, LoginActivity.class);
                startActivity(Intent);
-               finish();
+               finish();*/
 
             }else{
                Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
