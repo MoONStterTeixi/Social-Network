@@ -156,12 +156,12 @@ public class RegisterActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-
-
-
     public void goLogin (View v) throws InterruptedException {
         //selectRadioGroup();
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString());
+        String userFinal = CryptoHash.getSha256(et_email.getText().toString());
+
+        String cryptohash = pwdFinal + userFinal;
 
        int a =  et_username.getText().length();
        if (cb_accept.isChecked()) {
@@ -184,11 +184,11 @@ public class RegisterActivity extends AppCompatActivity {
                et_pwd.requestFocus();
 
             } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
-               User usr = new User(et_username.getText().toString(), et_email.getText().toString(), et_pwd.getText().toString(),resultRG ,cb_accept.isChecked());
+               User usr = new User(et_username.getText().toString(), et_email.getText().toString(), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
                Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-               Toast.makeText(this, "Pass: " + pwdFinal, Toast.LENGTH_LONG).show();
+               Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
                /*Intent Intent = new Intent(this, LoginActivity.class);
                startActivity(Intent);
                finish();*/

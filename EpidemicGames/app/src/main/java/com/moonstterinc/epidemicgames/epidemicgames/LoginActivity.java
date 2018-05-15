@@ -146,6 +146,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goWelcome (View v){
 
+        String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString());
+        String userFinal = CryptoHash.getSha256(et_email.getText().toString());
+
+        String cryptohash = pwdFinal + userFinal;
+
         Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
         if(!validateEmail(et_email.getText().toString())) {
             et_email.setError("Invalid Email");
