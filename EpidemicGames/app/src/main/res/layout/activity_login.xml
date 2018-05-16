@@ -4,30 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_register_login"
     tools:context=".LoginActivity">
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="653dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.019" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Inciar Sesión"
-        android:textColor="@android:color/background_light"
+        android:text="Inciar"
+        android:textColor="@android:color/background_dark"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,11 +46,12 @@
     <EditText
         android:id="@+id/email"
         android:layout_width="308dp"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/background_light"
         android:ems="10"
         android:hint="Correo"
         android:inputType="textPersonName"
@@ -75,11 +65,12 @@
     <EditText
         android:id="@+id/pwd"
         android:layout_width="308dp"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/background_light"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
@@ -100,6 +91,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="¿Olvidaste la contraseña?"
+        android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -116,8 +108,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:checked="false"
-        android:text="Recuerdame"
-        android:textColor="@color/colorAccent"
+        android:text=" Recuerdame "
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.116"
@@ -159,6 +152,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.115"
         app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="71dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Sesión"
+        android:textColor="@android:color/background_dark"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.099" />
 
 
 </android.support.constraint.ConstraintLayout>

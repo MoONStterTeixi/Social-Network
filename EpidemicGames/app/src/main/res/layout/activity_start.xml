@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@drawable/bg_start2"
     tools:context=".StartActivity">
 
 
@@ -17,15 +17,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Epidemic "
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/background_light"
         android:textSize="60sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintVertical_bias="0.056" />
 
 
     <Button
@@ -76,15 +76,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Games"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/background_light"
         android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.093" />
+        app:layout_constraintVertical_bias="0.174" />
 
     <TextView
         android:id="@+id/textView14"
@@ -95,6 +95,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Utilizando Epidemic Games aceptas los:"
+        android:textColor="@android:color/background_light"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
