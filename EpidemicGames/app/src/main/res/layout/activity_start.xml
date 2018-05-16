@@ -111,6 +111,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:onClick="terms"
         android:text="Terms of Use and Privacy Policy"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
