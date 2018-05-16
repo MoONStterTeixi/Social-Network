@@ -7,6 +7,8 @@ import android.widget.Toast;
 public class DataClass {
     public static Context context;
     //public static int contador = 0;
+
+    //Classe JSON
     public static String UserJson = "";
     public static User usr;
 
@@ -15,7 +17,8 @@ public class DataClass {
 
     //Global
     public static User GlobalUser;
-    //RFC822 compliant regex adapted for Java
+
+    //RFC822 compliant regex adapted for Java (Correo)
     public static String pattern = "(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+" +
             "(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+" +
             "(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+" +
@@ -56,8 +59,6 @@ public class DataClass {
             "(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+" +
             "(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+" +
             "|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*))*)?;\\s*)";
-
-
     //LOGIN
     public static String saveLogin = "";
     public static Boolean resultLogin = false;
@@ -69,6 +70,11 @@ public class DataClass {
     public static String user;
     public static String sSubCadena1 = "";
     public static String sSubCadena2 = "";
+
+    //Registrov2
+    public static int contadorFragments;
+    public static String nickFrag = "";
+
 
     public static void msToast(String s){
         Toast.makeText(context, s, Toast.LENGTH_LONG).show();

@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                 " eu condimentum urna neque ac eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. " +
                 "Sed et tortor mollis, convallis mauris nec, pellentesque eros.");
 
-        myBuild.setTitle("Epidemic Games Info");
+        myBuild.setTitle("[Info] Epidemic Games");
 
         myBuild.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                 cb_accept.setChecked(true);
             }
         });
-        myBuild.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        myBuild.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -165,43 +165,44 @@ public class RegisterActivity extends AppCompatActivity {
 
        int a =  et_username.getText().length();
        if (cb_accept.isChecked()) {
-            if( a < 3){
-                et_username.setError("Invalid Username:\n" +
-                        "-is at least 4 character long");
+            if( a < 4){
+                et_username.setError("Usuario inválido:\n" +
+                        "-Mínimo 4 caracteres.");
                 et_username.requestFocus();
             }else if(!validateEmail(et_email.getText().toString())) {
-               et_email.setError("Invalid Email");
+               et_email.setError("Correo inválido.");
                et_email.requestFocus();
 
             } else if (!isValid(et_pwd.getText().toString())) {
-               et_pwd.setError("Invalid Password:\n" +
-                       "-contains at least 1 digit\n" +
-                       "-contains at least 1 lowercase letter\n" +
-                       "-contains at least 1 lowercase letter\n" +
-                       "-contains at least 1 of the special\n" +
-                       "-is at least 6 character long\n" +
-                       "-is at most 15 characters long");
+               et_pwd.setError("Contraseña inválida:\n" +
+                       "-Mínimo 1 Número,\n" +
+                       "-Mínimo 1 una letra MAYÚSCULA,\n" +
+                       "-Mínimo 1 una letra minúscula,\n" +
+                       "-Contener 1 Carácter especial\n                 |Mama mío! :) |,\n" +
+                       "-Debe ser mínimo de 6 Carácteres,\n" +
+                       "-Máximo de 15 Carácteres.");
                et_pwd.requestFocus();
 
             } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
                User usr = new User(et_username.getText().toString(), et_email.getText().toString(), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
-               Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-               //Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
+               Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+               Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
                Intent Intent = new Intent(this, LoginActivity.class);
                startActivity(Intent);
                finish();
 
             }else{
-               Toast.makeText(this, "Passwords: ¡Are not the same!", Toast.LENGTH_LONG).show();
-               et_pwd.requestFocus();
+               //Toast.makeText(this, "Contraseña: ¡No son iguales!", Toast.LENGTH_LONG).show();
+                et_pwd.setError("Contraseña: ¡No son iguales!");
+                et_pwd.requestFocus();
 
-               et_repwd.setError("Are not the same");
+               et_repwd.setError("Contraseña: ¡No son iguales!");
                et_repwd.requestFocus();
             }
        }else{
-           Toast.makeText(this, "Read conditions and then Accept", Toast.LENGTH_LONG).show();
+           Toast.makeText(this, "Lee los Términos y Condiciones \n     (Si esta conforme, acepte)", Toast.LENGTH_LONG).show();
        }
     }
 }

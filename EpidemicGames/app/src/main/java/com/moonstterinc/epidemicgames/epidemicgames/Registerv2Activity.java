@@ -18,7 +18,7 @@ public class Registerv2Activity extends AppCompatActivity {
 
     public static Vibrator vb1;
     public Button nextScreen;
-    private EditText etusername, etgenre, etemail, etpwd, etrepwd;
+    private EditText et_username, et_fetusername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,8 @@ public class Registerv2Activity extends AppCompatActivity {
     }
 
     public void Reference(){
-        etusername = findViewById(R.id.nick);
-        etgenre  = findViewById(R.id.genre);
-        etemail = findViewById(R.id.email);
-        etpwd = findViewById(R.id.pwd);
-        etrepwd = findViewById(R.id.repwd);
+        et_username = findViewById(R.id.nickfrag);
+        et_fetusername  =findViewById(R.id.fetusername);
     }
 
     /**
@@ -68,12 +65,16 @@ public class Registerv2Activity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             switch (position) {
                 case 0:
+                    DataClass.contadorFragments = 1;
                     return IntroFragment1.newInstance();
 
+
                 case 1:
+                    DataClass.contadorFragments = 2;
                     return IntroFragment2.newInstance();
 
                 case 2:
+                    DataClass.contadorFragments = 3;
                     return IntroFragment3.newInstance();
 
                 default:

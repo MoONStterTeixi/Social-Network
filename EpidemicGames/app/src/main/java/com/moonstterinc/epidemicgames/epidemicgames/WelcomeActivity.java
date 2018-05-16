@@ -66,18 +66,15 @@ public class WelcomeActivity extends AppCompatActivity
 
         references();
 
-        tv_username.setText(DataClass.GlobalUser.getUsername());
+        if(DataClass.GlobalUser == null){
+            tv_username.setText("TestDummy");
+        }else{
+            tv_username.setText(DataClass.GlobalUser.getUsername());
+        }
+
         
         getTimeFromAndroid();
         //createNotification();
-
-        //Página web
-        WebView myWebView = (WebView) findViewById(R.id.webView);
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        myWebView.setWebViewClient(new WebViewClient());
-        myWebView.loadUrl("https://www.xataka.com/");
-
 
     }
 
@@ -106,7 +103,9 @@ public class WelcomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_web) {
+            Intent Intent = new Intent(this, WebActivity.class);
+            startActivity(Intent);
             return true;
         }
 
@@ -137,10 +136,10 @@ public class WelcomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_exit) {
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
-            myBuild.setMessage("You sure you're going to get out?");
+            myBuild.setMessage("¿Seguro que quieres salir?");
             myBuild.setTitle("Epidemic Games");
 
-            myBuild.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            myBuild.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //Cierra todo
@@ -169,10 +168,6 @@ public class WelcomeActivity extends AppCompatActivity
         tv_statusTime = findViewById(R.id.statusTime);
         tv_username = findViewById(R.id.username);
         tv_emailDrawer = findViewById(R.id.emailDrawer);
-
-
-        //
-
     }
 
     //Obtener mensaje
@@ -182,16 +177,16 @@ public class WelcomeActivity extends AppCompatActivity
 
         if(timeOfDay >= 0 && timeOfDay < 12){
             //Toast.makeText(this, "Good Morning", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Good Morning,");
+            tv_statusTime.setText("Buenos días,");
         }else if(timeOfDay >= 12 && timeOfDay < 16){
             //Toast.makeText(this, "Good Afternoon", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Good Afternoon,");
+            tv_statusTime.setText("Buenas Tardes,");
         }else if(timeOfDay >= 16 && timeOfDay < 21){
             //Toast.makeText(this, "Good Evening", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Good Evening,");
+            tv_statusTime.setText("Buenas Tardes,");
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Good Night,");
+            tv_statusTime.setText("Buenas Noches,");
         }
     }
 
@@ -219,10 +214,10 @@ public class WelcomeActivity extends AppCompatActivity
     public void onBackPressed()
     {
         AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
-        myBuild.setMessage("You sure you're going to get out?");
+        myBuild.setMessage("¿Seguro que quieres salir?");
         myBuild.setTitle("Epidemic Games");
 
-        myBuild.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        myBuild.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Cierra todo

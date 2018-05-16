@@ -22,12 +22,17 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Reference();
 
-        tv_username.setText(DataClass.GlobalUser.getUsername());
-        et_usertname.setText(DataClass.GlobalUser.getUsername());
-        et_email.setText(DataClass.GlobalUser.getEmail());
+        if (DataClass.GlobalUser == null){
+            tv_username.setText("TestDummy");
+            tv_username.setText("TestDummy");
+            et_email.setText("TestDummy");
+        }else{
+            tv_username.setText(DataClass.GlobalUser.getUsername());
+            tv_username.setText(DataClass.GlobalUser.getUsername());
+            et_email.setText(DataClass.GlobalUser.getEmail());
+        }
     }
 
     @Override
@@ -37,13 +42,11 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void Reference (){
         tv_username = findViewById(R.id.tvemail_profile);
         et_email = findViewById(R.id.etemail_profile);
-        et_usertname = findViewById(R.id.etusername_profile);
     }
 }

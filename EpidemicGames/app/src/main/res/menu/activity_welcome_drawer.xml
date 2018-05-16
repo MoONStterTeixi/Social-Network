@@ -9,11 +9,11 @@
                 <item
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/profile"
-                    android:title="Profile" />
+                    android:title="Perfil" />
                 <item
                     android:id="@+id/nav_news"
                     android:icon="@drawable/news"
-                    android:title="News" />
+                    android:title="Noticias" />
                 <item
                     android:id="@+id/nav_games"
                     android:icon="@drawable/games"
@@ -21,7 +21,7 @@
                 <item
                     android:id="@+id/nav_about"
                     android:icon="@drawable/about"
-                    android:title="About Us" />
+                    android:title="Sobre nosotros" />
             </group>
         </menu>
     </item>
@@ -32,7 +32,7 @@
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="Settings" />
+                android:title="Opciones" />
             <item
                 android:id="@+id/nav_exit"
                 android:icon="@drawable/exit"

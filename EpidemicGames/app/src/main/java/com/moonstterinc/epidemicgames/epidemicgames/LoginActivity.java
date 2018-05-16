@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
     private void Reference(){
         et_email = findViewById(R.id.email);
         et_pwd =  findViewById(R.id.pwd);
-        tx_login = findViewById(R.id.login);
         s_saveLogin = findViewById(R.id.saveLogin);
 
     }
@@ -146,17 +145,30 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goWelcome (View v){
 
+        //Encryptar password con Email y password
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString());
         String userFinal = CryptoHash.getSha256(et_email.getText().toString());
 
         String cryptohash = pwdFinal + userFinal;
 
         //Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
-        if(!validateEmail(et_email.getText().toString())) {
-            et_email.setError("Invalid Email");
+
+        //ERRORx0E00 Campos vacios
+        if (et_email.getText().toString().equals("") && et_pwd.getText().toString().equals("")){
+            et_email.setError("");
             et_email.requestFocus();
-        } else if (!isValid(et_pwd.getText().toString())) {
-            et_pwd.setError("Invalid Password");
+
+            et_pwd.setError("Revisar campos");
+            et_pwd.requestFocus();
+        }
+
+        //ERRORx0EO01 Correo invalido
+        if (!validateEmail(et_email.getText().toString())) {
+            et_email.setError("Revisar campos");
+            et_email.requestFocus();
+        //ERRORx0ED01 Password invalido
+        }else if (!isValid(et_pwd.getText().toString())) {
+            et_pwd.setError("Revisar campos");
             et_pwd.requestFocus();
         } else {
             try{
@@ -165,13 +177,15 @@ public class LoginActivity extends AppCompatActivity {
                 new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 //tx_login.setText(DataClass.UserJson);
             }catch(Exception e){
-                Toast.makeText(this, "[ERROR] User o Password", Toast.LENGTH_LONG).show();
+                //ERRORx00E0 Problemas con el server
+                Toast.makeText(this, "[ERRORx00E0] General", Toast.LENGTH_LONG).show();
             }
+            //[ERRORx00E2 Correo o pass fake
             if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
-                Toast.makeText(this, "[ERROR] Turn new", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "[ERRORx00E2] Email o Contraseña", Toast.LENGTH_LONG).show();
             } else {
                 DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
-                Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
                 Intent Intent = new Intent(this, WelcomeActivity.class);
                 startActivity(Intent);
                 finish();
