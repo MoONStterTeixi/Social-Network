@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <Button
-        android:id="@+id/change_email"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="348dp"
-        android:onClick="ShowEmail"
-        android:text="EMAIL"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/textView8"
         android:layout_width="418dp"
@@ -37,6 +20,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/change_genre"
+        android:layout_width="259dp"
+        android:layout_height="76dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttonstyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.334" />
 
     <TextView
         android:id="@+id/textView5"
@@ -92,24 +91,24 @@
         app:layout_constraintVertical_bias="0.349" />
 
     <Button
-        android:id="@+id/buttons"
+        android:id="@+id/change_password"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="344dp"
-        android:onClick="ShowGenre"
-        android:text="GENERO"
+        android:layout_marginTop="348dp"
+        android:onClick="ShowEmail"
+        android:text="EMAIL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.814"
+        app:layout_constraintHorizontal_bias="0.182"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.075" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <Button
-        android:id="@+id/change_password"
+        android:id="@+id/change_password3"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
@@ -124,21 +123,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.026" />
 
-    <TextView
-        android:id="@+id/change_genre"
-        android:layout_width="259dp"
-        android:layout_height="76dp"
+    <Button
+        android:id="@+id/change_password2"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/buttonstyle"
+        android:layout_marginTop="348dp"
+        android:onClick="ShowGenre"
+        android:text="GÉNERO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.814"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761" />
+        app:layout_constraintVertical_bias="0.026" />
 
 
 </android.support.constraint.ConstraintLayout>
