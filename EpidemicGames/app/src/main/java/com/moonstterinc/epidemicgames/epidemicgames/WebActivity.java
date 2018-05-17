@@ -30,5 +30,5 @@ public class WebActivity extends AppCompatActivity {
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl("http://www.moonstterinc.com/es/");
     }
-    
+
 }

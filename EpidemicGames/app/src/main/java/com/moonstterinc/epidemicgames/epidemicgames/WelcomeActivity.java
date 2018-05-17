@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -71,13 +72,23 @@ public class WelcomeActivity extends AppCompatActivity
         }else{
             tv_username.setText(DataClass.GlobalUser.getUsername());
         }
-
-        
         getTimeFromAndroid();
+        onInsta();
         //createNotification();
-
     }
 
+    public void onInsta() {
+        ImageView entry = (ImageView) findViewById(R.id.insta);
+        entry.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://www.google.com/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+    }
     /*@Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,13 +122,11 @@ public class WelcomeActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_profile) {
             Intent Intent = new Intent(this, ProfileActivity.class);
             startActivity(Intent);
@@ -157,7 +166,6 @@ public class WelcomeActivity extends AppCompatActivity
             AlertDialog dialog = myBuild.create();
             dialog.show();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -216,7 +224,6 @@ public class WelcomeActivity extends AppCompatActivity
         AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
         myBuild.setMessage("¿Seguro que quieres salir?");
         myBuild.setTitle("Epidemic Games");
-
         myBuild.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -231,7 +238,6 @@ public class WelcomeActivity extends AppCompatActivity
                 dialog.cancel();
             }
         });
-
         AlertDialog dialog = myBuild.create();
         dialog.show();
     }
