@@ -12,8 +12,9 @@
         android:layout_width="51dp"
         android:layout_height="30dp"
         android:layout_gravity="end"
+        android:background="@android:drawable/btn_dialog"
         android:gravity="center"
-        android:text="X"
+        android:textColor="@android:color/background_light"
         android:textStyle="bold" />
 
     <LinearLayout

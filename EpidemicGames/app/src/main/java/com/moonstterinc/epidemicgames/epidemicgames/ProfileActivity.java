@@ -55,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         Button btnFollow;
         myDialog.setContentView(R.layout.change_pass);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("M");
+        txtclose.setText("");
         btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
         Button btnFollow;
         myDialog.setContentView(R.layout.change_email);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("M");
+        txtclose.setText("");
         btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
         Button btnFollow;
         myDialog.setContentView(R.layout.change_genre);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("M");
+        txtclose.setText("");
         btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override

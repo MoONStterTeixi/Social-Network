@@ -14,6 +14,7 @@
         android:layout_gravity="end"
         android:background="@android:drawable/btn_dialog"
         android:gravity="center"
+        android:textColor="@android:color/background_light"
         android:textStyle="bold" />
 
     <LinearLayout

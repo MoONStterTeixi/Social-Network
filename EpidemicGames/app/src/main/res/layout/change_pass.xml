@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="260dp"
-    android:layout_height="310dp"
+    android:layout_height="340dp"
     android:layout_gravity="center"
     android:background="@android:color/background_light"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/txtclose"
@@ -14,6 +14,7 @@
         android:layout_gravity="end"
         android:background="@android:drawable/btn_dialog"
         android:gravity="center"
+        android:textColor="@android:color/background_light"
         android:textStyle="bold" />
 
     <LinearLayout
