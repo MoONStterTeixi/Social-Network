@@ -61,6 +61,7 @@
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 android:textColor="@color/white"
+                android:textColorHint="@android:color/background_light"
                 android:textSize="20sp" />
         </LinearLayout>
 
