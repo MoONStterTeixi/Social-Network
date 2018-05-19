@@ -158,8 +158,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void goLogin (View v) throws InterruptedException {
         //selectRadioGroup();
-        String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString());
-        String userFinal = CryptoHash.getSha256(et_email.getText().toString());
+        String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
+        String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
         String cryptohash = pwdFinal + userFinal;
 
@@ -184,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
                et_pwd.requestFocus();
 
             } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
-               User usr = new User(et_username.getText().toString(), et_email.getText().toString(), cryptohash,resultRG ,cb_accept.isChecked());
+               User usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
                Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();

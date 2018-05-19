@@ -4,22 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_startx3"
+    android:background="@drawable/bg_start"
     tools:context=".StartActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="52dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.287"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.861"
+        app:srcCompat="@drawable/icon_start_login" />
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="192dp"
-        android:layout_height="71dp"
+        android:layout_width="187dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/holo_green_light"
         android:onClick="goLogin"
-        android:text="Iniciar sesión"
+        android:text="Inciar sesión"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,10 +44,10 @@
         app:layout_constraintVertical_bias="0.872" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/register"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="201dp"
-        android:layout_height="84dp"
+        android:layout_width="190dp"
+        android:layout_height="86dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -97,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintVertical_bias="0.75" />
 
     <ImageView
         android:id="@+id/imageView9"

@@ -78,7 +78,7 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     public void onInsta() {
-        ImageView entry = (ImageView) findViewById(R.id.insta);
+        ImageView entry = (ImageView) findViewById(R.id.welcome_insta);
         entry.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -89,15 +89,6 @@ public class WelcomeActivity extends AppCompatActivity
             }
         });
     }
-    /*@Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,6 +96,7 @@ public class WelcomeActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.welcome, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

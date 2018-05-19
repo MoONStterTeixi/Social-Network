@@ -3,16 +3,16 @@
     android:layout_width="280dp"
     android:layout_height="280dp"
     android:layout_gravity="center"
-    android:background="@android:color/background_light"
+    android:background="@android:color/transparent"
     android:orientation="vertical"
     android:padding="5dp">
 
     <TextView
         android:id="@+id/txtclose"
-        android:layout_width="51dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="end"
-        android:background="@android:drawable/btn_dialog"
+        android:background="@drawable/profile_exit"
         android:gravity="center"
         android:textColor="@android:color/background_light"
         android:textStyle="bold" />
@@ -59,7 +59,9 @@
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -71,6 +73,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:background="@color/colorAccent"
-        android:text="Cambiar" />
+        android:text="Cambiar"
+        android:textColor="@android:color/background_light" />
 
 </LinearLayout>

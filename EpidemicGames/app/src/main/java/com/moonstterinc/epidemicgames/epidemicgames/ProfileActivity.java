@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         myDialog = new Dialog(this);
+
         //Evitar que rote *
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -28,11 +30,11 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Reference();
 
-        /*if (DataClass.GlobalUser == null) {
+        if (DataClass.GlobalUser == null) {
             tv_username.setText("TestDummy");
         } else {
             tv_username.setText(DataClass.GlobalUser.getUsername());
-        }*/
+        }
     }
 
     @Override
@@ -48,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
     public void Reference() {
         tv_username = findViewById(R.id.tvemail_profile);
     }
-
 
     public void ShowPass(View v) {
         TextView txtclose;

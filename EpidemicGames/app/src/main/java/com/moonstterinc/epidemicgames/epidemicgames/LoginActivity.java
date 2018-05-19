@@ -146,8 +146,8 @@ public class LoginActivity extends AppCompatActivity {
     public void goWelcome (View v){
 
         //Encryptar password con Email y password
-        String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString());
-        String userFinal = CryptoHash.getSha256(et_email.getText().toString());
+        String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
+        String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
         String cryptohash = pwdFinal + userFinal;
 
@@ -172,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
             et_pwd.requestFocus();
         } else {
             try{
-                DataClass.usr = new User(et_email.getText().toString(), cryptohash);
+                DataClass.usr = new User(et_email.getText().toString().replace(" ",""), cryptohash);
                 //localhost= new CallAPI_Rest().execute("http://172.17.129.67:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 //tx_login.setText(DataClass.UserJson);

@@ -8,19 +8,19 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_profile"
-                    android:icon="@drawable/profile"
+                    android:icon="@drawable/drawer_profile"
                     android:title="Perfil" />
                 <item
                     android:id="@+id/nav_news"
-                    android:icon="@drawable/news"
+                    android:icon="@drawable/drawer_news"
                     android:title="Noticias" />
                 <item
                     android:id="@+id/nav_games"
-                    android:icon="@drawable/games"
+                    android:icon="@drawable/drawer_games"
                     android:title="Games" />
                 <item
                     android:id="@+id/nav_about"
-                    android:icon="@drawable/about"
+                    android:icon="@drawable/drawer_about"
                     android:title="Sobre nosotros" />
             </group>
         </menu>
@@ -35,7 +35,7 @@
                 android:title="Opciones" />
             <item
                 android:id="@+id/nav_exit"
-                android:icon="@drawable/exit"
+                android:icon="@drawable/drawer_exit"
                 android:title="Exit" />
         </menu>
     </item>
