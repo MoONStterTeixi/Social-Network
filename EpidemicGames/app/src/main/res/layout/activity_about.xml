@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="About Us"
+        android:text="Sobre nostros"
         android:textColor="@color/colorAccent"
         android:textSize="35sp"
         android:textStyle="bold"
