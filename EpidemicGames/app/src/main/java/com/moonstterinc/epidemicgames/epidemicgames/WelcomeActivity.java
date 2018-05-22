@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.Calendar;
@@ -40,11 +41,13 @@ public class WelcomeActivity extends AppCompatActivity
 
     private TextView tv_statusTime, tv_username, tv_emailDrawer;
     Dialog myDialog;
+    int contador = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        myDialog = new Dialog(this);
 
         //Evitar que rote *
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -78,11 +81,16 @@ public class WelcomeActivity extends AppCompatActivity
             tv_username.setText(DataClass.GlobalUser.getUsername());
         }
         getTimeFromAndroid();
-        onInsta();
         //createNotification();
+        if (contador == 0){
+            ShowNewGame();
+            contador ++;
+        }
+
     }
 
-    public void onInsta() {
+
+    /*public void onInsta() {
         ImageView entry = (ImageView) findViewById(R.id.welcome_insta);
         entry.setOnClickListener(new View.OnClickListener() {
 
@@ -93,7 +101,7 @@ public class WelcomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,16 +121,33 @@ public class WelcomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_web) {
             myDialog = new Dialog(this);
-            ShowGame();
+            ShowHelper();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void ShowGame() {
+    public void ShowHelper() {
         TextView txtclose;
         Button btnFollow;
-        myDialog.setContentView(R.layout.change_pass);
+        myDialog.setContentView(R.layout.welcome_help);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("");
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+
+    public void ShowNewGame() {
+        TextView txtclose;
+        Button btnFollow;
+        myDialog.setContentView(R.layout.welcome_ez);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
         txtclose.setText("");
         btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
@@ -134,8 +159,21 @@ public class WelcomeActivity extends AppCompatActivity
         });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+
+
     }
 
+    public void goPlayStore(View v){
+        final String appPackageName = "me.pou.app"; // getPackageName() from Context or Activity object
+        try {
+            myDialog.dismiss();
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            myDialog.dismiss();
+        }
+
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
