@@ -33,7 +33,6 @@
         <activity android:name=".NewsActivity" />
         <activity android:name=".GamesActivity" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".WebActivity"></activity>
     </application>
 
 </manifest>

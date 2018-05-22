@@ -39,7 +39,7 @@ import java.util.Calendar;
 public class WelcomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView tv_statusTime, tv_username, tv_emailDrawer;
+    private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     Dialog myDialog;
     int contador = 0;
 
@@ -73,12 +73,25 @@ public class WelcomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Marcar menu por defecto
+        navigationView.setCheckedItem(R.id.nav_home);
+
+        //Para poder llamar a la instacia de nav_header_welcome
+        View navHeader = navigationView.getHeaderView(0);
+        tv_usernameDrawer = navHeader.findViewById(R.id.usernameDrawer);
+        tv_emailDrawer = navHeader.findViewById(R.id.emailDrawer);
+
         references();
 
         if(DataClass.GlobalUser == null){
             tv_username.setText("TestDummy");
+            tv_usernameDrawer.setText("TestDummy");
+            tv_emailDrawer.setText("testdummy@testdummy.com");
         }else{
             tv_username.setText(DataClass.GlobalUser.getUsername());
+            tv_usernameDrawer.setText(DataClass.GlobalUser.getUsername());
+            tv_emailDrawer.setText(DataClass.GlobalUser.getEmail());
+
         }
         getTimeFromAndroid();
         //createNotification();
@@ -86,9 +99,13 @@ public class WelcomeActivity extends AppCompatActivity
             ShowNewGame();
             contador ++;
         }
-
     }
 
+    //Codigo a mano
+    public void references(){
+        tv_statusTime = findViewById(R.id.statusTime);
+        tv_username = findViewById(R.id.username);
+    }
 
     /*public void onInsta() {
         ImageView entry = (ImageView) findViewById(R.id.welcome_insta);
@@ -107,9 +124,9 @@ public class WelcomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.welcome, menu);
+
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -143,7 +160,6 @@ public class WelcomeActivity extends AppCompatActivity
         myDialog.show();
     }
 
-
     public void ShowNewGame() {
         TextView txtclose;
         Button btnFollow;
@@ -172,7 +188,6 @@ public class WelcomeActivity extends AppCompatActivity
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             myDialog.dismiss();
         }
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -180,7 +195,12 @@ public class WelcomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_profile) {
+        if (id == R.id.nav_home) {
+            if (id != id) {
+                Intent Intent = new Intent(this, WelcomeActivity.class);
+                startActivity(Intent);
+            }
+        }else if (id == R.id.nav_profile) {
             Intent Intent = new Intent(this, ProfileActivity.class);
             startActivity(Intent);
         } else if (id == R.id.nav_news) {
@@ -222,13 +242,6 @@ public class WelcomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    //Codigo a mano
-    public void references(){
-        tv_statusTime = findViewById(R.id.statusTime);
-        tv_username = findViewById(R.id.username);
-        tv_emailDrawer = findViewById(R.id.emailDrawer);
     }
 
     //Obtener mensaje

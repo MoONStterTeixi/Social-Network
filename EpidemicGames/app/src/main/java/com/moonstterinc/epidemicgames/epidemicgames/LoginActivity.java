@@ -1,7 +1,12 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,9 +14,11 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,17 +32,24 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.moonstterinc.epidemicgames.epidemicgames.DataClass.context;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email, et_pwd;
-    private TextView tx_login;
+   // private TextView tx_login;
     private Switch s_saveLogin;
-    static final int READ_BLOCK_SIZE = 100;
+    //static final int READ_BLOCK_SIZE = 100;
+    Dialog myDialog;
+
+    //Instaciamos
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        myDialog = new Dialog(this);
 
         Reference();
         DataClass.context = this.getApplicationContext();
@@ -47,8 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //onClickLoading();
-
-
         et_email.setText(DataClass.sSubCadena1);
         et_pwd.setText(DataClass.sSubCadena2);
         if (DataClass.resultLogin == true){
@@ -87,6 +99,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Inicializamos la barra
+        progressDialog= new ProgressDialog(this);
     }
 
 
@@ -104,13 +119,29 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
+
     private void Reference(){
         et_email = findViewById(R.id.email);
         et_pwd =  findViewById(R.id.pwd);
         s_saveLogin = findViewById(R.id.saveLogin);
-
     }
 
+    public void ShowEmail(View v) {
+            TextView txtclose;
+            Button btnFollow;
+            myDialog.setContentView(R.layout.login_change_pass);
+            txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+            txtclose.setText("");
+            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+            txtclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+    }
 
     private static final String PASSWORD_REGEXP =
             "^"
@@ -142,9 +173,7 @@ public class LoginActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-
     public void goWelcome (View v){
-
         //Encryptar password con Email y password
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
         String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
@@ -165,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
         //ERRORx0EO01 Correo invalido
         if (!validateEmail(et_email.getText().toString())) {
             et_email.setError("Revisar campos");
-            et_email.requestFocus();
+            et_email.requestFocus();;
         //ERRORx0ED01 Password invalido
         }else if (!isValid(et_pwd.getText().toString())) {
             et_pwd.setError("Revisar campos");
@@ -184,6 +213,12 @@ public class LoginActivity extends AppCompatActivity {
             if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
                 Toast.makeText(this, "[ERRORx00E2] Email o Contraseña", Toast.LENGTH_LONG).show();
             } else {
+                //agregas un mensaje en el ProgressDialog
+                progressDialog.setTitle("Validando usuario");
+                progressDialog.setMessage("Iniciado sesión");
+                //muestras el ProgressDialog
+                progressDialog.show();
+
                 DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
                 //Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
                 Intent Intent = new Intent(this, WelcomeActivity.class);

@@ -3,9 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="||Personal Panel||">
+    <item android:title="Personal Panel">
         <menu>
             <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_home"
+                    android:icon="@drawable/home"
+                    android:title="Inicio" />
                 <item
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/drawer_profile"
@@ -18,21 +22,25 @@
                     android:id="@+id/nav_games"
                     android:icon="@drawable/drawer_games"
                     android:title="Games" />
-                <item
-                    android:id="@+id/nav_about"
-                    android:icon="@drawable/drawer_about"
-                    android:title="Sobre nosotros" />
             </group>
         </menu>
     </item>
 
+    <item android:title="Redes Sociales">
+        <menu>
+        </menu>
+    </item>
 
-    <item android:title="More Options">
+    <item android:title="Más opciones">
         <menu>
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="Opciones" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/drawer_about"
+                android:title="Sobre nosotros" />
             <item
                 android:id="@+id/nav_exit"
                 android:icon="@drawable/drawer_exit"

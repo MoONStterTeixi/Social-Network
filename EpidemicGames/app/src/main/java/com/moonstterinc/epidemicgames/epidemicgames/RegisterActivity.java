@@ -1,5 +1,6 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -32,6 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
     int resultRG;
     String msg = null;
 
+    //Instaciamos
+    private ProgressDialog progressDialog;
+
     public RegisterActivity() {
     }
 
@@ -47,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Inicializamos la barra
+        progressDialog= new ProgressDialog(this);
     }
 
     @Override
@@ -82,22 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void terms(View v){
        android.app.AlertDialog.Builder myBuild = new android.app.AlertDialog.Builder(this);
-        myBuild.setMessage("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis ex, feugiat at dolor quis," +
-                " elementum rutrum lorem. Morbi viverra leo eget scelerisque imperdiet. Nulla sit amet commodo enim.\n" +
-                " Sed congue sed diam sit amet pharetra. Vestibulum vitae nulla eu metus varius venenatis ac nec urna.\n\n\n\n" +
-                " Quisque ut lorem tempus orci porttitor porttitor nec in mauris. Ut sem velit, semper et enim viverra, " +
-                "porttitor posuere ligula. Sed tincidunt, risus et bibendum lobortis, nunc nisl pellentesque quam, in vulputate felis tortor ac justo.\n\n\n" +
-                " In ornare ex vitae eros ornare commodo. Vestibulum porttitor, felis in hendrerit porttitor, ligula quam tincidunt mi," +
-                " eu condimentum urna neque ac eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. " +
-                "Sed et tortor mollis, convallis mauris nec, pellentesque eros."+
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed turpis ex, feugiat at dolor quis," +
-                " elementum rutrum lorem. Morbi viverra leo eget scelerisque imperdiet. Nulla sit amet commodo enim.\n" +
-                " Sed congue sed diam sit amet pharetra. Vestibulum vitae nulla eu metus varius venenatis ac nec urna.\n\n\n\n" +
-                " Quisque ut lorem tempus orci porttitor porttitor nec in mauris. Ut sem velit, semper et enim viverra, " +
-                "porttitor posuere ligula. Sed tincidunt, risus et bibendum lobortis, nunc nisl pellentesque quam, in vulputate felis tortor ac justo.\n\n\n" +
-                " In ornare ex vitae eros ornare commodo. Vestibulum porttitor, felis in hendrerit porttitor, ligula quam tincidunt mi," +
-                " eu condimentum urna neque ac eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. " +
-                "Sed et tortor mollis, convallis mauris nec, pellentesque eros.");
+        myBuild.setMessage("Sin informacion");
 
         myBuild.setTitle("[Info] Epidemic Games");
 
@@ -187,8 +178,13 @@ public class RegisterActivity extends AppCompatActivity {
                User usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
-               Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
-               Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
+
+                //agregas un mensaje en el ProgressDialog
+                progressDialog.setTitle("Validando registro");
+                progressDialog.setMessage("Esto puede tardar un poquito...");
+                //muestras el ProgressDialog
+                progressDialog.show();
+               //Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
                Intent Intent = new Intent(this, LoginActivity.class);
                startActivity(Intent);
                finish();
