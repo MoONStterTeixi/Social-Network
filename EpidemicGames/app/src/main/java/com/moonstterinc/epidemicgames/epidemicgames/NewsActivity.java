@@ -1,11 +1,25 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewsActivity extends AppCompatActivity {
+
+    private List<News> news;
+    private NewsAdapter newsAdapter;
+    private String newsTitle = "Noticias";
+    private String newsText = "Texto";
+    private String newsLabel = "Label";
+    private String newsDate = "00/00/0000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +31,62 @@ public class NewsActivity extends AppCompatActivity {
 
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        news = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            News news = new News();
+
+            news.setTitle(newsTitle);
+            news.setText(newsText);
+            news.setLabel(newsLabel);
+            news.setDate(newsDate);
+
+
+            this.news.add(news);
+        }
+
+        //find view by id and attaching adapter for the RecyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        newsAdapter = new NewsAdapter(recyclerView, news, this);
+        recyclerView.setAdapter(newsAdapter);
+
+        //set load more listener for the RecyclerView adapter
+        newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (news.size() <= 20) {
+                    news.add(null);
+                    newsAdapter.notifyItemInserted(news.size() - 1);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            news.remove(news.size() - 1);
+                            newsAdapter.notifyItemRemoved(news.size());
+
+                            //Generating more data
+                            int index = news.size();
+                            int end = index + 5;
+                            for (int i = index; i < end; i++) {
+                                News news = new News();
+
+                                news.setTitle(newsTitle);
+                                news.setText(newsText);
+                                news.setLabel(newsLabel);
+                                news.setDate(newsDate);
+
+                               NewsActivity.this.news.add(news);
+                            }
+                            newsAdapter.notifyDataSetChanged();
+                            newsAdapter.setLoaded();
+                        }
+                    }, 5000);
+                } else {
+                    Toast.makeText(NewsActivity.this, "Loading data completed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
