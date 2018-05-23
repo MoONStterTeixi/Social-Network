@@ -42,6 +42,7 @@ public class WelcomeActivity extends AppCompatActivity
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     Dialog myDialog;
     int contador = 0;
+    String nameGame = "Epidemic Zombie";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,20 @@ public class WelcomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Abrir una APP
+                try{
+                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+                    startActivity(launchIntent);
+                    Snackbar.make(view, "Abriendo Juego "+nameGame, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }catch (Exception e){
+                    ShowNewGame();
+                    Snackbar.make(view, "Debes descargar "+nameGame, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
+
+
             }
         });
 
@@ -124,7 +137,6 @@ public class WelcomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.welcome, menu);
-
         return true;
     }
 

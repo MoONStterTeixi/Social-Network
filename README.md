@@ -17,3 +17,6 @@ https://es.stackoverflow.com/questions/46544/como-puedo-a%C3%B1adir-una-progress
 
 //Crear movimiento
 https://www.youtube.com/watch?v=ZZkanr8tS6w
+
+//Permisos Crear tarjetita
+https://androidstudiofaqs.com/tutoriales/dar-permisos-a-aplicaciones-en-android-studio

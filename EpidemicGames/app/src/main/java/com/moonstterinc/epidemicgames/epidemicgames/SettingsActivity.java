@@ -25,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         Reference();
     }
 
