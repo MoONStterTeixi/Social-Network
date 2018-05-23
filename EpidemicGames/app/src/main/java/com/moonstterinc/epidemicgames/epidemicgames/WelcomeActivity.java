@@ -33,6 +33,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+import android.widget.ViewFlipper;
 
 import java.util.Calendar;
 
@@ -41,6 +42,8 @@ public class WelcomeActivity extends AppCompatActivity
 
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     Dialog myDialog;
+    ViewFlipper v_flipper;
+
     int contador = 0;
     String nameGame = "Epidemic Zombie";
 
@@ -94,6 +97,15 @@ public class WelcomeActivity extends AppCompatActivity
         tv_usernameDrawer = navHeader.findViewById(R.id.usernameDrawer);
         tv_emailDrawer = navHeader.findViewById(R.id.emailDrawer);
 
+
+        //Slide Fotos
+        int images [] = {R.drawable.welcome_slide1, R.drawable.welcome_slide2, R.drawable.welcome_slide3};
+        v_flipper = findViewById(R.id.v_flipper);
+
+        for(int image: images){
+            flipperImages(image);
+        }
+
         references();
 
         if(DataClass.GlobalUser == null){
@@ -118,6 +130,20 @@ public class WelcomeActivity extends AppCompatActivity
     public void references(){
         tv_statusTime = findViewById(R.id.statusTime);
         tv_username = findViewById(R.id.username);
+    }
+
+    //Aniamacion de slide
+    public void flipperImages(int image){
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        v_flipper.addView(imageView);
+        v_flipper.setFlipInterval(4000);
+        v_flipper.setAutoStart(true);
+
+        //Animación
+        v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
+        v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 
     /*public void onInsta() {
