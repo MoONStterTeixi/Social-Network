@@ -16,7 +16,7 @@ public class Welcomev2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomev2);
 
-       // mainGrid = findViewById(R.id.mainGrid);
+       mainGrid = findViewById(R.id.mainGrid);
 
         //Set Event
         setSingleEvent(mainGrid);
@@ -58,39 +58,28 @@ public class Welcomev2Activity extends AppCompatActivity {
 
                     switch (finalI){
                         case 0:
-                            Intent intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
+                            Intent intent = new Intent(Welcomev2Activity.this,ProfileActivity.class);
+                            //intent.putExtra("info","This is activity from card item index  "+finalI);
                             startActivity(intent);
                             break;
                         case 1:
-                            intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
+                            intent = new Intent(Welcomev2Activity.this,NewsActivity.class);
                             startActivity(intent);
                             break;
                         case 2:
-                            intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
-                            startActivity(intent);
+
                             break;
                         case 3:
-                            intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
-                            startActivity(intent);
+
                             break;
                         case 4:
-                            intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
-                            startActivity(intent);
+
                             break;
                         case 5:
-                            intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
-                            startActivity(intent);
+
                             break;
                         case 6:
-                            intent = new Intent(Welcomev2Activity.this,ActivityOne.class);
-                            intent.putExtra("info","This is activity from card item index  "+finalI);
-                            startActivity(intent);
+
                             break;
                     }
 

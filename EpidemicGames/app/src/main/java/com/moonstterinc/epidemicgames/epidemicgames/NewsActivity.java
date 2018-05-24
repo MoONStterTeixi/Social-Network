@@ -1,12 +1,16 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +24,9 @@ public class NewsActivity extends AppCompatActivity {
     private String newsText = "Texto";
     private String newsLabel = "Label";
     private String newsDate = "00/00/0000";
+
+    //*
+    GridLayout mainGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,11 @@ public class NewsActivity extends AppCompatActivity {
 
 
             this.news.add(news);
+
+            //*
+            mainGrid = findViewById(R.id.mainGrid);
+            //Set Event
+            //setSingleEvent(mainGrid);
         }
 
         //find view by id and attaching adapter for the RecyclerView
@@ -99,5 +111,28 @@ public class NewsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //*
+    private void setSingleEvent(GridLayout mainGrid) {
+        //Loop all child item of Main Grid
+        for (int i = 0; i < mainGrid.getChildCount(); i++) {
+            //You can see , all child item is CardView , so we just cast object to CardView
+            CardView cardView = (CardView) mainGrid.getChildAt(i);
+            final int finalI = i;
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(NewsActivity.this,ActivityOne.class);
+                    intent.putExtra("info","This is activity from card item index  "+finalI);
+                    startActivity(intent);
+                    }
+
+                    //Un solo layout
+                    /*Intent intent = new Intent(MainActivity.this,ActivityOne.class);
+                    intent.putExtra("info","This is activity from card item index  "+finalI);
+                    startActivity(intent);*/
+            });
+        }
     }
 }
