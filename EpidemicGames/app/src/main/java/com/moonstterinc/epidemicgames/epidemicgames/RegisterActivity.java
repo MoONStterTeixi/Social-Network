@@ -152,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
         String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
-        String cryptohash = pwdFinal + userFinal;
+        String cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
        int a =  et_username.getText().length();
        if (cb_accept.isChecked()) {
@@ -177,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
                User usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
-               new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=register&json="+usr.toJson());
+               new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+usr.toJson());
 
                 //agregas un mensaje en el ProgressDialog
                 progressDialog.setTitle("Validando registro");

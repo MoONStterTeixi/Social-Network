@@ -178,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
         String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
-        String cryptohash = pwdFinal + userFinal;
+        String cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
         //Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
 
@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
             try{
                 DataClass.usr = new User(et_email.getText().toString().replace(" ",""), cryptohash);
                 //localhost= new CallAPI_Rest().execute("http://172.17.129.67:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
-                new CallAPI_Rest().execute("https://moonstterinc.000webhostapp.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
+                new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 //tx_login.setText(DataClass.UserJson);
             }catch(Exception e){
                 //ERRORx00E0 Problemas con el server
