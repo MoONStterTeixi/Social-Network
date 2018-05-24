@@ -20,3 +20,8 @@ https://www.youtube.com/watch?v=ZZkanr8tS6w
 
 //Permisos Crear tarjetita
 https://androidstudiofaqs.com/tutoriales/dar-permisos-a-aplicaciones-en-android-studio
+
+//Nueva interfaz
+https://www.youtube.com/watch?v=VUPM387qyrw
+
+Min 5min

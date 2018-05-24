@@ -221,7 +221,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
                 //Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
-                Intent Intent = new Intent(this, WelcomeActivity.class);
+                /*Intent Intent = new Intent(this, WelcomeActivity.class);
+                startActivity(Intent);
+                finish();*/
+
+                Intent Intent = new Intent(this,  Welcomev2Activity.class);
                 startActivity(Intent);
                 finish();
             }
