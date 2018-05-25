@@ -116,7 +116,6 @@ public class RegisterActivity extends AppCompatActivity {
         View radioButton = rggenre.findViewById(radioButtonID);
         resultRG = rggenre.indexOfChild(radioButton);
     }*/
-
     private static final String PASSWORD_REGEXP =
             "^"
                     + "(?=.*\\d)"
@@ -127,15 +126,12 @@ public class RegisterActivity extends AppCompatActivity {
                     + "{6,15}"
                     + "$";
 
-
     private Pattern pattern = Pattern.compile(PASSWORD_REGEXP);
     private Matcher matcher;
 
     public boolean isValid(String password){
-
         matcher = pattern.matcher(password);
         return matcher.matches();
-
     }
 
     //Return true if email is valid and false if email is invalid

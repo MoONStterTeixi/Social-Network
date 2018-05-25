@@ -22,11 +22,11 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Página web
-        WebView myWebView = (WebView) findViewById(R.id.webView);
+        /*WebView myWebView = (WebView) findViewById(R.id.webView);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         myWebView.setWebViewClient(new WebViewClient());
-        myWebView.loadUrl("http://www.moonstterinc.com/es/");
+        myWebView.loadUrl("http://www.moonstterinc.com/es/");*/
     }
 
     @Override

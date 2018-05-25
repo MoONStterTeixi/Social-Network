@@ -3,34 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="Personal Panel">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_home"
-                    android:icon="@drawable/home"
-                    android:title="Inicio" />
-                <item
-                    android:id="@+id/nav_profile"
-                    android:icon="@drawable/drawer_profile"
-                    android:title="Perfil" />
-                <item
-                    android:id="@+id/nav_news"
-                    android:icon="@drawable/drawer_news"
-                    android:title="Noticias" />
-                <item
-                    android:id="@+id/nav_games"
-                    android:icon="@drawable/drawer_games"
-                    android:title="Games" />
-            </group>
-        </menu>
-    </item>
-
-    <item android:title="Redes Sociales">
-        <menu>
-        </menu>
-    </item>
-
     <item android:title="Más opciones">
         <menu>
             <item

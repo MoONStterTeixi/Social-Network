@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +29,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -43,6 +45,8 @@ public class WelcomeActivity extends AppCompatActivity
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     Dialog myDialog;
     ViewFlipper v_flipper;
+
+    GridLayout mainGrid;
 
     int contador = 0;
     String nameGame = "Epidemic Zombie";
@@ -90,7 +94,7 @@ public class WelcomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Marcar menu por defecto
-        navigationView.setCheckedItem(R.id.nav_home);
+       // navigationView.setCheckedItem(R.id.nav_home);
 
         //Para poder llamar a la instacia de nav_header_welcome
         View navHeader = navigationView.getHeaderView(0);
@@ -124,12 +128,16 @@ public class WelcomeActivity extends AppCompatActivity
             ShowNewGame();
             contador ++;
         }
+
+        //Set Event
+        setSingleEvent(mainGrid);
     }
 
     //Codigo a mano
     public void references(){
-        tv_statusTime = findViewById(R.id.statusTime);
-        tv_username = findViewById(R.id.username);
+        tv_statusTime = findViewById(R.id.w_statusTime);
+        tv_username = findViewById(R.id.w_username);
+        mainGrid = findViewById(R.id.mainGrid);
     }
 
     //Aniamacion de slide
@@ -146,18 +154,11 @@ public class WelcomeActivity extends AppCompatActivity
         v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 
-    /*public void onInsta() {
-        ImageView entry = (ImageView) findViewById(R.id.welcome_insta);
-        entry.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse("http://www.google.com/");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
-    }*/
+    public void onWeb(View v) {
+        Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -216,6 +217,25 @@ public class WelcomeActivity extends AppCompatActivity
 
 
     }
+    public void ShowSocial() {
+        TextView txtclose;
+        Button btnFollow;
+        myDialog.setContentView(R.layout.welcome_social);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("");
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+
+
+    }
+
 
     public void goPlayStore(View v){
         final String appPackageName = "me.pou.app"; // getPackageName() from Context or Activity object
@@ -233,26 +253,13 @@ public class WelcomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_home) {
-            if (id != id) {
-                Intent Intent = new Intent(this, WelcomeActivity.class);
-                startActivity(Intent);
-            }
-        }else if (id == R.id.nav_profile) {
-            Intent Intent = new Intent(this, ProfileActivity.class);
-            startActivity(Intent);
-        } else if (id == R.id.nav_news) {
-            Intent Intent = new Intent(this, NewsActivity.class);
-            startActivity(Intent);
-        } else if (id == R.id.nav_games) {
-            Intent Intent = new Intent(this, GamesActivity.class);
-            startActivity(Intent);
-        } else if (id == R.id.nav_about) {
+        if (id == R.id.nav_about) {
             Intent Intent = new Intent(this, AboutActivity.class);
             startActivity(Intent);
         } else if (id == R.id.nav_settings) {
-            Intent Intent = new Intent(this, SettingsActivity.class);
-            startActivity(Intent);
+            /*Intent Intent = new Intent(this, SettingsActivity.class);
+            startActivity(Intent);*/
+            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_exit) {
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
@@ -280,6 +287,72 @@ public class WelcomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setSingleEvent(GridLayout mainGrid) {
+        //Loop all child item of Main Grid
+        for (int i = 0; i < mainGrid.getChildCount(); i++) {
+            //You can see , all child item is CardView , so we just cast object to CardView
+            CardView cardView = (CardView) mainGrid.getChildAt(i);
+            final int finalI = i;
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    switch (finalI){
+                        case 0:
+                            Intent intent = new Intent(WelcomeActivity.this,ProfileActivity.class);
+                            //intent.putExtra("info","This is activity from card item index  "+finalI);
+                            startActivity(intent);
+                            break;
+                        case 1:
+                            intent = new Intent(WelcomeActivity.this,NewsActivity.class);
+                            startActivity(intent);
+                            break;
+                        case 2:
+                            intent = new Intent(WelcomeActivity.this,GamesActivity.class);
+                            startActivity(intent);
+                            break;
+                        case 3:
+                            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                            break;
+                        case 4:
+                            //Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                            ShowSocial();
+                            break;
+                        case 5:
+                            AlertDialog.Builder myBuild = new AlertDialog.Builder(WelcomeActivity.this);
+                            myBuild.setMessage("¿Seguro que quieres salir?");
+                            myBuild.setTitle("Epidemic Games");
+
+                            myBuild.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Cierra todo
+                                    finishAffinity();
+                                }
+                            });
+
+                            myBuild.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            AlertDialog dialog = myBuild.create();
+                            dialog.show();
+                            break;
+                    }
+
+                    //Un solo layout
+                    /*Intent intent = new Intent(MainActivity.this,ActivityOne.class);
+                    intent.putExtra("info","This is activity from card item index  "+finalI);
+                    startActivity(intent);*/
+
+                }
+            });
+        }
     }
 
     //Obtener mensaje

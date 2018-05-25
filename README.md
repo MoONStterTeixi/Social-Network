@@ -25,3 +25,6 @@ https://androidstudiofaqs.com/tutoriales/dar-permisos-a-aplicaciones-en-android-
 https://www.youtube.com/watch?v=VUPM387qyrw
 
 Min 5min
+
+//Guardar Datos
+https://nowornever3.com/2016/01/28/shared-preferences-preferencias-en-android/

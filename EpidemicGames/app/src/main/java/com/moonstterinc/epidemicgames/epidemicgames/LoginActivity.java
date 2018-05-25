@@ -37,9 +37,11 @@ import static com.moonstterinc.epidemicgames.epidemicgames.DataClass.context;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email, et_pwd;
-   // private TextView tx_login;
+
+    //Guardar Credenciales
+   /*private TextView tx_login;
     private Switch s_saveLogin;
-    //static final int READ_BLOCK_SIZE = 100;
+    //static final int READ_BLOCK_SIZE = 100;*/
     Dialog myDialog;
 
     //Instaciamos
@@ -60,8 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //onClickLoading();
-        et_email.setText(DataClass.sSubCadena1);
+
+        //Guardar Credenciales
+       /* et_email.setText(DataClass.sSubCadena1);
         et_pwd.setText(DataClass.sSubCadena2);
         if (DataClass.resultLogin == true){
             s_saveLogin.setChecked(true);
@@ -70,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
             et_pwd.setText(null);
             s_saveLogin.setChecked(false);
 
-        }
+        }*/
 
-        s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -86,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     //onClickSave();
                 }
             }
-        });
+        });*/
 
         final CheckBox showPasswordCheckBox = (CheckBox) findViewById(R.id.showPasswordCheckBox);
         showPasswordCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog= new ProgressDialog(this);
     }
 
-
+    //Boton lateral atras <-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -115,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    //Boton lateral atras <-
+
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
@@ -123,9 +126,10 @@ public class LoginActivity extends AppCompatActivity {
     private void Reference(){
         et_email = findViewById(R.id.email);
         et_pwd =  findViewById(R.id.pwd);
-        s_saveLogin = findViewById(R.id.saveLogin);
+        //s_saveLogin = findViewById(R.id.saveLogin);
     }
 
+    //Restablecer contraseña
     public void ShowEmail(View v) {
             TextView txtclose;
             Button btnFollow;
@@ -143,34 +147,13 @@ public class LoginActivity extends AppCompatActivity {
             myDialog.show();
     }
 
-    private static final String PASSWORD_REGEXP =
-            "^"
-                    + "(?=.*\\d)"
-                    + "(?=.*[a-z])"
-                    + "(?=.*[A-Z])"
-                    + "(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])"
-                    + "."
-                    + "{6,15}"
-                    + "$";
-
-
-    private Pattern pattern = Pattern.compile(PASSWORD_REGEXP);
-    private Matcher matcher;
-
-    public boolean isValid(String password){
-
-        matcher = pattern.matcher(password);
-        return matcher.matches();
-
-    }
-
-    //Return true if email is valid and false if email is invalid
-    protected boolean validateEmail(String email) {
-        String emailPattern = DataClass.pattern;
-        Pattern pattern = Pattern.compile(emailPattern);
-        Matcher matcher = pattern.matcher(email);
-
-        return matcher.matches();
+    //Crear la tarjeta del progresso
+    public void ShowProgress(){
+        //agregas un mensaje en el ProgressDialog
+        progressDialog.setTitle("Validando usuario");
+        progressDialog.setMessage("Iniciado sesión");
+        //muestras el ProgressDialog
+        progressDialog.show();
     }
 
     public void goWelcome (View v){
@@ -180,67 +163,41 @@ public class LoginActivity extends AppCompatActivity {
 
         String cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
-        //Toast.makeText(this,et_email.getText() , Toast.LENGTH_LONG).show();
-
-        //ERRORx0E00 Campos vacios
+        //Campos vacios
         if (et_email.getText().toString().equals("") && et_pwd.getText().toString().equals("")){
             et_email.setError("");
             et_email.requestFocus();
 
             et_pwd.setError("Revisar campos");
             et_pwd.requestFocus();
-        }
-
-        //ERRORx0EO01 Correo invalido
-        if (!validateEmail(et_email.getText().toString())) {
-            et_email.setError("Revisar campos");
-            et_email.requestFocus();;
-        //ERRORx0ED01 Password invalido
-        }else if (!isValid(et_pwd.getText().toString())) {
-            et_pwd.setError("Revisar campos");
-            et_pwd.requestFocus();
         } else {
             try{
+                //Enviamos el paquete JSON
                 DataClass.usr = new User(et_email.getText().toString().replace(" ",""), cryptohash);
-                //localhost= new CallAPI_Rest().execute("http://172.17.129.67:80/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
                 new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
-                //tx_login.setText(DataClass.UserJson);
             }catch(Exception e){
-                //ERRORx00E0 Problemas con el server
-                Toast.makeText(this, "[ERRORx00E0] General", Toast.LENGTH_LONG).show();
+                //Problemas de conexón
+                Toast.makeText(this, "[Error] General", Toast.LENGTH_LONG).show();
             }
-            //[ERRORx00E2 Correo o pass fake
+            //Retorno del PHP
             if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
-                Toast.makeText(this, "[ERRORx00E2] Email o Contraseña", Toast.LENGTH_LONG).show();
+                ShowProgress();
+                Toast.makeText(this, "[Error] Email o Contraseña", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
             } else {
-                //agregas un mensaje en el ProgressDialog
-                progressDialog.setTitle("Validando usuario");
-                progressDialog.setMessage("Iniciado sesión");
-                //muestras el ProgressDialog
-                progressDialog.show();
-
+                //En caso correcto nos logeamos
+                ShowProgress();
                 DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
-                //Toast.makeText(this, "Input Validation Success", Toast.LENGTH_LONG).show();
-                /*Intent Intent = new Intent(this, WelcomeActivity.class);
-                startActivity(Intent);
-                finish();*/
-
-                Intent Intent = new Intent(this,  Welcomev2Activity.class);
+                Intent Intent = new Intent(this,  WelcomeActivity.class);
                 startActivity(Intent);
                 finish();
             }
         }
-
     }
 
+    //Hacer pruebas
     public void onlyDEV(View v){
         Intent Intent = new Intent(this, WelcomeActivity.class);
-        startActivity(Intent);
-        finish();
-    }
-
-    public void onlyDEV2(View v){
-        Intent Intent = new Intent(this, Welcomev2Activity.class);
         startActivity(Intent);
         finish();
     }

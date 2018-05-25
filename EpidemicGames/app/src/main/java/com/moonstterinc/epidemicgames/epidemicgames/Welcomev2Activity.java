@@ -35,7 +35,7 @@ public class Welcomev2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcomev2);
+        setContentView(R.layout.old_activity_welcomev2);
 
         references();
         getTimeFromAndroid();
