@@ -239,6 +239,12 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void onlyDEV2(View v){
+        Intent Intent = new Intent(this, Welcomev2Activity.class);
+        startActivity(Intent);
+        finish();
+    }
+
     /*public void contador (String c){
         for(int x=0;x<c.length();x++) {
             contador++;
