@@ -121,23 +121,6 @@
         app:layout_constraintVertical_bias="0.688"
         tools:checked="false" />
 
-    <CheckBox
-        android:id="@+id/showPasswordCheckBox"
-        android:layout_width="26dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/login_pass_on_of"
-        android:password="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.576" />
-
     <ImageView
         android:id="@+id/imageView13"
         android:layout_width="wrap_content"
@@ -154,6 +137,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.115"
         app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="25dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/check_on_off"
+        android:onClick="onToggleClicked"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.579" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,6 +39,7 @@ import static com.moonstterinc.epidemicgames.epidemicgames.DataClass.context;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email, et_pwd;
+    private ToggleButton tb_pwd;
 
     //Guardar Credenciales
 
@@ -94,18 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         loadData();
         updateViews();
 
-        final CheckBox showPasswordCheckBox = (CheckBox) findViewById(R.id.showPasswordCheckBox);
-        showPasswordCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (showPasswordCheckBox.isChecked()){
-                    et_pwd.setTransformationMethod(null);
-                }else{
-                    et_pwd.setTransformationMethod(new PasswordTransformationMethod());
-                }
-            }
-        });
-
         //Inicializamos la barra
         progressDialog= new ProgressDialog(this);
     }
@@ -130,7 +120,46 @@ public class LoginActivity extends AppCompatActivity {
         et_email = findViewById(R.id.email);
         et_pwd =  findViewById(R.id.pwd);
         s_saveLogin = findViewById(R.id.saveLogin);
+        tb_pwd = findViewById(R.id.toggleButton);
     }
+
+    //Ver Password
+    public void onToggleClicked(View view) {
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+        if (on) {
+            et_pwd.setTransformationMethod(null);
+        } else {
+            et_pwd.setTransformationMethod(new PasswordTransformationMethod());
+        }
+    }
+
+    //Guardar Datos
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(EMAIL, et_email.getText().toString().replace(" ",""));
+        editor.putString(PWD, et_pwd.getText().toString().replace(" ",""));
+        editor.putBoolean(SWITCH, s_saveLogin.isChecked());
+
+        editor.apply();
+
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        email = sharedPreferences.getString(EMAIL,"");
+        pwd = sharedPreferences.getString(PWD, "");
+        switchOnOff = sharedPreferences.getBoolean(SWITCH, false);
+    }
+
+    public void updateViews(){
+        et_email.setText(email);
+        et_pwd.setText(pwd);
+        s_saveLogin.setChecked(switchOnOff);
+    }
+
 
     //Restablecer contraseña
     public void ShowEmail(View v) {
@@ -204,30 +233,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(Intent);
         finish();
     }
-
-    public void saveData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(EMAIL, et_email.getText().toString().replace(" ",""));
-        editor.putString(PWD, et_pwd.getText().toString().replace(" ",""));
-        editor.putBoolean(SWITCH, s_saveLogin.isChecked());
-
-        editor.apply();
-
-    }
-
-    public void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        email = sharedPreferences.getString(EMAIL,"");
-        pwd = sharedPreferences.getString(PWD, "");
-        switchOnOff = sharedPreferences.getBoolean(SWITCH, false);
-    }
-
-    public void updateViews(){
-        et_email.setText(email);
-        et_pwd.setText(pwd);
-        s_saveLogin.setChecked(switchOnOff);
-    }
-
 }
