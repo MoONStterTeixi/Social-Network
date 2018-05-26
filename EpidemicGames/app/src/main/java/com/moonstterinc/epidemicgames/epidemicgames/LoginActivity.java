@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,13 +40,21 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_email, et_pwd;
 
     //Guardar Credenciales
-   /*private TextView tx_login;
+
     private Switch s_saveLogin;
-    //static final int READ_BLOCK_SIZE = 100;*/
     Dialog myDialog;
 
     //Instaciamos
     private ProgressDialog progressDialog;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EMAIL = "email";
+    public static final String PWD = "pwd";
+    public static final String SWITCH = "switch";
+
+    private String email;
+    private String pwd;
+    private boolean switchOnOff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,33 +72,27 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        //Guardar Credenciales
-       /* et_email.setText(DataClass.sSubCadena1);
-        et_pwd.setText(DataClass.sSubCadena2);
-        if (DataClass.resultLogin == true){
-            s_saveLogin.setChecked(true);
-        }else{
-            et_email.setText(null);
-            et_pwd.setText(null);
-            s_saveLogin.setChecked(false);
+        loadData();
 
-        }*/
-
-        /*s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    DataClass.saveLogin = "YES";
-                    //tx_login.setText("Check");
-                    //onClickSave();
+                    saveData();
+                    Toast.makeText(context, "¡Credenciales guardadas!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    DataClass.saveLogin = "NO";
-                    //tx_login.setText("NOCheck");
-                    //onClickSave();
+                    et_email.setText(null);
+                    et_pwd.setText(null);
+                    s_saveLogin.setChecked(false);
+                    saveData();
+                    Toast.makeText(context, "¡Credenciales eliminas!", Toast.LENGTH_LONG).show();
                 }
             }
-        });*/
+        });
+
+        loadData();
+        updateViews();
 
         final CheckBox showPasswordCheckBox = (CheckBox) findViewById(R.id.showPasswordCheckBox);
         showPasswordCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
     private void Reference(){
         et_email = findViewById(R.id.email);
         et_pwd =  findViewById(R.id.pwd);
-        //s_saveLogin = findViewById(R.id.saveLogin);
+        s_saveLogin = findViewById(R.id.saveLogin);
     }
 
     //Restablecer contraseña
@@ -202,72 +205,29 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    /*public void contador (String c){
-        for(int x=0;x<c.length();x++) {
-            contador++;
-        }
-        tx_login.setText("S: "+contador);
-    }*/
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-    //Guardar datos y Cargar en TXT
-    /*public void onClickSave(){
-        String str =  "PEPE";
-        String str2 =  "PEPE";
+        editor.putString(EMAIL, et_email.getText().toString().replace(" ",""));
+        editor.putString(PWD, et_pwd.getText().toString().replace(" ",""));
+        editor.putBoolean(SWITCH, s_saveLogin.isChecked());
 
-        try{
-            //FileOutputStream fos = openFileOutput("textFile.txt", MODE_PRIVATE);
-            FileOutputStream fos = openFileOutput("rememberME.txt", MODE_PRIVATE);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
+        editor.apply();
 
-            // Escribimos el String en el archivo
-            osw.write(DataClass.saveLogin + str + str2);
-            osw.flush();
-            osw.close();
+    }
 
-            // Mostramos que se ha guardado
-            Toast.makeText(getBaseContext(), "Guardado", Toast.LENGTH_SHORT).show();
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        email = sharedPreferences.getString(EMAIL,"");
+        pwd = sharedPreferences.getString(PWD, "");
+        switchOnOff = sharedPreferences.getBoolean(SWITCH, false);
+    }
 
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
+    public void updateViews(){
+        et_email.setText(email);
+        et_pwd.setText(pwd);
+        s_saveLogin.setChecked(switchOnOff);
+    }
 
-    }*/
-
-
-    /*public void onClickLoading(){
-        try{
-            FileInputStream fis = openFileInput("rememberME.txt");
-            InputStreamReader isr = new InputStreamReader(fis);
-
-            char[] inputBuffer = new char[READ_BLOCK_SIZE];
-            String s = "";
-
-            int charRead;
-            while((charRead = isr.read(inputBuffer)) > 0){
-                // Convertimos los char a String
-                String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                s += readString;
-
-                inputBuffer = new char[READ_BLOCK_SIZE];
-            }
-            String sSubCadena = "";
-            try{
-                sSubCadena = s.substring(0,3);
-                DataClass.sSubCadena1 = s.substring(3,7);
-                DataClass.sSubCadena2 = s.substring(7,11);
-            }catch (Exception e){
-
-            }
-            if(sSubCadena.equals("YES")){
-                DataClass.resultLogin = true;
-            }
-
-            // Mostramos un Toast con el proceso completado
-            Toast.makeText(getBaseContext(), "Cargado", Toast.LENGTH_SHORT).show();
-
-            isr.close();
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-    }*/
 }
