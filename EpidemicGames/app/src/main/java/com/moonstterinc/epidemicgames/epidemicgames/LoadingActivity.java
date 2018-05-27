@@ -23,6 +23,7 @@ public class LoadingActivity extends AppCompatActivity {
         hideNavigationBar();
         setContentView(R.layout.activity_loading);
 
+        //Saber si tiene conexión
         ResultisNetworkAvailable();
 
         //Evitar que rote *
@@ -63,12 +64,14 @@ public class LoadingActivity extends AppCompatActivity {
         welcomeThread.start();
     }
 
-    //Selecion de Activity
+    //Todo ok pantalla carga
     private void StartActivity(){
         Intent i = new Intent(LoadingActivity.this, StartActivity.class);
         startActivity(i);
         finish();
     }
+
+    //No tiene conexión otro layout
     private void NoConnActivity(){
         Intent i = new Intent(LoadingActivity.this, NoConnActivity.class);
         startActivity(i);
@@ -89,13 +92,13 @@ public class LoadingActivity extends AppCompatActivity {
             //Toast.makeText(this, "STATUS INTERNET: OK", Toast.LENGTH_SHORT).show();
 
             value = 0;
-            thread(3000);
+            thread(2000);
 
         } else {
             //Toast.makeText(this, "STATUS INTERNET: FAIL", Toast.LENGTH_SHORT).show();
 
             value = 1;
-            thread(2000);
+            thread(1000);
         }
     }
 }

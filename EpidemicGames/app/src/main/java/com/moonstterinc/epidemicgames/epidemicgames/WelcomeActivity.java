@@ -46,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity
     Dialog myDialog;
     ViewFlipper v_flipper;
 
+    //Tarjetas
     GridLayout mainGrid;
 
     int contador = 0;
@@ -60,9 +61,12 @@ public class WelcomeActivity extends AppCompatActivity
         //Evitar que rote *
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
+        //Barra Principal verde
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Accion del boton flotante verde
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +88,8 @@ public class WelcomeActivity extends AppCompatActivity
             }
         });
 
+
+        //Barra lateral
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -94,7 +100,7 @@ public class WelcomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Marcar menu por defecto
-       // navigationView.setCheckedItem(R.id.nav_home);
+        // navigationView.setCheckedItem(R.id.nav_home);
 
         //Para poder llamar a la instacia de nav_header_welcome
         View navHeader = navigationView.getHeaderView(0);
@@ -122,43 +128,26 @@ public class WelcomeActivity extends AppCompatActivity
             tv_emailDrawer.setText(DataClass.GlobalUser.getEmail());
 
         }
+
+        //Mensaje principa de Buenos días.. etc...
         getTimeFromAndroid();
-        //createNotification();
+
         if (contador == 0){
             ShowNewGame();
             contador ++;
         }
 
-        //Set Event
+        //Obtener evento de click en las tarjetas
         setSingleEvent(mainGrid);
     }
 
-    //Codigo a mano
+    //Declaraciones de references
     public void references(){
         tv_statusTime = findViewById(R.id.w_statusTime);
         tv_username = findViewById(R.id.w_username);
         mainGrid = findViewById(R.id.mainGrid);
     }
 
-    //Aniamacion de slide
-    public void flipperImages(int image){
-        ImageView imageView = new ImageView(this);
-        imageView.setBackgroundResource(image);
-
-        v_flipper.addView(imageView);
-        v_flipper.setFlipInterval(4000);
-        v_flipper.setAutoStart(true);
-
-        //Animación
-        v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
-        v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
-    }
-
-    public void onWeb(View v) {
-        Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -181,71 +170,6 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void ShowHelper() {
-        TextView txtclose;
-        Button btnFollow;
-        myDialog.setContentView(R.layout.welcome_help);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("");
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
-
-    public void ShowNewGame() {
-        TextView txtclose;
-        Button btnFollow;
-        myDialog.setContentView(R.layout.welcome_ez);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("");
-        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-
-
-    }
-    public void ShowSocial() {
-        TextView txtclose;
-        Button btnFollow;
-        myDialog.setContentView(R.layout.welcome_social);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("");
-        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-
-
-    }
-
-
-    public void goPlayStore(View v){
-        final String appPackageName = "me.pou.app"; // getPackageName() from Context or Activity object
-        try {
-            myDialog.dismiss();
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-        } catch (android.content.ActivityNotFoundException anfe) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-            myDialog.dismiss();
-        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -289,6 +213,115 @@ public class WelcomeActivity extends AppCompatActivity
         return true;
     }
 
+    //Obtener mensaje
+    private void getTimeFromAndroid() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay >= 6 && timeOfDay < 12){
+            //Toast.makeText(this, "Good Morning", Toast.LENGTH_SHORT).show();
+            tv_statusTime.setText("Buenos días,");
+        }else if(timeOfDay >= 12 && timeOfDay < 14){
+            //Toast.makeText(this, "Good Afternoon", Toast.LENGTH_SHORT).show();
+            tv_statusTime.setText("Buenas tardes,");
+        }else if(timeOfDay >= 14 && timeOfDay < 21){
+            //Toast.makeText(this, "Good Evening", Toast.LENGTH_SHORT).show();
+            tv_statusTime.setText("Buenas tardes,");
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
+            tv_statusTime.setText("Buenas noches,");
+        }else if(timeOfDay >= 24 && timeOfDay < 6) {
+            //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
+            tv_statusTime.setText("Buenas noches,");
+        }
+    }
+
+    //Aniamacion de slide
+    public void flipperImages(int image){
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        v_flipper.addView(imageView);
+        v_flipper.setFlipInterval(4000);
+        v_flipper.setAutoStart(true);
+
+        //Animación
+        v_flipper.setInAnimation(this, android.R.anim.slide_in_left);
+        v_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
+    }
+
+    //Mostar novedad de juego
+    public void ShowNewGame() {
+        TextView txtclose;
+        Button btnFollow;
+        myDialog.setContentView(R.layout.welcome_ez);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("");
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    public void goPlayStore(View v){
+        final String appPackageName = "me.pou.app"; // getPackageName() from Context or Activity object
+        try {
+            myDialog.dismiss();
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            myDialog.dismiss();
+        }
+    }
+
+    //Mostrar mensaje de Ayuda
+    public void ShowHelper() {
+        TextView txtclose;
+        Button btnFollow;
+        myDialog.setContentView(R.layout.welcome_help);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("");
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+
+    //Mostrar mensaje de Redes Sociales
+    public void ShowSocial() {
+        TextView txtclose;
+        Button btnFollow;
+        myDialog.setContentView(R.layout.welcome_social);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        txtclose.setText("");
+        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    public void onWeb(View v) {
+        Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    //Evento al hacer click en la tajeta adecuada
     private void setSingleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
         for (int i = 0; i < mainGrid.getChildCount(); i++) {
@@ -345,54 +378,14 @@ public class WelcomeActivity extends AppCompatActivity
                             break;
                     }
 
-                    //Un solo layout
+                    //Un solo layout nos sirvira para noticias
                     /*Intent intent = new Intent(MainActivity.this,ActivityOne.class);
                     intent.putExtra("info","This is activity from card item index  "+finalI);
                     startActivity(intent);*/
-
                 }
             });
         }
     }
-
-    //Obtener mensaje
-    private void getTimeFromAndroid() {
-        Calendar c = Calendar.getInstance();
-        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-
-        if(timeOfDay >= 0 && timeOfDay < 12){
-            //Toast.makeText(this, "Good Morning", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Buenos días,");
-        }else if(timeOfDay >= 12 && timeOfDay < 16){
-            //Toast.makeText(this, "Good Afternoon", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Buenas Tardes,");
-        }else if(timeOfDay >= 16 && timeOfDay < 21){
-            //Toast.makeText(this, "Good Evening", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Buenas Tardes,");
-        }else if(timeOfDay >= 21 && timeOfDay < 24){
-            //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
-            tv_statusTime.setText("Buenas Noches,");
-        }
-    }
-
-    //Creamos notificaciones
-    /*public void createNotification() {
-        // Prepare intent which is triggered if the
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        PendingIntent pending = PendingIntent.getActivity(this, 0, intent, 0);
-
-        Notification notifications = new Notification.Builder(this)
-                .setContentTitle("New notification EpidemicGames")
-                .setContentText("Thanks for using this app :)").setSmallIcon(R.drawable.icon)
-                .setContentIntent(pending)
-                .addAction(R.drawable.ic_menu_send, "Reply", pending) //Añadir Banner Largo x3
-                .addAction(R.drawable.ic_menu_share, "cancel", pending)
-                .addAction(R.drawable.ic_menu_slideshow, "setings", pending).build();
-
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notifications.flags |= Notification.FLAG_AUTO_CANCEL;
-        manager.notify(0, notifications);
-    }*/
 
     //Al pusar atras con el boton de android sale un mensaje de estas seguro?
     @Override

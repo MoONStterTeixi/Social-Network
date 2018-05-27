@@ -40,23 +40,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email, et_pwd;
     private ToggleButton tb_pwd;
+    private TextView tv_noConn;
 
-    //Guardar Credenciales
-
-    private Switch s_saveLogin;
-    Dialog myDialog;
-
-    //Instaciamos
+    //Instaciamos el progreso
     private ProgressDialog progressDialog;
 
+    //Guardar Credenciales
+    private Switch s_saveLogin;
+    Dialog myDialog;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String EMAIL = "email";
     public static final String PWD = "pwd";
     public static final String SWITCH = "switch";
 
+    public static final String DETAILS = "datails";
+
     private String email;
     private String pwd;
     private boolean switchOnOff;
+    private int details = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         myDialog = new Dialog(this);
 
         Reference();
-        DataClass.context = this.getApplicationContext();
 
         //Evitar que rote *
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -73,26 +74,34 @@ public class LoginActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        loadData();
-
+        //Switch si es check hace una cosa sino otra
         s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
+                    if (details == 0){
+                        Toast.makeText(context, "¡Credenciales guardadas!", Toast.LENGTH_LONG).show();
+                        details = 1;
+                    }
                     saveData();
-                    Toast.makeText(context, "¡Credenciales guardadas!", Toast.LENGTH_LONG).show();
+
                 }
                 else {
                     et_email.setText(null);
                     et_pwd.setText(null);
                     s_saveLogin.setChecked(false);
+
+                    if(details == 1){
+                        Toast.makeText(context, "¡Credenciales eliminas!", Toast.LENGTH_LONG).show();
+                        details = 0;
+                    }
                     saveData();
-                    Toast.makeText(context, "¡Credenciales eliminas!", Toast.LENGTH_LONG).show();
+
                 }
             }
         });
 
+        //Cargamos datos (presistencia)
         loadData();
         updateViews();
 
@@ -116,11 +125,13 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    //Las referencias
     private void Reference(){
         et_email = findViewById(R.id.email);
         et_pwd =  findViewById(R.id.pwd);
         s_saveLogin = findViewById(R.id.saveLogin);
         tb_pwd = findViewById(R.id.toggleButton);
+        tv_noConn = findViewById(R.id.noConn);
     }
 
     //Ver Password
@@ -142,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(EMAIL, et_email.getText().toString().replace(" ",""));
         editor.putString(PWD, et_pwd.getText().toString().replace(" ",""));
         editor.putBoolean(SWITCH, s_saveLogin.isChecked());
+        editor.putInt(DETAILS, details);
 
         editor.apply();
 
@@ -152,12 +164,14 @@ public class LoginActivity extends AppCompatActivity {
         email = sharedPreferences.getString(EMAIL,"");
         pwd = sharedPreferences.getString(PWD, "");
         switchOnOff = sharedPreferences.getBoolean(SWITCH, false);
+        details = sharedPreferences.getInt(DETAILS, details);
     }
 
     public void updateViews(){
         et_email.setText(email);
         et_pwd.setText(pwd);
         s_saveLogin.setChecked(switchOnOff);
+        details =+ details;
     }
 
 
@@ -188,11 +202,14 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
+    //Botton login
     public void goWelcome (View v){
+
         //Encryptar password con Email y password
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
         String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
+        //Formula final de la encryptación
         String cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
         //Campos vacios
@@ -207,22 +224,26 @@ public class LoginActivity extends AppCompatActivity {
                 //Enviamos el paquete JSON
                 DataClass.usr = new User(et_email.getText().toString().replace(" ",""), cryptohash);
                 new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
+
+                //Retorno del PHP
+                if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1")) {
+                    ShowProgress();
+                    Toast.makeText(this, "[Error] Email o Contraseña", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                } else if (DataClass.UserJson.equals("")){
+                    //Problemas de conexón
+                    tv_noConn.setBackgroundColor(Color.RED);
+                    tv_noConn.setText("Revisa la conexión");
+                } else {
+                    //En caso correcto nos logeamos
+                    ShowProgress();
+                    DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
+                    Intent Intent = new Intent(this,  WelcomeActivity.class);
+                    startActivity(Intent);
+                    finish();
+                }
             }catch(Exception e){
-                //Problemas de conexón
-                Toast.makeText(this, "[Error] General", Toast.LENGTH_LONG).show();
-            }
-            //Retorno del PHP
-            if (DataClass.UserJson.equals("0") || DataClass.UserJson.equals("1") || DataClass.UserJson.equals("")) {
-                ShowProgress();
-                Toast.makeText(this, "[Error] Email o Contraseña", Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
-            } else {
-                //En caso correcto nos logeamos
-                ShowProgress();
-                DataClass.GlobalUser = User.GetObj(DataClass.UserJson);
-                Intent Intent = new Intent(this,  WelcomeActivity.class);
-                startActivity(Intent);
-                finish();
+
             }
         }
     }
