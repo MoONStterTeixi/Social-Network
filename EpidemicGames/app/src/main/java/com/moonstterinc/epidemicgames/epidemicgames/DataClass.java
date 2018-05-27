@@ -5,15 +5,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class DataClass {
-    public static Context context;
-    //public static int contador = 0;
-
     //Classe JSON
     public static String UserJson = "";
     public static User usr;
-
-    //public static boolean checkUJ = false;
-    //public static Context  cnt = null;
 
     //Global
     public static User GlobalUser;
@@ -74,10 +68,5 @@ public class DataClass {
     //Registrov2
     public static int contadorFragments;
     public static String nickFrag = "";
-
-
-    public static void msToast(String s){
-        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
-    }
 
 }

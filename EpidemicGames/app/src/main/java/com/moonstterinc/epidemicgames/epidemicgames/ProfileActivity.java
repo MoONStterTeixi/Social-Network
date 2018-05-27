@@ -10,12 +10,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import static com.moonstterinc.epidemicgames.epidemicgames.DataClass.context;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -48,9 +45,9 @@ public class ProfileActivity extends AppCompatActivity {
         }
         iv_image.setBackgroundResource(R.drawable.profile_lock);
 
-        //b_email.setEnabled(false);
-        //b_pass.setEnabled(false);
-        //b_genre.setEnabled(false);
+        b_email.setEnabled(false);
+        b_pass.setEnabled(false);
+        b_genre.setEnabled(false);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void ShowPass(View v) {
         if (!unlock){
-            Toast.makeText(context, "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
         }else{
             TextView txtclose;
             Button btnFollow;
@@ -94,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void ShowEmail(View v) {
         if (!unlock){
-            Toast.makeText(context, "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
         }else{
             TextView txtclose;
             Button btnFollow;
@@ -116,7 +113,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void ShowGenre(View v) {
         if (!unlock){
-            Toast.makeText(context, "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
         }else{
             TextView txtclose;
             Button btnFollow;
@@ -179,7 +176,7 @@ public class ProfileActivity extends AppCompatActivity {
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             myDialog.show();
         }else{
-            Toast.makeText(context, "Se cierra al salir del perfil :)", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Se cierra al salir del perfil :)", Toast.LENGTH_LONG).show();
         }
 
     }

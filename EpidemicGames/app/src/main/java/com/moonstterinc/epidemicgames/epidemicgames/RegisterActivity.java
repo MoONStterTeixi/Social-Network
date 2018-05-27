@@ -4,10 +4,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AlertDialog;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,29 +14,38 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.security.MessageDigest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.moonstterinc.epidemicgames.epidemicgames.DataClass.context;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username, et_email ,et_pwd, et_repwd;
-    //private RadioGroup rggenre;
-    private RadioButton rbother, rbfemale, rbmale;
     private CheckBox cb_accept;
-
+    private TextView tv_noConn;
     int resultRG;
-    String msg = null;
 
-    //Instaciamos
     private ProgressDialog progressDialog;
 
-    public RegisterActivity() {
-    }
+    //Patrones de password
+    private static final String PASSWORD_REGEXP =
+            "^"
+                    + "(?=.*\\d)"
+                    + "(?=.*[a-z])"
+                    + "(?=.*[A-Z])"
+                    + "(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])"
+                    + "."
+                    + "{6,15}"
+                    + "$";
+
+    private Pattern pattern = Pattern.compile(PASSWORD_REGEXP);
+    private Matcher matcher;
+
+    //private RadioGroup rggenre;
+    //private RadioButton rbother, rbfemale, rbmale;
+    //Instaciamos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,17 +83,17 @@ public class RegisterActivity extends AppCompatActivity {
         et_email = findViewById(R.id.email);
         et_pwd = findViewById(R.id.password);
         et_repwd = findViewById(R.id.repPassword);
+        tv_noConn = findViewById(R.id.noConn);
+        cb_accept = findViewById(R.id.accept);
 
         //rggenre = findViewById(R.id.genre);
-
         /*rbother = findViewById(R.id.other);
         rbfemale = findViewById(R.id.female);
         rbmale = findViewById(R.id.male);*/
-
-        cb_accept = findViewById(R.id.accept);
-
     }
 
+
+    //Tarjeta de terminos
     public void terms(View v){
        android.app.AlertDialog.Builder myBuild = new android.app.AlertDialog.Builder(this);
         myBuild.setMessage("Sin informacion");
@@ -116,25 +124,8 @@ public class RegisterActivity extends AppCompatActivity {
         View radioButton = rggenre.findViewById(radioButtonID);
         resultRG = rggenre.indexOfChild(radioButton);
     }*/
-    private static final String PASSWORD_REGEXP =
-            "^"
-                    + "(?=.*\\d)"
-                    + "(?=.*[a-z])"
-                    + "(?=.*[A-Z])"
-                    + "(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])"
-                    + "."
-                    + "{6,15}"
-                    + "$";
 
-    private Pattern pattern = Pattern.compile(PASSWORD_REGEXP);
-    private Matcher matcher;
-
-    public boolean isValid(String password){
-        matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
-
-    //Return true if email is valid and false if email is invalid
+    //Return true si el correo es valido de lo contrario será false
     protected boolean validateEmail(String email) {
         String emailPattern = DataClass.pattern;
         Pattern pattern = Pattern.compile(emailPattern);
@@ -143,56 +134,87 @@ public class RegisterActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
+    //Verifica si los patrones de password son los acordado
+    public boolean isValid(String password){
+        matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    //Crear la tarjeta del progresso
+    public void ShowProgress(){
+        //agregas un mensaje en el ProgressDialog
+        progressDialog.setTitle("Validando usuario");
+        progressDialog.setMessage("Iniciado sesión");
+        //muestras el ProgressDialog
+        progressDialog.show();
+    }
+
+    //Boton registro
     public void goLogin (View v) throws InterruptedException {
         //selectRadioGroup();
+
+        //Encryptar password con Email y password
         String pwdFinal = CryptoHash.getSha256(et_pwd.getText().toString().replace(" ",""));
         String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
+        //Formula final de la encryptación
         String cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
+       //Obtenemos la logitud
        int a =  et_username.getText().length();
+
+        //Username menos de 4
+        if( a < 4){
+            et_username.setError("Usuario inválido:\n" +
+                    "-Mínimo 4 caracteres.");
+            //Error en modo foco
+            et_username.requestFocus();
+
+            //Correo no válido
+        }else if(!validateEmail(et_email.getText().toString())) {
+            et_email.setError("Correo inválido.");
+            et_email.requestFocus();
+
+            //Contraseña no válida
+        } else if (!isValid(et_pwd.getText().toString())) {
+            et_pwd.setError("Contraseña inválida:\n" +
+                    "-Mínimo 1 Número,\n" +
+                    "-Mínimo 1 una letra MAYÚSCULA,\n" +
+                    "-Mínimo 1 una letra minúscula,\n" +
+                    "-Contener 1 Carácter especial\n                 |Mama mío! :) |,\n" +
+                    "-Debe ser mínimo de 6 Carácteres,\n" +
+                    "-Máximo de 15 Carácteres.");
+            et_pwd.requestFocus();
+        }
+
+        if (!et_pwd.getText().toString().equals(et_repwd.getText().toString())) {
+            //Toast.makeText(this, "Contraseña: ¡No son iguales!", Toast.LENGTH_LONG).show();
+            et_pwd.setError("Contraseña: ¡No son iguales!");
+            et_pwd.requestFocus();
+
+            et_repwd.setError("Contraseña: ¡No son iguales!");
+            et_repwd.requestFocus();
+        }
+
+       //Verficamos que el check de terminos
        if (cb_accept.isChecked()) {
-            if( a < 4){
-                et_username.setError("Usuario inválido:\n" +
-                        "-Mínimo 4 caracteres.");
-                et_username.requestFocus();
-            }else if(!validateEmail(et_email.getText().toString())) {
-               et_email.setError("Correo inválido.");
-               et_email.requestFocus();
-
-            } else if (!isValid(et_pwd.getText().toString())) {
-               et_pwd.setError("Contraseña inválida:\n" +
-                       "-Mínimo 1 Número,\n" +
-                       "-Mínimo 1 una letra MAYÚSCULA,\n" +
-                       "-Mínimo 1 una letra minúscula,\n" +
-                       "-Contener 1 Carácter especial\n                 |Mama mío! :) |,\n" +
-                       "-Debe ser mínimo de 6 Carácteres,\n" +
-                       "-Máximo de 15 Carácteres.");
-               et_pwd.requestFocus();
-
-            } else if (et_pwd.getText().toString().equals(et_repwd.getText().toString())){
+           try{
                User usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+usr.toJson());
 
-                //agregas un mensaje en el ProgressDialog
-                progressDialog.setTitle("Validando registro");
-                progressDialog.setMessage("Esto puede tardar un poquito...");
-                //muestras el ProgressDialog
-                progressDialog.show();
-               //Toast.makeText(this, "Crypt:" + cryptohash, Toast.LENGTH_LONG).show();
+               ShowProgress();
+
+               //Vamos a Login
                Intent Intent = new Intent(this, LoginActivity.class);
                startActivity(Intent);
                finish();
 
-            }else{
-               //Toast.makeText(this, "Contraseña: ¡No son iguales!", Toast.LENGTH_LONG).show();
-                et_pwd.setError("Contraseña: ¡No son iguales!");
-                et_pwd.requestFocus();
-
-               et_repwd.setError("Contraseña: ¡No son iguales!");
-               et_repwd.requestFocus();
-            }
+           }catch(Exception e){
+               //Problemas de conexón
+               tv_noConn.setBackgroundColor(Color.RED);
+               tv_noConn.setText("Revisa la conexión");
+           }
        }else{
            Toast.makeText(this, "Lee los Términos y Condiciones \n     (Si esta conforme, acepte)", Toast.LENGTH_LONG).show();
        }
