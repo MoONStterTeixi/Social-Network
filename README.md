@@ -28,3 +28,6 @@ Min 5min
 
 //Guardar Datos
 https://nowornever3.com/2016/01/28/shared-preferences-preferencias-en-android/
+
+//Animar botones
+https://www.youtube.com/watch?v=ASo57cTVctM
