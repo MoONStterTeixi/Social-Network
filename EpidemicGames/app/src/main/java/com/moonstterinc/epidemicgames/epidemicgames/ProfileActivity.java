@@ -32,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private boolean unlock = false;
     int value = 0;
+    private String passwordFinal = "";
 
     Dialog myDialog;
 
@@ -93,15 +94,37 @@ public class ProfileActivity extends AppCompatActivity {
                 ce_email.setHint(DataClass.GlobalUser.getEmail());
 
                 btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
-                txtclose.setOnClickListener(new View.OnClickListener() {
+                btnFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String pwdFinal = CryptoHash.getSha256(passwordFinal);
+                        String userFinal = CryptoHash.getSha256(ce_email.getText().toString().replace(" ",""));
+
+                        //Formula final de la encryptación
+                        String cryptohashFinal = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
+
                         try{
-                            /*DataClass.usr = new User("a","a","a");
-                            new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=upadate&json=" + DataClass.usr.toJsonL()).get();*/
+                            DataClass.usr = new User(DataClass.GlobalUser.getUsername(),ce_email.getText().toString().replace(" ",""), null,0,true);
+                            new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJson()).get();
+
+                            //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
+
+                            if (DataClass.UserJson.equals("1")){
+                                Toast.makeText(ProfileActivity.this, "Email cambiado con exito", Toast.LENGTH_LONG).show();
+                                DataClass.profileFAIL = 1;
+                                myDialog.dismiss();
+                            }else{
+                                Toast.makeText(ProfileActivity.this, "Error al intentar cambiar el email", Toast.LENGTH_LONG).show();
+                            }
                         }catch(Exception e){
 
                         }
+                    }
+                });
+
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         myDialog.dismiss();
                     }
                 });
@@ -185,6 +208,8 @@ public class ProfileActivity extends AppCompatActivity {
             txtclose.setText("");
 
             pass = myDialog.findViewById(R.id.passCheck);
+
+            passwordFinal = pass.getText().toString().replace(" ","");
 
             Button btnFollow;
             btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);

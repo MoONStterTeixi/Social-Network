@@ -200,9 +200,9 @@ public class RegisterActivity extends AppCompatActivity {
        //Verficamos que el check de terminos
        if (cb_accept.isChecked()) {
            try{
-               User usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
+               DataClass.usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
-               new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+usr.toJson()).get();
+               new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+DataClass.usr.toJson()).get();
 
                //Retorno del PHP
                if (DataClass.UserJson.equals("2")){
