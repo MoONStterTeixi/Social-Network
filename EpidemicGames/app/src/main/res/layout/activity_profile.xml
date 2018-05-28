@@ -195,6 +195,7 @@
         android:background="@android:color/darker_gray"
         android:onClick="ShowPass"
         android:text="Contraseña"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

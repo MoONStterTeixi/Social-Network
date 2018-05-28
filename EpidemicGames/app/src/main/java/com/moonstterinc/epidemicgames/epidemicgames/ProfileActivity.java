@@ -78,30 +78,37 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void ShowEmail(View v) {
-        if (!unlock){
-            Toast.makeText(this, "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
-        }else{
-            TextView txtclose;
-            EditText ce_email;
-            Button btnFollow;
+            if (!unlock){
+                Toast.makeText(this, "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
+            }else{
+                TextView txtclose;
+                final EditText ce_email;
+                Button btnFollow;
 
-            myDialog.setContentView(R.layout.profile_change_email);
-            txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-            txtclose.setText("");
+                myDialog.setContentView(R.layout.profile_change_email);
+                txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+                txtclose.setText("");
 
-            ce_email = (EditText) myDialog.findViewById(R.id.ce_email);
-            ce_email.setHint(DataClass.GlobalUser.getEmail());
+                ce_email = (EditText) myDialog.findViewById(R.id.ce_email);
+                ce_email.setHint(DataClass.GlobalUser.getEmail());
 
-            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
-            txtclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            myDialog.show();
-        }
+                btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+                txtclose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try{
+                            /*DataClass.usr = new User("a","a","a");
+                            new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=upadate&json=" + DataClass.usr.toJsonL()).get();*/
+                        }catch(Exception e){
+
+                        }
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                myDialog.show();
+            }
+
 
     }
 

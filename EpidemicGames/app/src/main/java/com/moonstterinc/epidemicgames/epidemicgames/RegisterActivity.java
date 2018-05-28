@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username, et_email ,et_pwd, et_repwd;
     private CheckBox cb_accept;
-    private TextView tv_noConn;
+    private TextView tv_noConn, tv_register_err_username, tv_register_err_email;
     int resultRG;
 
     private ProgressDialog progressDialog;
@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         //Inicializamos la barra
         progressDialog= new ProgressDialog(this);
     }
-
+    //Boton lateral atras <-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -73,10 +73,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    //Boton lateral atras <-
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
+
 
     public void Reference(){
         et_username = findViewById(R.id.username);
@@ -85,39 +85,14 @@ public class RegisterActivity extends AppCompatActivity {
         et_repwd = findViewById(R.id.repPassword);
         tv_noConn = findViewById(R.id.noConn);
         cb_accept = findViewById(R.id.accept);
+        tv_register_err_username  = findViewById(R.id.register_err_username);
+        tv_register_err_email = findViewById(R.id.register_err_email);
 
         //rggenre = findViewById(R.id.genre);
         /*rbother = findViewById(R.id.other);
         rbfemale = findViewById(R.id.female);
         rbmale = findViewById(R.id.male);*/
     }
-
-
-    //Tarjeta de terminos
-    public void terms(View v){
-       android.app.AlertDialog.Builder myBuild = new android.app.AlertDialog.Builder(this);
-        myBuild.setMessage("Sin informacion");
-
-        myBuild.setTitle("[Info] Epidemic Games");
-
-        myBuild.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                cb_accept.setChecked(true);
-            }
-        });
-        myBuild.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                cb_accept.setChecked(false);
-            }
-        });
-
-        android.app.AlertDialog dialog = myBuild.create();
-        dialog.show();
-    }
-
     //Selecionar el Grupo de radio
    /* public void selectRadioGroup() {
         int radioButtonID = rggenre.getCheckedRadioButtonId();
@@ -140,11 +115,36 @@ public class RegisterActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
+    //Tarjeta de terminos
+    public void terms(View v){
+        android.app.AlertDialog.Builder myBuild = new android.app.AlertDialog.Builder(this);
+        myBuild.setMessage("Sin informacion");
+
+        myBuild.setTitle("[Info] Epidemic Games");
+
+        myBuild.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cb_accept.setChecked(true);
+            }
+        });
+        myBuild.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                cb_accept.setChecked(false);
+            }
+        });
+
+        android.app.AlertDialog dialog = myBuild.create();
+        dialog.show();
+    }
+
     //Crear la tarjeta del progresso
     public void ShowProgress(){
         //agregas un mensaje en el ProgressDialog
         progressDialog.setTitle("Validando usuario");
-        progressDialog.setMessage("Iniciado sesión");
+        progressDialog.setMessage("Puede tardar un poquito..");
         //muestras el ProgressDialog
         progressDialog.show();
     }
@@ -187,6 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
             et_pwd.requestFocus();
         }
 
+        //Contraseña no iguales
         if (!et_pwd.getText().toString().equals(et_repwd.getText().toString())) {
             //Toast.makeText(this, "Contraseña: ¡No son iguales!", Toast.LENGTH_LONG).show();
             et_pwd.setError("Contraseña: ¡No son iguales!");
@@ -201,15 +202,33 @@ public class RegisterActivity extends AppCompatActivity {
            try{
                User usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
-               new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+usr.toJson());
+               new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+usr.toJson()).get();
 
-               ShowProgress();
+               //Retorno del PHP
+               if (DataClass.UserJson.equals("2")){
+                   Toast.makeText(this, "[Error] Usuario ya en uso", Toast.LENGTH_LONG).show();
+                   tv_register_err_username.setBackgroundColor(Color.RED);
+                   tv_register_err_email.setBackgroundColor(Color.TRANSPARENT);
 
-               //Vamos a Login
-               Intent Intent = new Intent(this, LoginActivity.class);
-               startActivity(Intent);
-               finish();
+               }else if (DataClass.UserJson.equals("1")){
+                   tv_register_err_username.setBackgroundColor(Color.TRANSPARENT);
+                   tv_register_err_email.setBackgroundColor(Color.RED);
+                   Toast.makeText(this, "[Error] Email ya registrado", Toast.LENGTH_LONG).show();
 
+               }else if (DataClass.UserJson.equals("3")){
+                   tv_register_err_username.setBackgroundColor(Color.RED);
+                   tv_register_err_email.setBackgroundColor(Color.RED);
+                   Toast.makeText(this, "[Error] Usuario y Email existentes", Toast.LENGTH_LONG).show();
+
+               }else{
+                   tv_register_err_username.setBackgroundColor(Color.TRANSPARENT);
+                   tv_register_err_email.setBackgroundColor(Color.TRANSPARENT);
+                   ShowProgress();
+                   //Vamos a Login
+                   Intent Intent = new Intent(this, LoginActivity.class);
+                   startActivity(Intent);
+                   finish();
+               }
            }catch(Exception e){
                //Problemas de conexón
                tv_noConn.setBackgroundColor(Color.RED);

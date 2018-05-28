@@ -88,7 +88,7 @@ public class NewsActivity extends AppCompatActivity {
                                 news.setLabel(newsLabel);
                                 news.setDate(newsDate);
 
-                               NewsActivity.this.news.add(news);
+                                NewsActivity.this.news.add(news);
                             }
                             newsAdapter.notifyDataSetChanged();
                             newsAdapter.setLoaded();
@@ -126,9 +126,9 @@ public class NewsActivity extends AppCompatActivity {
                     Intent intent = new Intent(NewsActivity.this,ActivityOne.class);
                     intent.putExtra("info","This is activity from card item index  "+finalI);
                     startActivity(intent);
-                    }
+                }
 
-                    //Un solo layout
+                //Un solo layout
                     /*Intent intent = new Intent(MainActivity.this,ActivityOne.class);
                     intent.putExtra("info","This is activity from card item index  "+finalI);
                     startActivity(intent);*/

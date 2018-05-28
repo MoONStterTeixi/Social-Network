@@ -31,3 +31,6 @@ https://nowornever3.com/2016/01/28/shared-preferences-preferencias-en-android/
 
 //Animar botones
 https://www.youtube.com/watch?v=ASo57cTVctM
+
+//Dinamicas tarjetitas
+https://www.youtube.com/watch?v=USbTcGx1mD0&index=1&list=PLk7v1Z2rk4hjHrGKo9GqOtLs1e2bglHHA

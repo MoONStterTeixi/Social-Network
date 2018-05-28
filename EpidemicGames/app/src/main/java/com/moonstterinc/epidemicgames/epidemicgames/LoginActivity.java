@@ -75,8 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             saveData();
         }
 
-
-
         //Switch si es check hace una cosa sino otra
         s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -85,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (details == 0){
                         Toast.makeText(getBaseContext(), "¡Credenciales guardadas!", Toast.LENGTH_LONG).show();
                         details = 1;
+                        et_pwd.setTransformationMethod(new PasswordTransformationMethod());
                     }
                     saveData();
                 }
@@ -148,7 +147,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         }else{
             tv_noConn.setBackgroundColor(Color.YELLOW);
-            tv_noConn.setText("Una vez guardad la credencial no puede ver la Password");
+            tv_noConn.setTextColor(Color.BLACK);
+            tv_noConn.setText("No puede ver la contraseña");
         }
     }
 

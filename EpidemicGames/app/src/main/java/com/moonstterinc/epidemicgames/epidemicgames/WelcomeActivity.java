@@ -37,6 +37,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import android.widget.ViewFlipper;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Calendar;
 
 public class WelcomeActivity extends AppCompatActivity
@@ -106,7 +108,6 @@ public class WelcomeActivity extends AppCompatActivity
         View navHeader = navigationView.getHeaderView(0);
         tv_usernameDrawer = navHeader.findViewById(R.id.usernameDrawer);
         tv_emailDrawer = navHeader.findViewById(R.id.emailDrawer);
-
 
         //Slide Fotos
         int images [] = {R.drawable.welcome_slide1, R.drawable.welcome_slide2, R.drawable.welcome_slide3};
