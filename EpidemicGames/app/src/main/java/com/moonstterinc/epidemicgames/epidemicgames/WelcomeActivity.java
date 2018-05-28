@@ -187,14 +187,19 @@ public class WelcomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_exit) {
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
-            myBuild.setMessage("¿Seguro que quieres salir?");
+            myBuild.setMessage("¿Seguro que quieres cerrar sesión?");
             myBuild.setTitle("Epidemic Games");
 
             myBuild.setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //Cierra todo
-                    finishAffinity();
+
+                    DataClass.profileFAIL = 1;
+                    DataClass.info = "¡Has cerrado sesión!";
+
+                    Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             });
 

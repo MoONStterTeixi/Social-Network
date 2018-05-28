@@ -60,6 +60,23 @@ public class LoginActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        if(DataClass.profileFAIL == 1){
+            if (DataClass.color == 1){
+                tv_noConn.setBackgroundColor(Color.RED);
+            }else{
+                tv_noConn.setBackgroundColor(Color.GREEN);
+            }
+            tv_noConn.setText(DataClass.info);
+            et_email.setText(null);
+            et_pwd.setText(null);
+            s_saveLogin.setChecked(false);
+            details = 0;
+            saveData();
+        }
+
+
+
         //Switch si es check hace una cosa sino otra
         s_saveLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -78,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(details == 1){
                         Toast.makeText(getBaseContext(), "¡Credenciales eliminas!", Toast.LENGTH_LONG).show();
-                        details =+ 0;
+                        details = 0;
                     }
                     saveData();
                 }
@@ -120,12 +137,18 @@ public class LoginActivity extends AppCompatActivity {
 
     //Ver Password
     public void onToggleClicked(View view) {
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-        if (on) {
-            et_pwd.setTransformationMethod(null);
-        } else {
-            et_pwd.setTransformationMethod(new PasswordTransformationMethod());
+
+        if(details == 0){
+            // Is the toggle on?
+            boolean on = ((ToggleButton) view).isChecked();
+            if (on) {
+                et_pwd.setTransformationMethod(null);
+            } else {
+                et_pwd.setTransformationMethod(new PasswordTransformationMethod());
+            }
+        }else{
+            tv_noConn.setBackgroundColor(Color.YELLOW);
+            tv_noConn.setText("Una vez guardad la credencial no puede ver la Password");
         }
     }
 
@@ -193,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
         String userFinal = CryptoHash.getSha256(et_email.getText().toString().replace(" ",""));
 
         //Formula final de la encryptación
-        String cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
+        DataClass.cryptohash = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
         //Campos vacios
         if (et_email.getText().toString().equals("") && et_pwd.getText().toString().equals("")){
@@ -205,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             try{
                 //Enviamos el paquete JSON
-                DataClass.usr = new User(et_email.getText().toString().replace(" ",""), cryptohash);
+                DataClass.usr = new User(et_email.getText().toString().replace(" ",""), DataClass.cryptohash);
                 new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=login&json=" + DataClass.usr.toJsonL()).get();
 
                 //Retorno del PHP

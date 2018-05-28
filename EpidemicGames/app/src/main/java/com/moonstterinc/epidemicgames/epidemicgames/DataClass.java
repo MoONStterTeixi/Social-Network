@@ -9,6 +9,17 @@ public class DataClass {
     public static String UserJson = "";
     public static User usr;
 
+    //Contreseña cifrada
+    public static String cryptohash = "";
+
+    //Seguridad
+    public static int profileFAIL = 0;
+    public static int  contadoID = 4;
+
+    //Mensaje en rojo
+    public static String info = "";
+    public static int color = 0;
+
     //Global
     public static User GlobalUser;
 

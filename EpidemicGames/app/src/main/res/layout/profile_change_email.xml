@@ -3,7 +3,7 @@
     android:layout_width="280dp"
     android:layout_height="280dp"
     android:layout_gravity="center"
-    android:background="@android:color/transparent"
+    android:background="@android:color/background_light"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -53,15 +53,13 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/ce_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Email"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textColorHint="@android:color/background_light"
+                android:textColorHint="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="280dp"
-    android:layout_height="280dp"
+    android:layout_height="230dp"
     android:layout_gravity="center"
-    android:background="@android:color/transparent"
+    android:background="@android:color/background_light"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -47,16 +47,19 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <Spinner
+                android:id="@+id/profile_selcgen"
+                style="@android:style/Widget.Spinner.DropDown"
+                android:layout_width="183dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center" />
 
-            </RadioGroup>
         </LinearLayout>
 
     </LinearLayout>

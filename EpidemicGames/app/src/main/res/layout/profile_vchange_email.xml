@@ -3,7 +3,6 @@
     android:layout_width="280dp"
     android:layout_height="280dp"
     android:layout_gravity="center"
-    android:background="@drawable/buttonstyle"
     android:orientation="vertical"
     android:padding="5dp">
 
