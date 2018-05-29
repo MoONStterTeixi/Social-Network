@@ -38,4 +38,9 @@ https://www.youtube.com/watch?v=USbTcGx1mD0&index=1&list=PLk7v1Z2rk4hjHrGKo9GqOt
 Link del repositorio
 https://simplifiedcoding.net/demos/marvel/
 
-Apartado 6 video
+
+Noticias:
+https://ws.moonstterinc.com/query.php?action=test
+
+https://ws.moonstterinc.com/query.php?action=getnews
+

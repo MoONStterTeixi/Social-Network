@@ -33,6 +33,7 @@
         <activity android:name=".NewsActivity" />
         <activity android:name=".GamesActivity" />
         <activity android:name=".AboutActivity" />
+        <activity android:name=".newsComplet"></activity>
     </application>
 
 </manifest>

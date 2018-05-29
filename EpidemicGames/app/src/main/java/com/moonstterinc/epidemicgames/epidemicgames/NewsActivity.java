@@ -1,5 +1,6 @@
 package com.moonstterinc.epidemicgames.epidemicgames;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
@@ -13,20 +14,28 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsActivity extends AppCompatActivity {
 
-    private List<News> news;
-    private NewsAdapter newsAdapter;
-    private String newsTitle = "Noticias";
-    private String newsText = "Texto";
-    private String newsLabel = "Label";
-    private String newsDate = "00/00/0000";
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
-    //*
-    GridLayout mainGrid;
+    private List<ListItem> listItems;
+
+    private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,66 +48,13 @@ public class NewsActivity extends AppCompatActivity {
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        news = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            News news = new News();
-
-            news.setTitle(newsTitle);
-            news.setText(newsText);
-            news.setLabel(newsLabel);
-            news.setDate(newsDate);
-
-
-            this.news.add(news);
-
-            //*
-            mainGrid = findViewById(R.id.mainGrid);
-            //Set Event
-            //setSingleEvent(mainGrid);
-        }
-
-        //find view by id and attaching adapter for the RecyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsAdapter = new NewsAdapter(recyclerView, news, this);
-        recyclerView.setAdapter(newsAdapter);
 
-        //set load more listener for the RecyclerView adapter
-        newsAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (news.size() <= 20) {
-                    news.add(null);
-                    newsAdapter.notifyItemInserted(news.size() - 1);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            news.remove(news.size() - 1);
-                            newsAdapter.notifyItemRemoved(news.size());
+        listItems = new ArrayList<>();
 
-                            //Generating more data
-                            int index = news.size();
-                            int end = index + 5;
-                            for (int i = index; i < end; i++) {
-                                News news = new News();
-
-                                news.setTitle(newsTitle);
-                                news.setText(newsText);
-                                news.setLabel(newsLabel);
-                                news.setDate(newsDate);
-
-                                NewsActivity.this.news.add(news);
-                            }
-                            newsAdapter.notifyDataSetChanged();
-                            newsAdapter.setLoaded();
-                        }
-                    }, 5000);
-                } else {
-                    Toast.makeText(NewsActivity.this, "Loading data completed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        loadRecyclerViewData();
 
     }
 
@@ -109,30 +65,53 @@ public class NewsActivity extends AppCompatActivity {
                 finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    //*
-    private void setSingleEvent(GridLayout mainGrid) {
-        //Loop all child item of Main Grid
-        for (int i = 0; i < mainGrid.getChildCount(); i++) {
-            //You can see , all child item is CardView , so we just cast object to CardView
-            CardView cardView = (CardView) mainGrid.getChildAt(i);
-            final int finalI = i;
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(NewsActivity.this,ActivityOne.class);
-                    intent.putExtra("info","This is activity from card item index  "+finalI);
-                    startActivity(intent);
-                }
+    private void loadRecyclerViewData(){
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
 
-                //Un solo layout
-                    /*Intent intent = new Intent(MainActivity.this,ActivityOne.class);
-                    intent.putExtra("info","This is activity from card item index  "+finalI);
-                    startActivity(intent);*/
-            });
-        }
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                URL_DATA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        progressDialog.dismiss();
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+                            JSONArray array = jsonObject.getJSONArray("heroes");
+
+                            for(int i = 0; i<array.length(); i++){
+                                JSONObject o = array.getJSONObject(i);
+                                ListItem item = new ListItem(
+                                        o.getString("name"),
+                                        o.getString("about"),
+                                        o.getString("image")
+                                );
+                                listItems.add(item);
+                            }
+
+                            adapter = new MyAdapter(listItems,getApplicationContext());
+                            recyclerView.setAdapter(adapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), error.getMessage(),Toast.LENGTH_LONG);
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }
+

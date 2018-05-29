@@ -196,11 +196,12 @@ public class WelcomeActivity extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int which) {
 
                     DataClass.profileFAIL = 1;
+                    DataClass.color = 0;
                     DataClass.info = "¡Has cerrado sesión!";
 
                     Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    finish();
                 }
             });
 
@@ -383,11 +384,6 @@ public class WelcomeActivity extends AppCompatActivity
                             dialog.show();
                             break;
                     }
-
-                    //Un solo layout nos sirvira para noticias
-                    /*Intent intent = new Intent(MainActivity.this,ActivityOne.class);
-                    intent.putExtra("info","This is activity from card item index  "+finalI);
-                    startActivity(intent);*/
                 }
             });
         }

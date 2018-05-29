@@ -114,35 +114,6 @@ public class User {
         return jsonobj.toString();
     }
 
-    //Cambio Email
-    public String toJsonCE(){
-
-        JSONObject jsonobj = new JSONObject();
-        try{
-            jsonobj.put("username",this.username);
-            jsonobj.put("email",this.email);
-            jsonobj.put("sub",this.sub);
-            //jsonobj.put("img",this.img);
-
-        }catch (Exception e){}
-        return jsonobj.toString();
-    }
-
-    //Cambio Genero
-    public String toJsonCG(){
-
-        JSONObject jsonobj = new JSONObject();
-        try{
-            jsonobj.put("username",this.username);
-            jsonobj.put("genre",this.genre);
-            jsonobj.put("sub",this.sub);
-            //jsonobj.put("img",this.img);
-
-        }catch (Exception e){}
-        return jsonobj.toString();
-    }
-
-
     public static User GetObj(String v){
         User usr = new User();
         try {

@@ -25,14 +25,14 @@ import static java.lang.System.exit;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView tv_username, tv_checkID;
+    private TextView tv_username, tv_checkID, pass;
     private ImageView iv_image;
     private Button b_email, b_pass, b_genre;
     private Spinner s_profile_selcgen;
 
     private boolean unlock = false;
     int value = 0;
-    private String passwordFinal = "";
+    int posResult;
 
     Dialog myDialog;
 
@@ -97,25 +97,56 @@ public class ProfileActivity extends AppCompatActivity {
                 btnFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String pwdFinal = CryptoHash.getSha256(passwordFinal);
+                        String pwdFinal = CryptoHash.getSha256(pass.getText().toString().replace(" ",""));
                         String userFinal = CryptoHash.getSha256(ce_email.getText().toString().replace(" ",""));
 
                         //Formula final de la encryptación
                         String cryptohashFinal = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
                         try{
-                            DataClass.usr = new User(DataClass.GlobalUser.getUsername(),ce_email.getText().toString().replace(" ",""), null,0,true);
+                            DataClass.usr = new User(DataClass.GlobalUser.getUsername(),ce_email.getText().toString().replace(" ",""), cryptohashFinal, DataClass.GlobalUser.getGenre(),true);
                             new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJson()).get();
 
                             //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
-
+                        if(!DataClass.GlobalUser.getEmail().equals(userFinal)){
+                            tv_checkID.setBackgroundColor(Color.BLACK);
+                            tv_checkID.setText("[Email actual] Anulado opración.");
+                            myDialog.dismiss();
+                        }else{
                             if (DataClass.UserJson.equals("1")){
-                                Toast.makeText(ProfileActivity.this, "Email cambiado con exito", Toast.LENGTH_LONG).show();
+                                tv_checkID.setBackgroundColor(Color.BLACK);
+                                tv_checkID.setText("Cerrando y aplicando: Gracias, Adiós.");
+
                                 DataClass.profileFAIL = 1;
                                 myDialog.dismiss();
+
+                                AlertDialog.Builder myBuild = new AlertDialog.Builder(ProfileActivity.this);
+                                myBuild.setMessage("Email cambiado con exito.\nCerrando sesión para aplicar cambios...");
+                                myBuild.setTitle("Epidemic Games");
+
+                                DataClass.info = "Vuelve a escribir las credenciales.";
+                                DataClass.color = 2;
+
+                                myBuild.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                AlertDialog dialog = myBuild.create();
+                                dialog.show();
+                                thread(3000);
                             }else{
+                                tv_checkID.setBackgroundColor(Color.YELLOW);
+                                tv_checkID.setTextColor(Color.BLACK);
+                                tv_checkID.setText("Email ya registrado :(");
                                 Toast.makeText(ProfileActivity.this, "Error al intentar cambiar el email", Toast.LENGTH_LONG).show();
+                                myDialog.dismiss();
                             }
+                        }
+
+
                         }catch(Exception e){
 
                         }
@@ -131,8 +162,6 @@ public class ProfileActivity extends AppCompatActivity {
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 myDialog.show();
             }
-
-
     }
 
     public void ShowPass(View v) {
@@ -140,11 +169,68 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Antes debes desbloquear el candado", Toast.LENGTH_LONG).show();
         }else{
             TextView txtclose;
+            final EditText new_pass;
+
             Button btnFollow;
             myDialog.setContentView(R.layout.profile_change_pass);
+
             txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
             txtclose.setText("");
+
+            new_pass = (EditText) myDialog.findViewById(R.id.new_pass);
+
             btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String pwdFinal = CryptoHash.getSha256(new_pass.getText().toString().replace(" ",""));
+                    String userFinal = CryptoHash.getSha256(DataClass.GlobalUser.getEmail());
+
+                    //Formula final de la encryptación
+                    String cryptohashFinal = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
+
+                    try{
+                        DataClass.usr = new User(DataClass.GlobalUser.getUsername(),DataClass.GlobalUser.getEmail(), cryptohashFinal, DataClass.GlobalUser.getGenre(),true);
+                        new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJson()).get();
+
+                        //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
+
+                        if (DataClass.UserJson.equals("1")){
+                            //Toast.makeText(ProfileActivity.this, "Password cambiado con exito", Toast.LENGTH_LONG).show();
+
+                            tv_checkID.setBackgroundColor(Color.BLACK);
+                            tv_checkID.setText("Cerrando y aplicando: Gracias, Adiós");
+
+                            DataClass.profileFAIL = 1;
+                            myDialog.dismiss();
+
+                            AlertDialog.Builder myBuild = new AlertDialog.Builder(ProfileActivity.this);
+                            myBuild.setMessage("Contraseña cambiada con exito.\nCerrando sesión para aplicar cambios...");
+                            myBuild.setTitle("Epidemic Games");
+
+                            DataClass.info = "Vuelve a escribir las credenciales.";
+                            DataClass.color = 2;
+
+                            myBuild.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            AlertDialog dialog = myBuild.create();
+                            dialog.show();
+                            thread(3000);
+                        }else{
+
+                        }
+                    }catch(Exception e){
+
+                    }
+                }
+            });
+
+
             txtclose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -175,23 +261,23 @@ public class ProfileActivity extends AppCompatActivity {
             });
 
             Spinner spinner = (Spinner) myDialog.findViewById(R.id.profile_selcgen);
-            String[] valores = {"Mujer","Hombre","Otro"};
+            String[] valores = {"Elige género:","Mujer","Hombre","Otro"};
             spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
                 {
-                    /*int fin = (int) adapterView.getItemAtPosition(position);
-                    Toast.makeText(adapterView.getContext(), "Elegido" + fin, Toast.LENGTH_SHORT).show();*/
-                    Toast.makeText(adapterView.getContext(), (String) adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(adapterView.getContext(), (String) adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                    int pos = position;
+                    posResult = pos;
+                    //Toast.makeText(ProfileActivity.this, ""+pos, Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent)
                 {
                     // vacio
-
                 }
             });
 
@@ -199,24 +285,34 @@ public class ProfileActivity extends AppCompatActivity {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String pwdFinal = CryptoHash.getSha256( pass.getText().toString().replace(" ",""));
+                    String userFinal = CryptoHash.getSha256(DataClass.GlobalUser.getEmail());
 
-                    try{
-                        DataClass.usr = new User(DataClass.GlobalUser.getUsername(),0,true);
-                        new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJsonCG()).get();
+                    //Formula final de la encryptación
+                    String cryptohashFinal = CryptoHash.getSha256(pwdFinal +"."+ userFinal);
 
-                        //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
+                    if (posResult == 0 ){
+                        Toast.makeText(ProfileActivity.this, "Elige tú género...", Toast.LENGTH_LONG).show();
+                    }else{
+                        try{
+                            DataClass.usr = new User(DataClass.GlobalUser.getUsername(),DataClass.GlobalUser.getEmail(),cryptohashFinal, posResult,true);
+                            new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJson()).get();
 
-                        if (DataClass.UserJson.equals("1")){
-                            Toast.makeText(ProfileActivity.this, "Email cambiado con exito", Toast.LENGTH_LONG).show();
-                            DataClass.profileFAIL = 1;
-                            myDialog.dismiss();
-                        }else{
-                            Toast.makeText(ProfileActivity.this, "Error al intentar cambiar el email", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
+
+                            if (DataClass.UserJson.equals("1")){
+                                //Toast.makeText(ProfileActivity.this, "Password cambiado con exito", Toast.LENGTH_LONG).show();
+                                tv_checkID.setBackgroundColor(Color.BLACK);
+                                tv_checkID.setText("Genéro aplicado: Gracias, Adiós");
+                                myDialog.dismiss();
+                            }else{
+
+                            }
+                        }catch(Exception e){
+
                         }
-                    }catch(Exception e){
-
                     }
-                }
+                    }
             });
 
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -227,15 +323,13 @@ public class ProfileActivity extends AppCompatActivity {
     public void ShowOKPASS(View v) {
         DataClass.contadoID = DataClass.contadoID - 1;
         if (!unlock){
-            final TextView txtclose, pass;
+            final TextView txtclose;
 
             myDialog.setContentView(R.layout.profile_vchange_email);
             txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
             txtclose.setText("");
 
             pass = myDialog.findViewById(R.id.passCheck);
-
-            passwordFinal = pass.getText().toString().replace(" ","");
 
             Button btnFollow;
             btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
@@ -318,6 +412,7 @@ public class ProfileActivity extends AppCompatActivity {
                         Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        finish();
                     }
                 }
             }

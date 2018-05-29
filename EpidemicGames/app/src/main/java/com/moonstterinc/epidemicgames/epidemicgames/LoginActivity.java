@@ -64,15 +64,33 @@ public class LoginActivity extends AppCompatActivity {
         if(DataClass.profileFAIL == 1){
             if (DataClass.color == 1){
                 tv_noConn.setBackgroundColor(Color.RED);
-            }else{
+                tv_noConn.setText(DataClass.info);
+                et_email.setText(null);
+                et_pwd.setText(null);
+                s_saveLogin.setChecked(false);
+                details = 0;
+                DataClass.profileFAIL = 0;
+                saveData();
+            }else if(DataClass.color == 2){
+                tv_noConn.setTextColor(Color.BLACK);
+                tv_noConn.setBackgroundColor(Color.YELLOW);
+                tv_noConn.setText(DataClass.info);
+                et_email.setText(null);
+                et_pwd.setText(null);
+                s_saveLogin.setChecked(false);
+                details = 0;
+                DataClass.profileFAIL = 0;
+                saveData();
+        }else{
                 tv_noConn.setBackgroundColor(Color.GREEN);
+                tv_noConn.setText(DataClass.info);
+                et_email.setText(null);
+                et_pwd.setText(null);
+                s_saveLogin.setChecked(false);
+                details = 0;
+                DataClass.profileFAIL = 0;
+                saveData();
             }
-            tv_noConn.setText(DataClass.info);
-            et_email.setText(null);
-            et_pwd.setText(null);
-            s_saveLogin.setChecked(false);
-            details = 0;
-            saveData();
         }
 
         //Switch si es check hace una cosa sino otra
@@ -183,7 +201,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //Restablecer contraseña
     public void ShowEmail(View v) {
-            TextView txtclose;
+        Toast.makeText(LoginActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+            /*TextView txtclose;
             Button btnFollow;
             myDialog.setContentView(R.layout.login_change_pass);
             txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
@@ -196,7 +215,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            myDialog.show();
+            myDialog.show();*/
     }
 
     //Crear la tarjeta del progresso

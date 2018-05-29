@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="260dp"
     android:layout_height="340dp"
     android:layout_gravity="center"
@@ -64,7 +65,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/new_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -72,9 +73,9 @@
                 android:inputType="textPassword"
                 android:shadowColor="@color/colorAccent"
                 android:textAlignment="center"
-                android:textColor="@android:color/background_light"
+                android:textColor="@android:color/background_dark"
                 android:textColorHighlight="@color/colorAccent"
-                android:textColorHint="@android:color/background_light" />
+                android:textColorHint="@android:color/black" />
         </LinearLayout>
 
     </LinearLayout>
