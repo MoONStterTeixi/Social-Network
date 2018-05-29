@@ -166,7 +166,7 @@ public class ProfileActivity extends AppCompatActivity {
             myDialog.setContentView(R.layout.profile_change_genre);
             txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
             txtclose.setText("");
-            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+
             txtclose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -175,13 +175,15 @@ public class ProfileActivity extends AppCompatActivity {
             });
 
             Spinner spinner = (Spinner) myDialog.findViewById(R.id.profile_selcgen);
-            String[] valores = {"Mujero","Hombre","Otro"};
+            String[] valores = {"Mujer","Hombre","Otro"};
             spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
                 {
+                    /*int fin = (int) adapterView.getItemAtPosition(position);
+                    Toast.makeText(adapterView.getContext(), "Elegido" + fin, Toast.LENGTH_SHORT).show();*/
                     Toast.makeText(adapterView.getContext(), (String) adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                 }
 
@@ -190,6 +192,30 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     // vacio
 
+                }
+            });
+
+            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    try{
+                        DataClass.usr = new User(DataClass.GlobalUser.getUsername(),0,true);
+                        new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJsonCG()).get();
+
+                        //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
+
+                        if (DataClass.UserJson.equals("1")){
+                            Toast.makeText(ProfileActivity.this, "Email cambiado con exito", Toast.LENGTH_LONG).show();
+                            DataClass.profileFAIL = 1;
+                            myDialog.dismiss();
+                        }else{
+                            Toast.makeText(ProfileActivity.this, "Error al intentar cambiar el email", Toast.LENGTH_LONG).show();
+                        }
+                    }catch(Exception e){
+
+                    }
                 }
             });
 

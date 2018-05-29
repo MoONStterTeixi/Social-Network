@@ -34,3 +34,5 @@ https://www.youtube.com/watch?v=ASo57cTVctM
 
 //Dinamicas tarjetitas
 https://www.youtube.com/watch?v=USbTcGx1mD0&index=1&list=PLk7v1Z2rk4hjHrGKo9GqOtLs1e2bglHHA
+
+Apartado 6 video
