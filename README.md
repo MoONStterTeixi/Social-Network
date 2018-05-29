@@ -35,4 +35,7 @@ https://www.youtube.com/watch?v=ASo57cTVctM
 //Dinamicas tarjetitas
 https://www.youtube.com/watch?v=USbTcGx1mD0&index=1&list=PLk7v1Z2rk4hjHrGKo9GqOtLs1e2bglHHA
 
+Link del repositorio
+https://simplifiedcoding.net/demos/marvel/
+
 Apartado 6 video
