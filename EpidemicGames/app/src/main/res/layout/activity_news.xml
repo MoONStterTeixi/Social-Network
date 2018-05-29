@@ -28,15 +28,13 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="297dp"
+        android:layout_width="354dp"
         android:layout_height="522dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent"></android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

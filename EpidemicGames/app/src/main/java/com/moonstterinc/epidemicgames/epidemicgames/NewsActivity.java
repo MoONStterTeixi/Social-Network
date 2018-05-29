@@ -69,8 +69,9 @@ public class NewsActivity extends AppCompatActivity {
     }
 
     private void loadRecyclerViewData(){
+        //Tarjeta cargando + carga datos de la base de datos
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading data...");
+        progressDialog.setMessage("Cargando noticias...");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
@@ -81,6 +82,7 @@ public class NewsActivity extends AppCompatActivity {
                         progressDialog.dismiss();
 
                         try {
+                            //Añadimos el objecto JSON
                             JSONObject jsonObject = new JSONObject(s);
                             JSONArray array = jsonObject.getJSONArray("heroes");
 
@@ -89,6 +91,10 @@ public class NewsActivity extends AppCompatActivity {
                                 ListItem item = new ListItem(
                                         o.getString("name"),
                                         o.getString("about"),
+                                        o.getString("desc"),
+                                        o.getString("tag"),
+                                        o.getString("date"),
+                                        o.getString("text"),
                                         o.getString("image")
                                 );
                                 listItems.add(item);
