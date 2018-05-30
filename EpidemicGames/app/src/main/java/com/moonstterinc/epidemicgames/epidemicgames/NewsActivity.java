@@ -35,7 +35,7 @@ public class NewsActivity extends AppCompatActivity {
 
     private List<ListItem> listItems;
 
-    private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=test";
+    private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=getnews";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class NewsActivity extends AppCompatActivity {
                         try {
                             //Añadimos el objecto JSON
                             JSONObject jsonObject = new JSONObject(s);
-                            JSONArray array = jsonObject.getJSONArray("heroes");
+                            JSONArray array = jsonObject.getJSONArray("news");
 
                             for(int i = 0; i<array.length(); i++){
                                 JSONObject o = array.getJSONObject(i);

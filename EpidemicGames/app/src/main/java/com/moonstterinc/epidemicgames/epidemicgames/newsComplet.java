@@ -32,8 +32,6 @@ public class newsComplet extends AppCompatActivity {
         TextView txtText = (TextView)findViewById(R.id.text);
         ImageView imImage = (ImageView) findViewById(R.id.imageView);
 
-
-
         //Insertarlas en cada sitio
         if(getIntent() != null)
         {
