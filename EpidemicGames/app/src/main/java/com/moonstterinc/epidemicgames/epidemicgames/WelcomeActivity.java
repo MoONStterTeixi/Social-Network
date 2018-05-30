@@ -361,11 +361,11 @@ public class WelcomeActivity extends AppCompatActivity
                             startActivity(intent);
                             break;
                         case 2:
-                            intent = new Intent(WelcomeActivity.this,GamesActivity.class);
-                            startActivity(intent);
+                            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
                             break;
                         case 3:
-                            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                            intent = new Intent(WelcomeActivity.this,GamesActivity.class);
+                            startActivity(intent);
                             break;
                         case 4:
                             Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();

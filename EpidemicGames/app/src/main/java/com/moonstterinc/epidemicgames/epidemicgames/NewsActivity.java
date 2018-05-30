@@ -3,6 +3,7 @@ package com.moonstterinc.epidemicgames.epidemicgames;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,6 +40,9 @@ public class NewsActivity extends AppCompatActivity {
 
     private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=getnews";
 
+    private TextView tv_alert, tv_alert2;
+    private ImageView im_alert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,8 @@ public class NewsActivity extends AppCompatActivity {
 
         //Boton lateral atras <-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        reference();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -68,7 +76,16 @@ public class NewsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void reference(){
+        tv_alert = findViewById(R.id.games_alert);
+        tv_alert2 = findViewById(R.id.games_alert2);
+        im_alert = findViewById(R.id.games_imalert);
+    }
+
     private void loadRecyclerViewData(){
+
+        DataClass.myAdapter = 0;
+
         //Tarjeta cargando + carga datos de la base de datos
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Cargando noticias...");
@@ -104,6 +121,10 @@ public class NewsActivity extends AppCompatActivity {
                             recyclerView.setAdapter(adapter);
 
                         } catch (JSONException e) {
+                            tv_alert2.setTextColor(Color.RED);
+                            tv_alert.setTextColor(Color.WHITE);
+                            im_alert.setBackgroundResource(R.drawable.no_foun);
+                            Toast.makeText(NewsActivity.this, "Compruebe la conexión o vuelva a intentarlo más tarde :)", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
 
