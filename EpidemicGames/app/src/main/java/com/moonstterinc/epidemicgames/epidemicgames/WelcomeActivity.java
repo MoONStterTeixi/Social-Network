@@ -45,6 +45,7 @@ public class WelcomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
+    private Button bt_ins,bt_web,bt_twi;
     Dialog myDialog;
     ViewFlipper v_flipper;
 
@@ -140,6 +141,38 @@ public class WelcomeActivity extends AppCompatActivity
 
         //Obtener evento de click en las tarjetas
         setSingleEvent(mainGrid);
+
+        //Button Ins
+        bt_ins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                /*Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);*/
+            }
+        });
+
+        //Button Web
+        bt_web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        //Button Twi
+        bt_twi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                /*Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);*/
+            }
+        });
     }
 
     //Declaraciones de references
@@ -147,6 +180,9 @@ public class WelcomeActivity extends AppCompatActivity
         tv_statusTime = findViewById(R.id.w_statusTime);
         tv_username = findViewById(R.id.w_username);
         mainGrid = findViewById(R.id.mainGrid);
+        bt_ins = findViewById(R.id.welcome_ins);
+        bt_web = findViewById(R.id.welcome_web);
+        bt_twi = findViewById(R.id.welcome_twi);
     }
 
 
@@ -303,31 +339,6 @@ public class WelcomeActivity extends AppCompatActivity
         myDialog.show();
     }
 
-
-    //Mostrar mensaje de Redes Sociales
-    public void ShowSocial() {
-        TextView txtclose;
-        Button btnFollow;
-        myDialog.setContentView(R.layout.welcome_social);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("");
-        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
-
-    public void onWeb(View v) {
-        Uri uri = Uri.parse("http://www.moonstterinc.com/es/");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-    }
-
     //Evento al hacer click en la tajeta adecuada
     private void setSingleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
@@ -357,8 +368,7 @@ public class WelcomeActivity extends AppCompatActivity
                             Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
                             break;
                         case 4:
-                            //Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
-                            ShowSocial();
+                            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
                             break;
                         case 5:
                             AlertDialog.Builder myBuild = new AlertDialog.Builder(WelcomeActivity.this);
