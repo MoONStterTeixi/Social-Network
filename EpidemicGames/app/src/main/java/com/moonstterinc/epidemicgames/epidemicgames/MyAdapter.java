@@ -34,9 +34,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item, parent,false);
 
-        }else{
+        }else if (DataClass.myAdapter == 1){
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item2, parent,false);
+        }else{
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item3, parent,false);
         }
 
         return new ViewHolder(v);
@@ -48,17 +51,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         final ListItem listItem = listItems.get(position);
 
             //Añadir texto en los Textview de list_item
-            holder.textViewHead.setText(listItem.getHead());
-            holder.textViewAbout.setText(listItem.getAbout());
 
             if(DataClass.myAdapter == 0){
                 holder.textViewDate.setText(listItem.getDate());
-            }
+            }else if (DataClass.myAdapter == 1){
+                holder.textViewHead.setText(listItem.getHead());
+                holder.textViewAbout.setText(listItem.getAbout());
 
+            } else if (DataClass.myAdapter == 2){
+                //DataClass.id = 1;
+                    holder.textId.setText("1");
+                    holder.textViewHead.setText(listItem.getNick());
+                    holder.textViewDate.setText(listItem.getLvl());
+                    holder.textViewAbout.setText(listItem.getRound());
+
+
+            }
             //Obtener la imagen vía url
-            Picasso.get()
+            /*Picasso.get()
                     .load(listItem.getImageUrl())
-                    .into(holder.imageView);
+                    .into(holder.imageView);*/
 
             //Obtener el onClick de las tarjetas
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -66,15 +78,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 public void onClick(View v) {
 
                     //Pasar datos de un intent a otro
-                    Intent intent = new Intent(context, newsComplet.class);
-                    intent.putExtra("head",  listItem.getHead());
-                    intent.putExtra("desc",   listItem.getDesc());
-                    intent.putExtra("tag",   listItem.getTag());
-                    intent.putExtra("date",   listItem.getDate());
-                    intent.putExtra("text",   listItem.getText());
-                    intent.putExtra("img",   listItem.getImageUrl());
-                    context.startActivity(intent);
-                    //Toast.makeText(context, "Has Clicado en " + listItem.getHead(), Toast.LENGTH_LONG).show();
+                    if(DataClass.myAdapter == 2){
+                        Toast.makeText(context, "El/Ella es: " + listItem.getNick(), Toast.LENGTH_LONG).show();
+                    }else{
+                        Intent intent = new Intent(context, newsComplet.class);
+                        intent.putExtra("head",  listItem.getHead());
+                        intent.putExtra("desc",   listItem.getDesc());
+                        intent.putExtra("tag",   listItem.getTag());
+                        intent.putExtra("date",   listItem.getDate());
+                        intent.putExtra("text",   listItem.getText());
+                        intent.putExtra("img",   listItem.getImageUrl());
+                        context.startActivity(intent);
+                    }
+
+                    //
                 }
             });
 
@@ -95,12 +112,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public TextView textViewTag;
         public TextView textViewDate;
         public TextView textViewText;
+        public TextView textId;
         public ImageView imageView;
         public LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            textId = itemView.findViewById(R.id.textId);
             textViewHead = itemView.findViewById(R.id.textViewHead);
             textViewAbout = itemView.findViewById(R.id.textViewAbout);
             textViewDate = itemView.findViewById(R.id.textViewDate);

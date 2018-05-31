@@ -386,7 +386,8 @@ public class WelcomeActivity extends AppCompatActivity
                             startActivity(intent);
                             break;
                         case 4:
-                            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                            intent = new Intent(WelcomeActivity.this,GlobalActivity.class);
+                            startActivity(intent);
                             break;
                         case 5:
                             AlertDialog.Builder myBuild = new AlertDialog.Builder(WelcomeActivity.this);

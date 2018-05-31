@@ -25,6 +25,7 @@ public class DataClass {
 
     //MyApdater
     public static int myAdapter = 0;
+    public static int id=0;
 
     //RFC822 compliant regex adapted for Java (Correo)
     public static String pattern = "(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+" +

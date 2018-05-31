@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/textGrid2"
-                android:layout_alignTop="@+id/textView"
+                android:layout_alignTop="@+id/textViewDate"
                 android:text="textGrid"
                 android:textColor="@android:color/transparent"
                 android:textSize="10sp"

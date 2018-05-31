@@ -3,6 +3,8 @@ package com.moonstterinc.epidemicgames.epidemicgames;
 import android.nfc.Tag;
 
 public class ListItem {
+
+    //Noticias Y Games
     private String head;
     private String about;
     private String desc;
@@ -11,6 +13,12 @@ public class ListItem {
     private String text;
     private String imageUrl;
 
+    //Global
+    private String nick;
+    private String lvl;
+    private String round;
+
+    //Noticias Y Games
     public ListItem(String head, String about, String desc, String tag, String date, String text, String imageUrl) {
         this.head = head;
         this.about = about;
@@ -21,6 +29,14 @@ public class ListItem {
         this.imageUrl = imageUrl;
     }
 
+    //Global
+    public ListItem(String nick, String lvl, String round) {
+        this.nick = nick;
+        this.lvl = lvl;
+        this.round = round;
+    }
+
+    //Noticias Y Games
     public String getHead() {
         return head;
     }
@@ -49,4 +65,16 @@ public class ListItem {
         return imageUrl;
     }
 
+    //Global
+    public String getNick() {
+        return nick;
+    }
+
+    public String getLvl() {
+        return lvl;
+    }
+
+    public String getRound() {
+        return round;
+    }
 }
