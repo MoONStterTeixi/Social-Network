@@ -50,7 +50,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             //Añadir texto en los Textview de list_item
             holder.textViewHead.setText(listItem.getHead());
             holder.textViewAbout.setText(listItem.getAbout());
-            holder.textViewDate.setText(listItem.getDate());
+
+            if(DataClass.myAdapter == 0){
+                holder.textViewDate.setText(listItem.getDate());
+            }
 
             //Obtener la imagen vía url
             Picasso.get()

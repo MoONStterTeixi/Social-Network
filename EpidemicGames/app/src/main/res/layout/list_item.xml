@@ -27,7 +27,8 @@
                 android:id="@+id/imageView"
                 android:layout_width="296dp"
                 android:layout_height="104dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAlignment="center" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"

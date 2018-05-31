@@ -40,7 +40,7 @@ public class GamesActivity extends AppCompatActivity {
 
     private List<ListItem> listItems;
 
-    private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=test";
+    private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=getgames";
 
     Dialog myDialog;
     String appPackageName;
@@ -117,9 +117,6 @@ public class GamesActivity extends AppCompatActivity {
 
 
                             for(int i = 0; i<array.length(); i++){
-
-
-
                                 JSONObject o = array.getJSONObject(i);
                                 ListItem item = new ListItem(
                                         o.getString("name"),
@@ -136,6 +133,9 @@ public class GamesActivity extends AppCompatActivity {
                                 listItems.add(item);
                             }
 
+                            if (array.length() == 0){
+                                Toast.makeText(GamesActivity.this, "Compruebe la conexión o vuelva a intentarlo más tarde :)", Toast.LENGTH_LONG).show();
+                            }
                             adapter = new MyAdapter(listItems,getApplicationContext());
                             recyclerView.setAdapter(adapter);
 

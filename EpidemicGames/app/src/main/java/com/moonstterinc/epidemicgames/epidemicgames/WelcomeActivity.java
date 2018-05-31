@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,9 +30,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -297,6 +300,7 @@ public class WelcomeActivity extends AppCompatActivity
     public void ShowNewGame() {
         TextView txtclose;
         Button btnFollow;
+        Switch s_saveNomore;
         myDialog.setContentView(R.layout.welcome_ez);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
         txtclose.setText("");
@@ -307,12 +311,26 @@ public class WelcomeActivity extends AppCompatActivity
                 myDialog.dismiss();
             }
         });
+
+        s_saveNomore = (Switch) myDialog.findViewById(R.id.switch1);
+        s_saveNomore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    Toast.makeText(getBaseContext(), "¡SI!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "¡NOPE!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
 
     public void goPlayStore(View v){
-        final String appPackageName = "me.pou.app"; // getPackageName() from Context or Activity object
+        //final String appPackageName = "me.pou.app"; // getPackageName() from Context or Activity object
+        final String appPackageName = "com.MoONStterInc.EpidemicZombie";
         try {
             myDialog.dismiss();
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));

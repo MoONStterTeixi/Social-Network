@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.regex.Matcher;
@@ -23,7 +25,7 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username, et_email ,et_pwd, et_repwd;
-    private CheckBox cb_accept;
+    private CheckBox cb_acceptTerm,cb_accept;
     private TextView tv_noConn, tv_register_err_username, tv_register_err_email;
     int resultRG;
 
@@ -84,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_pwd = findViewById(R.id.password);
         et_repwd = findViewById(R.id.repPassword);
         tv_noConn = findViewById(R.id.noConn);
+        cb_acceptTerm = findViewById(R.id.acceptTerm);
         cb_accept = findViewById(R.id.accept);
         tv_register_err_username  = findViewById(R.id.register_err_username);
         tv_register_err_email = findViewById(R.id.register_err_email);
@@ -125,14 +128,14 @@ public class RegisterActivity extends AppCompatActivity {
         myBuild.setPositiveButton("Okey", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                cb_accept.setChecked(true);
+                cb_acceptTerm.setChecked(true);
             }
         });
         myBuild.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                cb_accept.setChecked(false);
+                cb_acceptTerm.setChecked(false);
             }
         });
 
@@ -170,13 +173,17 @@ public class RegisterActivity extends AppCompatActivity {
             //Error en modo foco
             et_username.requestFocus();
 
+
             //Correo no válido
-        }else if(!validateEmail(et_email.getText().toString())) {
+        }if(!validateEmail(et_email.getText().toString())) {
             et_email.setError("Correo inválido.");
             et_email.requestFocus();
 
-            //Contraseña no válida
-        } else if (!isValid(et_pwd.getText().toString())) {
+
+        }
+
+        //Contraseña no válida
+        if (!isValid(et_pwd.getText().toString())) {
             et_pwd.setError("Contraseña inválida:\n" +
                     "-Mínimo 1 Número,\n" +
                     "-Mínimo 1 una letra MAYÚSCULA,\n" +
@@ -198,27 +205,29 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
        //Verficamos que el check de terminos
-       if (cb_accept.isChecked()) {
+       if (cb_acceptTerm.isChecked()) {
            try{
                DataClass.usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
                //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
                new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+DataClass.usr.toJson()).get();
 
+               //Toast.makeText(this, DataClass.UserJson, Toast.LENGTH_LONG).show();
+
                //Retorno del PHP
                if (DataClass.UserJson.equals("2")){
-                   Toast.makeText(this, "[Error] Usuario ya en uso", Toast.LENGTH_LONG).show();
+                   //Toast.makeText(this, "[Error] Usuario ya en uso", Toast.LENGTH_LONG).show();
                    tv_register_err_username.setBackgroundColor(Color.RED);
                    tv_register_err_email.setBackgroundColor(Color.TRANSPARENT);
 
                }else if (DataClass.UserJson.equals("1")){
                    tv_register_err_username.setBackgroundColor(Color.TRANSPARENT);
                    tv_register_err_email.setBackgroundColor(Color.RED);
-                   Toast.makeText(this, "[Error] Email ya registrado", Toast.LENGTH_LONG).show();
+                   //Toast.makeText(this, "[Error] Email ya registrado", Toast.LENGTH_LONG).show();
 
                }else if (DataClass.UserJson.equals("3")){
                    tv_register_err_username.setBackgroundColor(Color.RED);
                    tv_register_err_email.setBackgroundColor(Color.RED);
-                   Toast.makeText(this, "[Error] Usuario y Email existentes", Toast.LENGTH_LONG).show();
+                  // Toast.makeText(this, "[Error] Usuario y Email existentes", Toast.LENGTH_LONG).show();
 
                }else{
                    tv_register_err_username.setBackgroundColor(Color.TRANSPARENT);
@@ -230,6 +239,7 @@ public class RegisterActivity extends AppCompatActivity {
                    finish();
                }
            }catch(Exception e){
+               Log.d("tag", String.valueOf(e));
                //Problemas de conexón
                tv_noConn.setBackgroundColor(Color.RED);
                tv_noConn.setText("Revisa la conexión");
