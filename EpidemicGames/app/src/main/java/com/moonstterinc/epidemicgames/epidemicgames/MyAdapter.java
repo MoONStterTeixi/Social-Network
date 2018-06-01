@@ -53,10 +53,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             //Añadir texto en los Textview de list_item
 
             if(DataClass.myAdapter == 0){
+                holder.textViewHead.setText(listItem.getHead());
+                holder.textViewAbout.setText(listItem.getAbout());
                 holder.textViewDate.setText(listItem.getDate());
+                //Obtener la imagen vía url
+                Picasso.get()
+                        .load(listItem.getImageUrl())
+                        .into(holder.imageView);
             }else if (DataClass.myAdapter == 1){
                 holder.textViewHead.setText(listItem.getHead());
                 holder.textViewAbout.setText(listItem.getAbout());
+                //Obtener la imagen vía url
+                Picasso.get()
+                        .load(listItem.getImageUrl())
+                        .into(holder.imageView);
 
             } else if (DataClass.myAdapter == 2){
                 //DataClass.id = 1;
@@ -64,13 +74,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     holder.textViewHead.setText(listItem.getNick());
                     holder.textViewDate.setText(listItem.getLvl());
                     holder.textViewAbout.setText(listItem.getRound());
-
-
             }
-            //Obtener la imagen vía url
-            /*Picasso.get()
-                    .load(listItem.getImageUrl())
-                    .into(holder.imageView);*/
+
 
             //Obtener el onClick de las tarjetas
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {

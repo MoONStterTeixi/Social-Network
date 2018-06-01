@@ -109,8 +109,8 @@
                 android:background="@android:drawable/editbox_dropdown_light_frame" />
 
             <Switch
-                android:id="@+id/switch1"
-                android:layout_width="165dp"
+                android:id="@+id/s_saveNomore"
+                android:layout_width="187dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="   No mostrar más" />

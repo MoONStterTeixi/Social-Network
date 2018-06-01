@@ -34,7 +34,8 @@
         <activity android:name=".GamesActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".newsComplet" />
-        <activity android:name=".GlobalActivity"></activity>
+        <activity android:name=".GlobalActivity" />
+        <activity android:name=".StatsActivity"></activity>
     </application>
 
 </manifest>

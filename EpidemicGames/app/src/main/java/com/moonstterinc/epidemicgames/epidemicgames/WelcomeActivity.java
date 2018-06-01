@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -42,6 +43,11 @@ import android.widget.ViewFlipper;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Calendar;
 
 public class WelcomeActivity extends AppCompatActivity
@@ -49,8 +55,15 @@ public class WelcomeActivity extends AppCompatActivity
 
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     private Button bt_ins,bt_web,bt_twi;
+    private Switch s_saveLogin;
+
     Dialog myDialog;
     ViewFlipper v_flipper;
+
+    //Guardar no mostrar mas CARD
+    static final int READ_BLOCK_SIZE = 100;
+
+    private int details = 0;
 
     //Tarjetas
     GridLayout mainGrid;
@@ -84,13 +97,10 @@ public class WelcomeActivity extends AppCompatActivity
                     Snackbar.make(view, "Abriendo Juego "+nameGame, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }catch (Exception e){
-                    ShowNewGame();
+                    //ShowNewGame();
                     Snackbar.make(view, "Debes descargar "+nameGame, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-
-
-
             }
         });
 
@@ -137,11 +147,6 @@ public class WelcomeActivity extends AppCompatActivity
         //Mensaje principa de Buenos días.. etc...
         getTimeFromAndroid();
 
-        if (contador == 0){
-            ShowNewGame();
-            contador ++;
-        }
-
         //Obtener evento de click en las tarjetas
         setSingleEvent(mainGrid);
 
@@ -176,6 +181,12 @@ public class WelcomeActivity extends AppCompatActivity
                 startActivity(intent);*/
             }
         });
+
+        onCargar();
+
+        if (details == 0){
+            //ShowNewGame();
+        }
     }
 
     //Declaraciones de references
@@ -186,6 +197,7 @@ public class WelcomeActivity extends AppCompatActivity
         bt_ins = findViewById(R.id.welcome_ins);
         bt_web = findViewById(R.id.welcome_web);
         bt_twi = findViewById(R.id.welcome_twi);
+        s_saveLogin = findViewById(R.id.s_saveNomore);
     }
 
 
@@ -312,15 +324,18 @@ public class WelcomeActivity extends AppCompatActivity
             }
         });
 
-        s_saveNomore = (Switch) myDialog.findViewById(R.id.switch1);
+        s_saveNomore = (Switch) myDialog.findViewById(R.id.s_saveNomore);
         s_saveNomore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    Toast.makeText(getBaseContext(), "¡SI!", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(getBaseContext(), "¡NOPE!", Toast.LENGTH_LONG).show();
+                    if (details == 0){
+                        Toast.makeText(getBaseContext(), "¡No lo volveremos a mostrar!", Toast.LENGTH_LONG).show();
+                        details = 1;
+                        onGuardar();
+                    }else if (details == 1){
+                        Toast.makeText(getBaseContext(), "¡2!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -379,7 +394,8 @@ public class WelcomeActivity extends AppCompatActivity
                             startActivity(intent);
                             break;
                         case 2:
-                            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+                            intent = new Intent(WelcomeActivity.this,StatsActivity.class);
+                            startActivity(intent);
                             break;
                         case 3:
                             intent = new Intent(WelcomeActivity.this,GamesActivity.class);
@@ -417,6 +433,56 @@ public class WelcomeActivity extends AppCompatActivity
             });
         }
     }
+
+
+    //Guardar Datos
+
+    public void onGuardar(){
+        String str = ""+details;
+        try{
+            FileOutputStream fos = openFileOutput("textFile.txt", MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+            // Escribimos el String en el archivo
+            osw.write(str);
+            osw.flush();
+            osw.close();
+
+            // Mostramos que se ha guardado
+            Toast.makeText(getBaseContext(), "Guardado", Toast.LENGTH_SHORT).show();
+
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void onCargar(){
+        try{
+            FileInputStream fis = openFileInput("textFile.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+
+            char[] inputBuffer = new char[READ_BLOCK_SIZE];
+            String s = "";
+
+            int charRead;
+            while((charRead = isr.read(inputBuffer)) > 0){
+                // Convertimos los char a String
+                String readString = String.copyValueOf(inputBuffer, 0, charRead);
+                s += readString;
+
+                inputBuffer = new char[READ_BLOCK_SIZE];
+            }
+
+            // Mostramos un Toast con el proceso completado
+            Toast.makeText(getBaseContext(), "Cargado"+s, Toast.LENGTH_SHORT).show();
+
+            isr.close();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
 
     //Al pusar atras con el boton de android sale un mensaje de estas seguro?
     @Override
