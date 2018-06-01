@@ -182,10 +182,8 @@ public class WelcomeActivity extends AppCompatActivity
             }
         });
 
-        onCargar();
-
-        if (details == 0){
-            //ShowNewGame();
+        if (details == 1){
+            ShowNewGame();
         }
     }
 
@@ -332,9 +330,6 @@ public class WelcomeActivity extends AppCompatActivity
                     if (details == 0){
                         Toast.makeText(getBaseContext(), "¡No lo volveremos a mostrar!", Toast.LENGTH_LONG).show();
                         details = 1;
-                        onGuardar();
-                    }else if (details == 1){
-                        Toast.makeText(getBaseContext(), "¡2!", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -435,53 +430,6 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
 
-    //Guardar Datos
-
-    public void onGuardar(){
-        String str = ""+details;
-        try{
-            FileOutputStream fos = openFileOutput("textFile.txt", MODE_PRIVATE);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
-
-            // Escribimos el String en el archivo
-            osw.write(str);
-            osw.flush();
-            osw.close();
-
-            // Mostramos que se ha guardado
-            Toast.makeText(getBaseContext(), "Guardado", Toast.LENGTH_SHORT).show();
-
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void onCargar(){
-        try{
-            FileInputStream fis = openFileInput("textFile.txt");
-            InputStreamReader isr = new InputStreamReader(fis);
-
-            char[] inputBuffer = new char[READ_BLOCK_SIZE];
-            String s = "";
-
-            int charRead;
-            while((charRead = isr.read(inputBuffer)) > 0){
-                // Convertimos los char a String
-                String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                s += readString;
-
-                inputBuffer = new char[READ_BLOCK_SIZE];
-            }
-
-            // Mostramos un Toast con el proceso completado
-            Toast.makeText(getBaseContext(), "Cargado"+s, Toast.LENGTH_SHORT).show();
-
-            isr.close();
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-    }
 
 
     //Al pusar atras con el boton de android sale un mensaje de estas seguro?

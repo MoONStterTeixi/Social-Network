@@ -234,7 +234,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_rowWeight="1"
-                app:cardBackgroundColor="@android:color/darker_gray"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
 
@@ -451,7 +450,7 @@
                     android:layout_width="458dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@android:color/holo_red_dark"
+                    android:background="@color/colorAccent"
                     android:text="Redes Sociales:"
                     android:textAlignment="center"
                     android:textColor="@android:color/background_light"

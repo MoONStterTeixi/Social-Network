@@ -31,7 +31,7 @@ public class GlobalActivity extends AppCompatActivity {
 
     private List<ListItem> listItems;
 
-    private static final String URL_DATA = "https://ws.moonstterinc.com/query.php?action=test";
+    private static final String URL_DATA = "https://moonstterinc.000webhostapp.com/EZ/query.php?action=gettop";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +86,12 @@ public class GlobalActivity extends AppCompatActivity {
                             for(int i = 0; i<array.length(); i++){
                                 JSONObject o = array.getJSONObject(i);
                                 ListItem item = new ListItem(
+                                        o.getInt("position"),
                                         o.getString("nickname"),
                                         o.getString("experience"),
                                         o.getString("act_round")
                                 );
                                 listItems.add(item);
-                                //DataClass.id = i++,
                             }
 
                             adapter = new MyAdapter(listItems,getApplicationContext());

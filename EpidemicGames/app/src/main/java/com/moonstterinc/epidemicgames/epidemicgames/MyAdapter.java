@@ -37,9 +37,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         }else if (DataClass.myAdapter == 1){
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item2, parent,false);
-        }else{
+        }else if (DataClass.myAdapter == 2){
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_item3, parent,false);
+        }else{
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.activity_stats, parent,false);
         }
 
         return new ViewHolder(v);
@@ -51,7 +54,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         final ListItem listItem = listItems.get(position);
 
             //Añadir texto en los Textview de list_item
-
             if(DataClass.myAdapter == 0){
                 holder.textViewHead.setText(listItem.getHead());
                 holder.textViewAbout.setText(listItem.getAbout());
@@ -68,14 +70,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                         .load(listItem.getImageUrl())
                         .into(holder.imageView);
 
-            } else if (DataClass.myAdapter == 2){
+            } else if (DataClass.myAdapter == 2) {
                 //DataClass.id = 1;
-                    holder.textId.setText("1");
-                    holder.textViewHead.setText(listItem.getNick());
-                    holder.textViewDate.setText(listItem.getLvl());
-                    holder.textViewAbout.setText(listItem.getRound());
+                holder.textId.setText("" + listItem.getPosition());
+                holder.textViewHead.setText(listItem.getNick());
+                holder.textViewDate.setText(listItem.getLvl());
+                holder.textViewAbout.setText(listItem.getRound());
             }
-
 
             //Obtener el onClick de las tarjetas
             holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -95,13 +96,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                         intent.putExtra("img",   listItem.getImageUrl());
                         context.startActivity(intent);
                     }
-
-                    //
                 }
             });
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -114,9 +111,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         //Declrarar las variables para uso posterios
         public TextView textViewHead;
         public TextView textViewAbout;
-        public TextView textViewTag;
         public TextView textViewDate;
-        public TextView textViewText;
         public TextView textId;
         public ImageView imageView;
         public LinearLayout linearLayout;
@@ -128,6 +123,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             textViewAbout = itemView.findViewById(R.id.textViewAbout);
             textViewDate = itemView.findViewById(R.id.textViewDate);
             imageView = itemView.findViewById(R.id.imageView);
+
             linearLayout = itemView.findViewById(R.id.linearLayout);
         }
     }
