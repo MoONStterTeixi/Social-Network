@@ -22,6 +22,7 @@ public class DataClass {
 
     //Global
     public static User GlobalUser;
+    public static int details = 0;
 
     //MyApdater
     public static int myAdapter = 0;

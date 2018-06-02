@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -17,7 +19,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
+import android.telecom.Call;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Base64;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -55,21 +59,32 @@ public class WelcomeActivity extends AppCompatActivity
 
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     private Button bt_ins,bt_web,bt_twi;
-    private Switch s_saveLogin;
+    private ImageView wel_image_profile;
 
     Dialog myDialog;
     ViewFlipper v_flipper;
-
-    //Guardar no mostrar mas CARD
-    static final int READ_BLOCK_SIZE = 100;
-
-    private int details = 0;
 
     //Tarjetas
     GridLayout mainGrid;
 
     int contador = 0;
     String nameGame = "Epidemic Zombie";
+
+
+    //No mostrar más tarjeta
+    private Switch s_saveLogin;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String NOMORE = "nomore";
+
+    private int nomore = 0;
+
+    //Cambio de fotoPerfil
+    Bitmap bmap;
+    public static final String IMAGE = "image";
+    private String image;
+
+    public static final String PROFILE = "profile";
+    private int profile = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +94,6 @@ public class WelcomeActivity extends AppCompatActivity
 
         //Evitar que rote *
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 
         //Barra Principal verde
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -182,9 +196,18 @@ public class WelcomeActivity extends AppCompatActivity
             }
         });
 
-        if (details == 1){
-            ShowNewGame();
+
+        loadData();
+        updateViews();
+
+        if (profile == 0){
+            wel_image_profile.setBackgroundResource(R.drawable.drawer_profileme);
+        }else{
+            wel_image_profile.setBackgroundColor(Color.TRANSPARENT);
         }
+
+        ShowNewGame();
+
     }
 
     //Declaraciones de references
@@ -196,6 +219,7 @@ public class WelcomeActivity extends AppCompatActivity
         bt_web = findViewById(R.id.welcome_web);
         bt_twi = findViewById(R.id.welcome_twi);
         s_saveLogin = findViewById(R.id.s_saveNomore);
+        wel_image_profile = findViewById(R.id.wel_image_profile);
     }
 
 
@@ -231,9 +255,8 @@ public class WelcomeActivity extends AppCompatActivity
             Intent Intent = new Intent(this, AboutActivity.class);
             startActivity(Intent);
         } else if (id == R.id.nav_settings) {
-            /*Intent Intent = new Intent(this, SettingsActivity.class);
-            startActivity(Intent);*/
-            Toast.makeText(WelcomeActivity.this, "No disponible", Toast.LENGTH_LONG).show();
+            Intent Intent = new Intent(this, SettingsActivity.class);
+            startActivity(Intent);
 
         } else if (id == R.id.nav_exit) {
             AlertDialog.Builder myBuild = new AlertDialog.Builder(this);
@@ -286,7 +309,7 @@ public class WelcomeActivity extends AppCompatActivity
         }else if(timeOfDay >= 21 && timeOfDay < 24){
             //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
             tv_statusTime.setText("Buenas noches,");
-        }else if(timeOfDay >= 24 && timeOfDay < 5) {
+        }else if(timeOfDay >=1 && timeOfDay < 6) {
             //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
             tv_statusTime.setText("Buenas noches,");
         }
@@ -308,34 +331,37 @@ public class WelcomeActivity extends AppCompatActivity
 
     //Mostar novedad de juego
     public void ShowNewGame() {
-        TextView txtclose;
-        Button btnFollow;
-        Switch s_saveNomore;
-        myDialog.setContentView(R.layout.welcome_ez);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("");
-        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
-        txtclose.setOnClickListener(new View.OnClickListener() {
+
+        if (nomore == 0){
+            TextView txtclose;
+            Button btnFollow;
+            Switch s_saveNomore;
+            myDialog.setContentView(R.layout.welcome_ez);
+            txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+            txtclose.setText("");
+            btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+            txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDialog.dismiss();
             }
         });
 
-        s_saveNomore = (Switch) myDialog.findViewById(R.id.s_saveNomore);
-        s_saveNomore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            s_saveNomore = (Switch) myDialog.findViewById(R.id.s_saveNomore);
+            s_saveNomore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    if (details == 0){
-                        Toast.makeText(getBaseContext(), "¡No lo volveremos a mostrar!", Toast.LENGTH_LONG).show();
-                        details = 1;
-                    }
+                if (isChecked) {
+                    Toast.makeText(getBaseContext(), "¡No lo volveremos a mostrar!", Toast.LENGTH_LONG).show();
+                    nomore = 1;
+                    saveData();
+
                 }
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
+                 }
+            });
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+        }
     }
 
     public void goPlayStore(View v){
@@ -457,4 +483,32 @@ public class WelcomeActivity extends AppCompatActivity
         dialog.show();
     }
 
+
+    //Prueba
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(NOMORE, nomore);
+
+        editor.apply();
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        nomore = sharedPreferences.getInt(NOMORE, nomore);
+
+
+        image = sharedPreferences.getString(IMAGE,"");
+        profile = sharedPreferences.getInt(PROFILE,  profile);
+    }
+
+    public void updateViews(){
+        nomore =+ nomore;
+
+        profile =+ profile;
+        byte [] encodeByte= Base64.decode(image, Base64.DEFAULT);
+        Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        wel_image_profile.setImageBitmap(bitmap);
+    }
 }

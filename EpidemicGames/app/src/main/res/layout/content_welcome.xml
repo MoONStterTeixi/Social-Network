@@ -85,13 +85,12 @@
                 android:id="@+id/w_username"
                 android:layout_width="299dp"
                 android:layout_height="59dp"
+                android:layout_alignEnd="@+id/textView34"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="40dp"
-                android:layout_marginEnd="-156dp"
-                android:layout_toStartOf="@+id/imageView14"
+                android:layout_marginBottom="36dp"
                 android:text="Usarname"
                 android:textColor="@color/colorPrimary"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -119,11 +118,12 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/imageView14"
-                android:layout_width="153dp"
-                android:layout_height="122dp"
-                android:layout_alignEnd="@+id/textView6"
+                android:id="@+id/wel_image_profile"
+                android:layout_width="111dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/drawer_profileme" />
 
 
@@ -417,7 +417,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
-                        android:background="@drawable/w_exit" />
+                        android:background="@drawable/w_exit"
+                        android:textAlignment="center" />
 
                     <TextView
                         android:layout_width="74dp"

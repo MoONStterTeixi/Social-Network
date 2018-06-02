@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username, et_email ,et_pwd, et_repwd;
     private CheckBox cb_acceptTerm,cb_accept;
-    private TextView tv_noConn, tv_register_err_username, tv_register_err_email;
+    private TextView tv_noConn;
     int resultRG;
 
     private ProgressDialog progressDialog;
@@ -88,8 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
         tv_noConn = findViewById(R.id.noConn);
         cb_acceptTerm = findViewById(R.id.acceptTerm);
         cb_accept = findViewById(R.id.accept);
-        tv_register_err_username  = findViewById(R.id.register_err_username);
-        tv_register_err_email = findViewById(R.id.register_err_email);
 
         //rggenre = findViewById(R.id.genre);
         /*rbother = findViewById(R.id.other);
@@ -192,60 +190,74 @@ public class RegisterActivity extends AppCompatActivity {
                     "-Debe ser mínimo de 6 Carácteres,\n" +
                     "-Máximo de 15 Carácteres.");
             et_pwd.requestFocus();
-        }
 
-        //Contraseña no iguales
-        if (!et_pwd.getText().toString().equals(et_repwd.getText().toString())) {
+            //Contraseña no iguales
+        }else if (!et_pwd.getText().toString().equals(et_repwd.getText().toString())) {
             //Toast.makeText(this, "Contraseña: ¡No son iguales!", Toast.LENGTH_LONG).show();
             et_pwd.setError("Contraseña: ¡No son iguales!");
             et_pwd.requestFocus();
 
             et_repwd.setError("Contraseña: ¡No son iguales!");
             et_repwd.requestFocus();
+
+            //Verficamos que el check de terminos
+        }else{
+            if (cb_acceptTerm.isChecked()) {
+                try{
+                    DataClass.usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
+                    //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
+                    new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+DataClass.usr.toJson()).get();
+
+                    //Toast.makeText(this, DataClass.UserJson, Toast.LENGTH_LONG).show();
+
+                    //Retorno del PHP
+                    if (DataClass.UserJson.equals("2")){
+                        et_username.setBackgroundColor(Color.RED);
+                        et_username.setTextColor(Color.WHITE);
+
+                        et_email.setBackgroundColor(Color.WHITE);
+                        et_email.setTextColor(Color.GRAY);
+                        Toast.makeText(this, "[Error] Usuario ya en uso", Toast.LENGTH_LONG).show();
+
+                    }else if (DataClass.UserJson.equals("1")){
+                        et_email.setBackgroundColor(Color.RED);
+                        et_email.setTextColor(Color.WHITE);
+
+                        et_username.setBackgroundColor(Color.WHITE);
+                        et_username.setTextColor(Color.GRAY);
+                        Toast.makeText(this, "[Error] Email ya registrado", Toast.LENGTH_LONG).show();
+
+                    }else if (DataClass.UserJson.equals("3")){
+                        et_username.setBackgroundColor(Color.RED);
+                        et_username.setTextColor(Color.WHITE);
+
+                        et_email.setBackgroundColor(Color.RED);
+                        et_email.setTextColor(Color.WHITE);
+                        Toast.makeText(this, "[Error] Usuario y Email existentes", Toast.LENGTH_LONG).show();
+
+                    }else{
+                        et_username.setBackgroundColor(Color.WHITE);
+                        et_username.setTextColor(Color.GRAY);
+
+                        et_email.setBackgroundColor(Color.WHITE);
+                        et_email.setTextColor(Color.GRAY);
+
+                        ShowProgress();
+
+                        //Vamos a Login
+                        Intent Intent = new Intent(this, LoginActivity.class);
+                        startActivity(Intent);
+                        finish();
+                    }
+                }catch(Exception e){
+                    Log.d("tag", String.valueOf(e));
+                    //Problemas de conexón
+                    tv_noConn.setBackgroundColor(Color.RED);
+                    tv_noConn.setText("Revisa la conexión");
+                }
+            }else{
+                Toast.makeText(this, "Lee los Términos y Condiciones \n     (Si esta conforme, acepte)", Toast.LENGTH_LONG).show();
+            }
         }
-
-       //Verficamos que el check de terminos
-       if (cb_acceptTerm.isChecked()) {
-           try{
-               DataClass.usr = new User(et_username.getText().toString().replace(" ",""), et_email.getText().toString().replace(" ",""), cryptohash,resultRG ,cb_accept.isChecked());
-               //new CallAPI_Rest().execute("http://172.17.129.63/Epidemic-Zombie-WebService/API-Rest/sn/query.php?action=register&json="+usr.toJson());
-               new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=register&json="+DataClass.usr.toJson()).get();
-
-               //Toast.makeText(this, DataClass.UserJson, Toast.LENGTH_LONG).show();
-
-               //Retorno del PHP
-               if (DataClass.UserJson.equals("2")){
-                   //Toast.makeText(this, "[Error] Usuario ya en uso", Toast.LENGTH_LONG).show();
-                   tv_register_err_username.setBackgroundColor(Color.RED);
-                   tv_register_err_email.setBackgroundColor(Color.TRANSPARENT);
-
-               }else if (DataClass.UserJson.equals("1")){
-                   tv_register_err_username.setBackgroundColor(Color.TRANSPARENT);
-                   tv_register_err_email.setBackgroundColor(Color.RED);
-                   //Toast.makeText(this, "[Error] Email ya registrado", Toast.LENGTH_LONG).show();
-
-               }else if (DataClass.UserJson.equals("3")){
-                   tv_register_err_username.setBackgroundColor(Color.RED);
-                   tv_register_err_email.setBackgroundColor(Color.RED);
-                  // Toast.makeText(this, "[Error] Usuario y Email existentes", Toast.LENGTH_LONG).show();
-
-               }else{
-                   tv_register_err_username.setBackgroundColor(Color.TRANSPARENT);
-                   tv_register_err_email.setBackgroundColor(Color.TRANSPARENT);
-                   ShowProgress();
-                   //Vamos a Login
-                   Intent Intent = new Intent(this, LoginActivity.class);
-                   startActivity(Intent);
-                   finish();
-               }
-           }catch(Exception e){
-               Log.d("tag", String.valueOf(e));
-               //Problemas de conexón
-               tv_noConn.setBackgroundColor(Color.RED);
-               tv_noConn.setText("Revisa la conexión");
-           }
-       }else{
-           Toast.makeText(this, "Lee los Términos y Condiciones \n     (Si esta conforme, acepte)", Toast.LENGTH_LONG).show();
-       }
     }
 }
