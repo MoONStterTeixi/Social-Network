@@ -105,6 +105,23 @@
         app:layout_constraintVertical_bias="0.498" />
 
 
+    <TextView
+        android:id="@+id/textView70"
+        android:layout_width="15dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:background="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="@+id/accept"
+        app:layout_constraintEnd_toEndOf="@+id/accept"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/accept"
+        app:layout_constraintTop_toTopOf="@+id/accept"
+        app:layout_constraintVertical_bias="0.0" />
+
     <CheckBox
         android:id="@+id/accept"
         android:layout_width="41dp"
@@ -218,6 +235,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="271dp"
         android:layout_height="38dp"
         android:layout_marginBottom="64dp"
@@ -240,6 +258,7 @@
             android:textAlignment="textEnd"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="337dp" />
+
     </LinearLayout>
 
     <LinearLayout
