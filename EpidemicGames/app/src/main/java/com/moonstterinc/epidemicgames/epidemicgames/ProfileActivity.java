@@ -4,18 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,14 +21,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-
 import static java.lang.System.exit;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView tv_username, tv_checkID, pass;
-    private ImageView iv_image,image_profile, profile_trans;
+    private ImageView iv_image;
     private Button b_email, b_pass, b_genre;
     private Spinner s_profile_selcgen;
 
@@ -43,16 +35,6 @@ public class ProfileActivity extends AppCompatActivity {
     int posResult;
 
     Dialog myDialog;
-
-
-    Bitmap bmap;
-
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String IMAGE = "image";
-    private String image;
-
-    public static final String PROFILE = "profile";
-    private int profile = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
         iv_image.setBackgroundResource(R.drawable.profile_lock);
 
-        loadData();
-        updateViews();
-
-        if (profile == 1) {
-            profile_trans.setBackgroundColor(Color.TRANSPARENT);
-        }
     }
 
     @Override
@@ -100,67 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
         b_pass = findViewById(R.id.profile_pass);
         b_genre = findViewById(R.id.profile_genre);
         tv_checkID = findViewById(R.id.checkID);
-        image_profile = findViewById(R.id.profile_you);
-        profile_trans = findViewById(R.id.profile_trans);
     }
-
-    public void onClick (View v){
-        cargarImagen();
-        // Getting drawable image via drawable-hdpi folder and covert into bitmap.
-    }
-
-
-    private void cargarImagen() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent, "Seleccione la Aplicación"),10);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            Uri path = data.getData();
-            image_profile.setImageURI(path);
-
-            image_profile.buildDrawingCache();
-            bmap = image_profile.getDrawingCache();
-            profile = 1;
-            image_profile.setBackgroundColor(Color.TRANSPARENT);
-            Toast.makeText(this, "Foto de perfil guardada", Toast.LENGTH_LONG).show();
-            saveData();
-        }
-
-    }
-
-    //Guardar Datos
-    public void saveData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        ByteArrayOutputStream ByteStream=new  ByteArrayOutputStream();
-        bmap.compress(Bitmap.CompressFormat.PNG,100, ByteStream);
-        byte [] b=ByteStream.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-
-        editor.putString(IMAGE, temp);
-        editor.putInt(PROFILE, profile);
-        editor.apply();
-    }
-
-    public void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        image = sharedPreferences.getString(IMAGE,"");
-        profile = sharedPreferences.getInt(PROFILE,  profile);
-    }
-
-    public void updateViews(){
-        profile =+ profile;
-        byte [] encodeByte=Base64.decode(image, Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        image_profile.setImageBitmap(bitmap);
-    }
-
 
     public void ShowEmail(View v) {
             if (!unlock){
