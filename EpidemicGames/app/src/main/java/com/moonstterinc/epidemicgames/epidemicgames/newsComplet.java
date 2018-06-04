@@ -30,7 +30,7 @@ public class newsComplet extends AppCompatActivity {
         TextView txtTag = (TextView)findViewById(R.id.tag);
         TextView txtDate = (TextView)findViewById(R.id.date);
         TextView txtText = (TextView)findViewById(R.id.text);
-        ImageView imImage = (ImageView) findViewById(R.id.imageView);
+        ImageView imImage = (ImageView) findViewById(R.id.iv_image);
 
         //Insertarlas en cada sitio
         if(getIntent() != null)

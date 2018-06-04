@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,7 +121,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             textViewHead = itemView.findViewById(R.id.textViewHead);
             textViewAbout = itemView.findViewById(R.id.textViewAbout);
             textViewDate = itemView.findViewById(R.id.textViewDate);
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.iv_image);
 
             linearLayout = itemView.findViewById(R.id.linearLayout);
         }

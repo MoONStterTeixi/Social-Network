@@ -59,7 +59,9 @@ public class WelcomeActivity extends AppCompatActivity
 
     private TextView tv_statusTime, tv_username, tv_usernameDrawer, tv_emailDrawer;
     private Button bt_ins,bt_web,bt_twi;
-    private ImageView wel_image_profile;
+    private ImageView wel_image_profile, iv_image;
+
+    Bitmap bitmap;
 
     Dialog myDialog;
     ViewFlipper v_flipper;
@@ -106,7 +108,7 @@ public class WelcomeActivity extends AppCompatActivity
             public void onClick(View view) {
                 //Abrir una APP
                 try{
-                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.MoONStterInc.EpidemicZombie");
+                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.MoONStterInc.EZ");
                     startActivity(launchIntent);
                     Snackbar.make(view, "Abriendo Juego "+nameGame, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -136,7 +138,6 @@ public class WelcomeActivity extends AppCompatActivity
         View navHeader = navigationView.getHeaderView(0);
         tv_usernameDrawer = navHeader.findViewById(R.id.usernameDrawer);
         tv_emailDrawer = navHeader.findViewById(R.id.emailDrawer);
-
         //Slide Fotos
         int images [] = {R.drawable.welcome_slide1, R.drawable.welcome_slide2, R.drawable.welcome_slide3};
         v_flipper = findViewById(R.id.v_flipper);
@@ -155,7 +156,6 @@ public class WelcomeActivity extends AppCompatActivity
             tv_username.setText(DataClass.GlobalUser.getUsername());
             tv_usernameDrawer.setText(DataClass.GlobalUser.getUsername());
             tv_emailDrawer.setText(DataClass.GlobalUser.getEmail());
-
         }
 
         //Mensaje principa de Buenos días.. etc...
@@ -220,6 +220,7 @@ public class WelcomeActivity extends AppCompatActivity
         bt_twi = findViewById(R.id.welcome_twi);
         s_saveLogin = findViewById(R.id.s_saveNomore);
         wel_image_profile = findViewById(R.id.wel_image_profile);
+        iv_image = findViewById(R.id.iv_image);
     }
 
 
@@ -524,7 +525,8 @@ public class WelcomeActivity extends AppCompatActivity
 
         profile =+ profile;
         byte [] encodeByte= Base64.decode(image, Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         wel_image_profile.setImageBitmap(bitmap);
+
     }
 }
