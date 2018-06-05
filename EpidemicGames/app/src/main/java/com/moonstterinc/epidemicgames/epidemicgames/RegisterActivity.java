@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
     //Tarjeta de terminos
     public void terms(View v){
         android.app.AlertDialog.Builder myBuild = new android.app.AlertDialog.Builder(this);
-        myBuild.setMessage("Sin informacion");
+        myBuild.setMessage("Sin información");
 
         myBuild.setTitle("[Info] Epidemic Games");
 
@@ -187,8 +187,8 @@ public class RegisterActivity extends AppCompatActivity {
                     "-Mínimo 1 una letra MAYÚSCULA,\n" +
                     "-Mínimo 1 una letra minúscula,\n" +
                     "-Contener 1 Carácter especial\n                 |Mama mío! :) |,\n" +
-                    "-Debe ser mínimo de 6 Carácteres,\n" +
-                    "-Máximo de 15 Carácteres.");
+                    "-Debe ser mínimo de 6 Caracteres,\n" +
+                    "-Máximo de 15 Caracteres.");
             et_pwd.requestFocus();
 
             //Contraseña no iguales

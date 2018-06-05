@@ -307,10 +307,13 @@ public class WelcomeActivity extends AppCompatActivity
         }else if(timeOfDay >= 14 && timeOfDay < 21){
             //Toast.makeText(this, "Good Evening", Toast.LENGTH_SHORT).show();
             tv_statusTime.setText("Buenas tardes,");
-        }else if(timeOfDay >= 21 && timeOfDay < 24){
+        }else if(timeOfDay >= 21 && timeOfDay < 24) {
             //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
             tv_statusTime.setText("Buenas noches,");
-        }else if(timeOfDay >=1 && timeOfDay < 6) {
+        }else if(timeOfDay >24 && timeOfDay <=1) {
+                //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
+                tv_statusTime.setText("Buenas noches,");
+        }else if(timeOfDay >1 && timeOfDay < 6) {
             //Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
             tv_statusTime.setText("Buenas noches,");
         }

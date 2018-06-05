@@ -124,7 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void cargarImagen() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent, "Seleccione la Aplicación"),10);
+        startActivityForResult(intent.createChooser(intent, "¿Como lo quiere abrir? :)"),10);
     }
 
     @Override
@@ -220,7 +220,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 if (DataClass.GlobalUser.getEmail().equals(userFinal)) {
                                     tv_checkID.setBackgroundColor(Color.BLACK);
-                                    tv_checkID.setText("[Email actual] Anulado opración.");
+                                    tv_checkID.setText("[Email actual] Anulando operación.");
                                     myDialog.dismiss();
                                 } else if (DataClass.UserJson.equals("1")) {
                                     tv_checkID.setBackgroundColor(Color.BLACK);
@@ -308,8 +308,8 @@ public class ProfileActivity extends AppCompatActivity {
                                 "-Mínimo 1 una letra MAYÚSCULA,\n" +
                                 "-Mínimo 1 una letra minúscula,\n" +
                                 "-Contener 1 Carácter especial\n" +
-                                "-Debe ser mínimo de 6 Carácteres,\n" +
-                                "-Máximo de 15 Carácteres.");
+                                "-Debe ser mínimo de 6 Caracteres,\n" +
+                                "-Máximo de 15 Caracteres.");
                         new_pass.requestFocus();
                     }else{
                         try{
@@ -390,7 +390,7 @@ public class ProfileActivity extends AppCompatActivity {
             spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
 
 
-            Toast.makeText(this, "Genero: "+DataClass.GlobalUser.getGenre(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Género: "+DataClass.GlobalUser.getGenre(), Toast.LENGTH_LONG).show();
             spinner.setSelection(DataClass.GlobalUser.getGenre());
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -426,12 +426,12 @@ public class ProfileActivity extends AppCompatActivity {
                             DataClass.usr = new User(DataClass.GlobalUser.getUsername(),DataClass.GlobalUser.getEmail(),cryptohashFinal, posResult,DataClass.GlobalUser.getSub());
                             new CallAPI_Rest().execute("http://www.moonstterinc.com/SN/query.php?action=update&json="+DataClass.usr.toJson()).get();
 
-                            Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(ProfileActivity.this, "PHP dice:"+DataClass.UserJson, Toast.LENGTH_LONG).show();
 
                             if (DataClass.UserJson.equals("1")){
                                 //Toast.makeText(ProfileActivity.this, "Password cambiado con exito", Toast.LENGTH_LONG).show();
                                 tv_checkID.setBackgroundColor(Color.BLACK);
-                                tv_checkID.setText("Genéro aplicado: Gracias, Adiós");
+                                tv_checkID.setText("Género aplicado: Gracias, Adiós");
                                 myDialog.dismiss();
                             }else{
 

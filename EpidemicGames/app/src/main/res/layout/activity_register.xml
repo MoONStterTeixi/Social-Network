@@ -280,7 +280,7 @@
             android:id="@+id/textView18"
             android:layout_width="343dp"
             android:layout_height="wrap_content"
-            android:text="Aceptas los Terminos y Condiciones"
+            android:text="Aceptas los Términos y Condiciones"
             android:textAlignment="viewEnd"
             android:textColor="@android:color/background_light"
             tools:layout_editor_absoluteX="16dp"
